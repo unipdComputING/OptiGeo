@@ -17,7 +17,9 @@ class Truss:
     self.id_prop: int = id_prop
     self.TOT_EL_NODES: int = 2
   # ---------------------------------------------------------------------------
-  def stiffness(self, n1: Node, n2: Node, prop: Property) -> np.ndarray:
+  def stiffness(self, el_nodes: list[Node], prop: Property) -> np.ndarray:
+    n1: Node = el_nodes[0]
+    n2: Node = el_nodes[1]
     l0: float = n1.dist(n2)
     if l0 <= 0.0:
       return np.zeros((2 * DIM_DOF, 2 * DIM_DOF))

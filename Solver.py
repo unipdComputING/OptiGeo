@@ -38,9 +38,8 @@ def assembly(nodes: list[Node], elements: list[Element], props: list[Property]) 
     if pos_prop < 0:
       print(f"ERROR in EL: {element.id}: properties {element.id_prop} not defined")
       quit()
-
-    elK: np.ndarray = element.stiffness(nodes[nodes_position[0]],
-                                        nodes[nodes_position[1]],
+    el_nodes: list[Node] = get_el_nodes(element.connectivity, nodes)
+    elK: np.ndarray = element.stiffness(el_nodes,
                                         props[pos_prop])
     for node_row in range(TOT_EL_NODES):
       pos_row: int = nodes_position[node_row]

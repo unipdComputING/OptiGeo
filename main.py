@@ -1,7 +1,7 @@
 import numpy as np
 from Node import Node
 from Property import Property
-from Element import Element
+from Truss import Truss as Element
 from Solver import Liner_Solver
 
 if __name__ == "__main__":
