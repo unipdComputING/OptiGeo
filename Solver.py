@@ -1,11 +1,11 @@
 import numpy as np
 from  Global import *
 from Node import Node
-from Element import Element
+#from Element import Element
 from Property import Property
-
+from Hexa8 import Hexa8 as Element
 # -----------------------------------------------------------------------------
-def Liner_Solver(nodes: list[Node] = None, elements: list[Element] = None, props: list[Property] = None) -> None:
+def Liner_Solver(nodes: list[Node] = None, elements: list[Element] = None, props: list[Property] = None,scale:int =1) -> None:
 
   if nodes is None or elements is None or props is None:
     return
@@ -19,6 +19,7 @@ def Liner_Solver(nodes: list[Node] = None, elements: list[Element] = None, props
   # 4. solver
   solver(nodes, K, a, f, fix)
   # 5. outputs
+  coordinate_renew(nodes,a,scale)
   return
 # -----------------------------------------------------------------------------
 def assembly(nodes: list[Node], elements: list[Element], props: list[Property]) -> np.ndarray:
@@ -91,6 +92,13 @@ def solver(nodes: list[Node], K: np.ndarray, a: np.ndarray, f: np.ndarray, fix: 
       node.dof[i] = a[cont]
       cont += 1
 # -----------------------------------------------------------------------------
+def coordinate_renew(nodes: list[Node],a: np.ndarray,scale) -> list[Node]:
+    sequence: int=0
+    for i in nodes:
+        for j in range(DIM_DOF):
+            i.x[j] += scale * a[sequence]
+            sequence += 1
+
 # -----------------------------------------------------------------------------
 # -----------------------------------------------------------------------------
 # -----------------------------------------------------------------------------
