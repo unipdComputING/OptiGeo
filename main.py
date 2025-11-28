@@ -17,20 +17,7 @@ if __name__ == "__main__":
         Node(id=8, x=np.array([0., 1., 1.]), id_pos=7),
   ]
 #--------------------------------------------------------------------------------------------------
-  nodes[0].add_partialconstraint(fix=np.array([1, 0, 0]))
-  nodes[3].add_partialconstraint(fix=np.array([1, 0, 0]))
-  nodes[7].add_partialconstraint(fix=np.array([1, 0, 0]))
-  nodes[4].add_partialconstraint(fix=np.array([1, 0, 0]))
 
-  nodes[0].add_partialconstraint(fix=np.array([0, 0, 1]))
-  nodes[1].add_partialconstraint(fix=np.array([0, 0, 1]))
-  nodes[2].add_partialconstraint(fix=np.array([0, 0, 1]))
-  nodes[3].add_partialconstraint(fix=np.array([0, 0, 1]))
-
-  nodes[0].add_partialconstraint(fix=np.array([0, 1, 0]))
-  nodes[1].add_partialconstraint(fix=np.array([0, 1, 0]))
-  nodes[5].add_partialconstraint(fix=np.array([0, 1, 0]))
-  nodes[4].add_partialconstraint(fix=np.array([0, 1, 0]))
   props: list[Property] = [
     Property(1, 210_000.0, 0.3),
   ]
@@ -38,8 +25,11 @@ if __name__ == "__main__":
   elements: list[Element] = [
     Element(1, [1, 2 ,3 ,4 ,5 ,6 ,7 ,8 ], 1),
   ]
+  elements[0].adding_surface_partialconstraint(4, np.array([1, 0, 0]), nodes)
+  elements[0].adding_surface_partialconstraint(2, np.array([0, 1, 0]), nodes)
+  elements[0].adding_surface_partialconstraint(0, np.array([0, 0, 1]), nodes)
   elements[0].draw_element(nodes)
-  elements[0].add_surface_stress( nodes, 1, np.array([0., 0., 1000]))
+  elements[0].add_surface_stress(nodes,1, np.array([0., 0., 1000.]))
 
 
   Liner_Solver(nodes, elements, props,100)

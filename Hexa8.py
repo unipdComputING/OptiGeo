@@ -105,10 +105,10 @@ class Hexa8:
       coords = np.array([n.x for n in nodes])
 
       E = prop.young
-      nu = 0.3
+      nu = prop.poisson
       D = self.D_matrix(E, nu)
 
-      a = 1.0 / np.sqrt(3.0)
+      a = 1. / np.sqrt(3.)
       gp = [-a, a]
       K = np.zeros((24, 24))
 
@@ -125,7 +125,6 @@ class Hexa8:
 
                   invJ = np.linalg.inv(J)
                   dN_dxyz = dN_dxi @ invJ.T
-
                   B = self.build_B(dN_dxyz)
 
                   K += B.T @ D @ B * detJ
@@ -175,5 +174,14 @@ class Hexa8:
       )
       plt.show()
   # ---------------------------------------------------------------------------
+  def adding_surface_partialconstraint(self,id_surf:int,fix:np.ndarray,nodes:list[Node]) -> None:
+      n0: Node = nodes[self.surface[id_surf, 0]]
+      n1: Node = nodes[self.surface[id_surf, 1]]
+      n2: Node = nodes[self.surface[id_surf, 2]]
+      n3: Node = nodes[self.surface[id_surf, 3]]
+      n0.add_partialconstraint(fix)
+      n1.add_partialconstraint(fix)
+      n2.add_partialconstraint(fix)
+      n3.add_partialconstraint(fix)
   # ---------------------------------------------------------------------------
   # ---------------------------------------------------------------------------
