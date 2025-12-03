@@ -1,5 +1,6 @@
 import numpy as np
 from Global import *
+
 class Node:
   # ---------------------------------------------------------------------------
   def __init__(self, id: int = 0, x: np = np.zeros(DIM_SPACE), id_pos: int = -1):
@@ -8,7 +9,7 @@ class Node:
     self.x: np = x
     self.dof: np = np.zeros(DIM_DOF)
     self.fix: np = np.zeros(DIM_DOF)
-    self.load:np = np.zeros(DIM_DOF)
+    self.load: np = np.zeros(DIM_DOF)
   # ---------------------------------------------------------------------------
   def dist(self, node: "Node") -> float:
     # x = node.x - self.x
@@ -33,9 +34,5 @@ class Node:
     self.fix = np.zeros(DIM_DOF)
     self.dof = np.zeros(DIM_DOF)
   # ---------------------------------------------------------------------------
-  def add_partialconstraint(self, fix: np = np.zeros(DIM_DOF)) -> None:
-    for i,j in enumerate(fix):
-        if j != self.fix[i] and j != 0:
-            self.fix[i] = j
   # ---------------------------------------------------------------------------
   # ---------------------------------------------------------------------------

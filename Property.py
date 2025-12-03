@@ -1,11 +1,10 @@
 
 class Property:
   # ---------------------------------------------------------------------------
-  def __init__(self, id: int = 0, young: float = 0, poisson: float = 0) -> None:
+  def __init__(self, id: int = 0, young: float = 0, area: float = 0) -> None:
     self.id: int = id
     self.young: float = young
-    #self.area: float = area
-    self.poisson: float = poisson
+    self.area: float = area
   # ---------------------------------------------------------------------------
   # ---------------------------------------------------------------------------
   # ---------------------------------------------------------------------------
