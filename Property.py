@@ -1,11 +1,28 @@
-
+import numpy as np
 class Property:
   # ---------------------------------------------------------------------------
-  def __init__(self, id: int = 0, young: float = 0, area: float = 0) -> None:
+  def __init__(self, id: int = 0, young: float = 0, poisson: float = 0) -> None:
     self.id: int = id
     self.young: float = young
-    self.area: float = area
+    #self.area: float = area
+    self.poisson: float = poisson
+
   # ---------------------------------------------------------------------------
+  def ElasticTensor(self) -> np.ndarray:
+      E = self.young
+      nu = self.poisson
+      l = E*nu/((1+nu) * (1-2*nu))
+      m = E/(2*(1+nu))
+
+      D = np.array([
+          [l + 2*m, l, l, 0., 0., 0.],
+          [l, l + 2*m, l, 0., 0., 0.],
+          [l, l, l + 2*m, 0., 0., 0.],
+          [0., 0., 0., m, 0., 0.],
+          [0., 0., 0., 0., m, 0.],
+          [0., 0., 0., 0., 0., m]
+      ])
+      return D
   # ---------------------------------------------------------------------------
   # ---------------------------------------------------------------------------
   # ---------------------------------------------------------------------------
