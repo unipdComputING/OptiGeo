@@ -28,8 +28,10 @@ if __name__ == "__main__":
   elements[0].adding_surface_partialconstraint(4, np.array([1, 0, 0]), nodes)
   elements[0].adding_surface_partialconstraint(2, np.array([0, 1, 0]), nodes)
   elements[0].adding_surface_partialconstraint(0, np.array([0, 0, 1]), nodes)
-  elements[0].draw_element(nodes)
+  fig1 = plt.figure(figsize=(8, 8))
+  elements[0].draw_element(fig1,nodes)
   elements[0].add_surface_stress(nodes,1, np.array([0., 0., 1000.]))
-
+  elements[0].compute_Vol(nodes)
   Liner_Solver(nodes, elements, props,100)
-  elements[0].draw_element(nodes)
+  fig2 = plt.figure(figsize=(8, 8))
+  elements[0].draw_element(fig2,nodes)

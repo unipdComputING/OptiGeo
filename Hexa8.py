@@ -1,4 +1,6 @@
 import  numpy as np
+from matplotlib.figure import Figure
+
 from Global import *
 from Node import Node
 from Property import Property
@@ -18,6 +20,16 @@ class Hexa8:
         [0, 4, 7, 3],
         [1, 2, 6, 5],
     ])
+
+    #        7 ──────────── 6
+    #      / |            / |
+    #     4 ──────────── 5  |
+    #     |  |           |  |
+    #     |  |           |  |
+    #     |  3 ──────────── 2
+    #     | /            | /
+    #     0 ──────────── 1
+
   # ---------------------------------------------------------------------------
   def add_surface_stress(self, nodes: list, id_surf: int,
                          stress_value: np.ndarray = np.zeros(3)) -> None:
@@ -33,7 +45,33 @@ class Hexa8:
           node.add_load(stress_value * Area_surf / 4)
 
   # ---------------------------------------------------------------------------
-  #def stiffness(self, n1: Node, n2: Node, prop: Property) -> np.ndarray:
+  def compute_Vol(self, nodes: list[Node]) -> float:
+      # Calcolo del volume decomponendo in 6 tetraedri
+
+      index_mat = np.array([ # matrice di combinazione per definire iterativamente gli esaedri
+
+          [0, 1, 2, 6],
+          [0, 2, 3, 6],
+          [0, 4, 5, 6],
+          [0, 5, 1, 6],
+          [0, 3, 7, 6],
+          [0, 7, 4, 6],
+
+      ])
+      vol = np.zeros(6)
+      for i in range (6):
+          n0 = nodes[index_mat[i,0]]
+          n1 = nodes[index_mat[i,1]]
+          n2 = nodes[index_mat[i,2]]
+          n3 = nodes[index_mat[i,3]]
+
+          a = n3.direction(n0)
+          b = n3.direction(n1)
+          c = n3.direction(n2)
+          axb = np.cross(a, b)
+          vol[i] = 1 / 6 * axb @ c
+      tot_vol = np.sum(vol)
+      return tot_vol
 
   # ---------------------------------------------------------------------------
   def get_nodes_position(self, nodes: list[Node]) -> list[int]:
@@ -110,12 +148,12 @@ class Hexa8:
 
       return K
   # ---------------------------------------------------------------------------
-  def draw_element(self, nodes: list[Node]) -> None:
+  def draw_element(self,figure: plt.Figure, nodes: list[Node]) -> None:
       x = [nodes[n-1].x[0] for n in self.connectivity]
       y = [nodes[n-1].x[1] for n in self.connectivity]
       z = [nodes[n-1].x[2] for n in self.connectivity]
 
-      fig = plt.figure(figsize=(10, 6))
+      fig = figure
       di = fig.add_subplot(111, projection='3d')
       di.scatter(x, y, z)
       for i in self.connectivity:
