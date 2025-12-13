@@ -5,16 +5,37 @@ import matplotlib.pyplot as plt
 #from Truss import Truss as Element
 from Solver import Liner_Solver
 from Hexa8 import Hexa8 as Element
+from Global import *
 if __name__ == "__main__":
   nodes: list[Node] = [
-        Node(id=1, x=np.array([   0.,   0.,     0.]), id_pos=0),
-        Node(id=2, x=np.array([1.,   0.,     0.]), id_pos=1),
-        Node(id=3, x=np.array([1.,1.,     0.]), id_pos=2),
-        Node(id=4, x=np.array([   0.,1.,     0.]), id_pos=3),
-        Node(id=5, x=np.array([0., 0., 1.]), id_pos=4),
-        Node(id=6, x=np.array([1., 0., 1.]), id_pos=5),
-        Node(id=7, x=np.array([1., 1., 1.]), id_pos=6),
-        Node(id=8, x=np.array([0., 1., 1.]), id_pos=7),
+      Node(id=1, x=np.array([0., 0., 0.]), id_pos=0),
+      Node(id=2, x=np.array([1., 0., 0.]), id_pos=1),
+      Node(id=3, x=np.array([2., 0., 0.]), id_pos=2),
+      Node(id=4, x=np.array([0., 1., 0.]), id_pos=3),
+      Node(id=5, x=np.array([1., 1., 0.]), id_pos=4),
+      Node(id=6, x=np.array([2., 1., 0.]), id_pos=5),
+      Node(id=7, x=np.array([0., 2., 0.]), id_pos=6),
+      Node(id=8, x=np.array([1., 2., 0.]), id_pos=7),
+      Node(id=9, x=np.array([2., 2., 0.]), id_pos=8),
+      Node(id=10, x=np.array([0., 0., 1.]), id_pos=9),
+      Node(id=11, x=np.array([1., 0., 1.]), id_pos=10),
+      Node(id=12, x=np.array([2., 0., 1.]), id_pos=11),
+      Node(id=13, x=np.array([0., 1., 1.]), id_pos=12),
+      Node(id=14, x=np.array([1., 1., 1.]), id_pos=13),
+      Node(id=15, x=np.array([2., 1., 1.]), id_pos=14),
+      Node(id=16, x=np.array([0., 2., 1.]), id_pos=15),
+      Node(id=17, x=np.array([1., 2., 1.]), id_pos=16),
+      Node(id=18, x=np.array([2., 2., 1.]), id_pos=17),
+      Node(id=19, x=np.array([0., 0., 2.]), id_pos=18),
+      Node(id=20, x=np.array([1., 0., 2.]), id_pos=19),
+      Node(id=21, x=np.array([2., 0., 2.]), id_pos=20),
+      Node(id=22, x=np.array([0., 1., 2.]), id_pos=21),
+      Node(id=23, x=np.array([1., 1., 2.]), id_pos=22),
+      Node(id=24, x=np.array([2., 1., 2.]), id_pos=23),
+      Node(id=25, x=np.array([0., 2., 2.]), id_pos=24),
+      Node(id=26, x=np.array([1., 2., 2.]), id_pos=25),
+      Node(id=27, x=np.array([2., 2., 2.]), id_pos=26),
+
   ]
 #--------------------------------------------------------------------------------------------------
 
@@ -23,15 +44,81 @@ if __name__ == "__main__":
   ]
 
   elements: list[Element] = [
-    Element(1, [1, 2 ,3 ,4 ,5 ,6 ,7 ,8 ], 1),
+      Element(1, [1, 2, 5, 4, 10, 11, 14, 13], 1,nodes),
+      Element(2, [2, 3, 6, 5, 11, 12, 15, 14], 1,nodes),
+      Element(3, [4, 5, 8, 7, 13, 14, 17, 16], 1,nodes),
+      Element(4, [5, 6, 9, 8, 14, 15, 18, 17], 1,nodes),
+      Element(5, [10, 11, 14, 13, 19, 20, 23, 22], 1,nodes),
+      Element(6, [11, 12, 15, 14, 20, 21, 24, 23], 1,nodes),
+      Element(7, [13, 14, 17, 16, 22, 23, 26, 25], 1,nodes),
+      Element(8, [14, 15, 18, 17, 23, 24, 27, 26], 1,nodes),
   ]
-  elements[0].adding_surface_partialconstraint(4, np.array([1, 0, 0]), nodes)
-  elements[0].adding_surface_partialconstraint(2, np.array([0, 1, 0]), nodes)
-  elements[0].adding_surface_partialconstraint(0, np.array([0, 0, 1]), nodes)
+#selecting nodes
+  x_nodes: list[tuple[int, int]] = []
+  for n in nodes:
+      if n.x[0] == 0:
+          for (e_id, s_id) in n.surfaces:
+              x_nodes.append((e_id, s_id))
+
+  y_nodes: list[tuple[int, int]] = []
+  for n in nodes:
+      if n.x[1] == 0:
+          for (e_id, s_id) in n.surfaces:
+              y_nodes.append((e_id, s_id))
+
+  z_nodes: list[tuple[int, int]] = []
+  for n in nodes:
+      if n.x[2] == 0:
+          for (e_id, s_id) in n.surfaces:
+              z_nodes.append((e_id, s_id))
+#convert nodes_set to surface_id_set
+  x_surf: dict[tuple[int,int],int] = counting(x_nodes)
+  y_surf: dict[tuple[int,int],int] = counting(y_nodes)
+  z_surf: dict[tuple[int,int],int] = counting(z_nodes)
+
+  x_surf_id_list: list[tuple[int,int]] = find_repeating_numbers(x_surf, 4)
+  y_surf_id_list: list[tuple[int,int]] = find_repeating_numbers(y_surf, 4)
+  z_surf_id_list: list[tuple[int,int]] = find_repeating_numbers(z_surf, 4)
+
+
+  for (e_id,s_id) in x_surf_id_list:
+    pos_el=find_pos(elements,e_id)
+    pos_su=find_pos(elements[pos_el].surface,s_id)
+    elements[pos_el].adding_surface_partialconstraint(pos_su, np.array([1, 0, 0]), nodes)
+  for (e_id,s_id) in y_surf_id_list:
+    pos_el=find_pos(elements,e_id)
+    pos_su=find_pos(elements[pos_el].surface,s_id)
+    elements[pos_el].adding_surface_partialconstraint(pos_su, np.array([0, 1, 0]), nodes)
+  for (e_id,s_id) in z_surf_id_list:
+    pos_el=find_pos(elements,e_id)
+    pos_su=find_pos(elements[pos_el].surface,s_id)
+    elements[pos_el].adding_surface_partialconstraint(pos_su, np.array([0, 0, 1]), nodes)
+
+#applying uniformly distributed load
+  load_nodes: list[tuple[int, int]] = []
+  for n in nodes:
+      if n.x[2] == 2:
+          for (e_id, s_id) in n.surfaces:
+              load_nodes.append((e_id, s_id))
+
+  load_surf: dict[tuple[int, int], int] = counting(load_nodes)
+  load_surf_id_list: list[tuple[int, int]] = find_repeating_numbers(load_surf, 4)
+
+  for (e_id,s_id) in load_surf_id_list:
+    pos_el=find_pos(elements,e_id)
+    pos_su=find_pos(elements[pos_el].surface,s_id)
+    elements[pos_el].add_surface_stress(nodes, pos_su, np.array([0., 0., 1000.]))
+
   fig1 = plt.figure(figsize=(8, 8))
-  elements[0].draw_element(fig1,nodes)
-  elements[0].add_surface_stress(nodes,1, np.array([0., 0., 1000.]))
+  elements[0].draw_hex8_element(fig1, nodes, color="black")
+  for i in range(1, len(elements)):
+    elements[i].draw_hex8_element(fig1, nodes, color="black")
+  plt.show()
+#  elements[0].add_surface_stress(nodes,1, np.array([0., 0., 1000.]))
   elements[0].compute_Vol(nodes)
   Liner_Solver(nodes, elements, props,100)
   fig2 = plt.figure(figsize=(8, 8))
-  elements[0].draw_element(fig2,nodes)
+  elements[0].draw_hex8_element(fig2, nodes, color="black")
+  for i in range(1, len(elements)):
+    elements[i].draw_hex8_element(fig2, nodes, color="black")
+  plt.show()

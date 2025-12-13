@@ -9,6 +9,9 @@ class Node:
     self.dof: np = np.zeros(DIM_DOF)
     self.fix: np = np.zeros(DIM_DOF)
     self.load:np = np.zeros(DIM_DOF)
+    self.includedbyelement = []
+    self.includedbysurface = []
+    self.surfaces: list[tuple[int, int]] = []
   # ---------------------------------------------------------------------------
   def dist(self, node: "Node") -> float:
     # x = node.x - self.x
@@ -37,5 +40,4 @@ class Node:
     for i,j in enumerate(fix):
         if j != self.fix[i] and j != 0:
             self.fix[i] = j
-  # ---------------------------------------------------------------------------
   # ---------------------------------------------------------------------------

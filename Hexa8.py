@@ -1,26 +1,35 @@
 import  numpy as np
 from matplotlib.figure import Figure
-
+from Surface import Surface
 from Global import *
 from Node import Node
 from Property import Property
 import matplotlib.pyplot as plt
 class Hexa8:
   # ---------------------------------------------------------------------------
-  def __init__(self, id: int = 0, connectivity: list[int] = (0, 0, 0, 0, 0, 0, 0, 0), id_prop: int = 0) -> None:
+  def __init__(self, id: int = 0, connectivity: list[int] = (0, 0, 0, 0, 0, 0, 0, 0), id_prop: int = 0,nodes: list[Node]=None) -> None:
     self.id: int = id
     self.connectivity: list[int] = connectivity
     self.id_prop: int = id_prop
     self.TOT_EL_NODES: int = 8
+    self.surface:list[Surface] = [
+          Surface(1, [self.connectivity[0], self.connectivity[1], self.connectivity[2], self.connectivity[3]], id,nodes),
+          Surface(2, [self.connectivity[4], self.connectivity[5], self.connectivity[6], self.connectivity[7]], id,nodes),
+          Surface(3, [self.connectivity[0], self.connectivity[1], self.connectivity[5], self.connectivity[4]], id,nodes),
+          Surface(4, [self.connectivity[3], self.connectivity[2], self.connectivity[6], self.connectivity[7]], id,nodes),
+          Surface(5, [self.connectivity[0], self.connectivity[4], self.connectivity[7], self.connectivity[3]], id,nodes),
+          Surface(6, [self.connectivity[1], self.connectivity[2], self.connectivity[6], self.connectivity[5]], id,nodes),
+  ]
+    """"
     self.surface = np.array([
-        [0, 1, 2, 3],
-        [4, 5, 6, 7],
-        [0, 1, 5, 4],
-        [3, 2, 6, 7],
-        [0, 4, 7, 3],
-        [1, 2, 6, 5],
+        [self.connectivity[0], self.connectivity[1], self.connectivity[2], self.connectivity[3]],
+        [self.connectivity[4], self.connectivity[5], self.connectivity[6], self.connectivity[7]],
+        [self.connectivity[0], self.connectivity[1], self.connectivity[5], self.connectivity[4]],
+        [self.connectivity[3], self.connectivity[2], self.connectivity[6], self.connectivity[7]],
+        [self.connectivity[0], self.connectivity[4], self.connectivity[7], self.connectivity[3]],
+        [self.connectivity[1], self.connectivity[2], self.connectivity[6], self.connectivity[5]],
     ])
-
+    """
     #        7 ──────────── 6
     #      / |            / |
     #     4 ──────────── 5  |
@@ -33,12 +42,19 @@ class Hexa8:
   # ---------------------------------------------------------------------------
   def add_surface_stress(self, nodes: list, id_surf: int,
                          stress_value: np.ndarray = np.zeros(3)) -> None:
-      n0: Node = nodes[self.surface[id_surf, 0]]
-      n1: Node = nodes[self.surface[id_surf, 1]]
-      n2: Node = nodes[self.surface[id_surf, 2]]
-      n3: Node = nodes[self.surface[id_surf, 3]]
+      """
+      n0: Node = nodes[find_pos(nodes,self.surface[id_surf, 0])]
+      n1: Node = nodes[find_pos(nodes,self.surface[id_surf, 1])]
+      n2: Node = nodes[find_pos(nodes,self.surface[id_surf, 2])]
+      n3: Node = nodes[find_pos(nodes,self.surface[id_surf, 3])]
+      """
+      n0: Node = nodes[find_pos(nodes,self.surface[id_surf].sur_nodes[0])]
+      n1: Node = nodes[find_pos(nodes,self.surface[id_surf].sur_nodes[1])]
+      n2: Node = nodes[find_pos(nodes,self.surface[id_surf].sur_nodes[2])]
+      n3: Node = nodes[find_pos(nodes,self.surface[id_surf].sur_nodes[3])]
       v1 = n1.direction(n0)
       v2 = n1.direction(n2)
+
       Area_surf = np.linalg.norm(np.cross(v1, v2))
       surf_nodes = [n0, n1, n2, n3]
       for node in surf_nodes:
@@ -50,20 +66,20 @@ class Hexa8:
 
       index_mat = np.array([ # matrice di combinazione per definire iterativamente gli esaedri
 
-          [0, 1, 2, 6],
-          [0, 2, 3, 6],
-          [0, 4, 5, 6],
-          [0, 5, 1, 6],
-          [0, 3, 7, 6],
-          [0, 7, 4, 6],
+          [self.connectivity[0], self.connectivity[1], self.connectivity[2], self.connectivity[6]],
+          [self.connectivity[0], self.connectivity[2], self.connectivity[3], self.connectivity[6]],
+          [self.connectivity[0], self.connectivity[4], self.connectivity[5], self.connectivity[6]],
+          [self.connectivity[0], self.connectivity[5], self.connectivity[1], self.connectivity[6]],
+          [self.connectivity[0], self.connectivity[3], self.connectivity[7], self.connectivity[6]],
+          [self.connectivity[0], self.connectivity[7], self.connectivity[4], self.connectivity[6]],
 
       ])
       vol = np.zeros(6)
       for i in range (6):
-          n0 = nodes[index_mat[i,0]]
-          n1 = nodes[index_mat[i,1]]
-          n2 = nodes[index_mat[i,2]]
-          n3 = nodes[index_mat[i,3]]
+          n0 = nodes[find_pos(nodes,index_mat[i,0])]
+          n1 = nodes[find_pos(nodes,index_mat[i,1])]
+          n2 = nodes[find_pos(nodes,index_mat[i,2])]
+          n3 = nodes[find_pos(nodes,index_mat[i,3])]
 
           a = n3.direction(n0)
           b = n3.direction(n1)
@@ -148,61 +164,65 @@ class Hexa8:
 
       return K
   # ---------------------------------------------------------------------------
-  def draw_element(self,figure: plt.Figure, nodes: list[Node]) -> None:
-      x = [nodes[n-1].x[0] for n in self.connectivity]
-      y = [nodes[n-1].x[1] for n in self.connectivity]
-      z = [nodes[n-1].x[2] for n in self.connectivity]
+  def draw_hex8_element(self,figure: plt.Figure, nodes: list, color="black", show_node_id=True):
 
-      fig = figure
-      di = fig.add_subplot(111, projection='3d')
-      di.scatter(x, y, z)
-      for i in self.connectivity:
-          di.text(nodes[find_pos(nodes,i)].x[0], nodes[find_pos(nodes,i)].x[1], nodes[find_pos(nodes,i)].x[2], str(nodes[i-1].id), fontsize=9)
-      for i in range(0, 3):
-          di.plot(
-              [nodes[find_pos(nodes,self.connectivity[i])].x[0], nodes[find_pos(nodes,self.connectivity[i+1])].x[0]],
-              [nodes[find_pos(nodes,self.connectivity[i])].x[1], nodes[find_pos(nodes,self.connectivity[i+1])].x[1]],
-              [nodes[find_pos(nodes,self.connectivity[i])].x[2], nodes[find_pos(nodes,self.connectivity[i+1])].x[2]],
-          color='black')
-          di.plot(
-              [nodes[find_pos(nodes,self.connectivity[i])].x[0], nodes[find_pos(nodes,self.connectivity[i+4])].x[0]],
-              [nodes[find_pos(nodes,self.connectivity[i])].x[1], nodes[find_pos(nodes,self.connectivity[i+4])].x[1]],
-              [nodes[find_pos(nodes,self.connectivity[i])].x[2], nodes[find_pos(nodes,self.connectivity[i+4])].x[2]],
-          color='black')
-          di.plot(
-              [nodes[find_pos(nodes,self.connectivity[i+4])].x[0], nodes[find_pos(nodes,self.connectivity[i+5])].x[0]],
-              [nodes[find_pos(nodes,self.connectivity[i+4])].x[1], nodes[find_pos(nodes,self.connectivity[i+5])].x[1]],
-              [nodes[find_pos(nodes,self.connectivity[i+4])].x[2], nodes[find_pos(nodes,self.connectivity[i+5])].x[2]],
-          color='black')
-      di.plot(
-          [nodes[self.connectivity[3]-1].x[0], nodes[self.connectivity[0]-1].x[0]],
-          [nodes[self.connectivity[3]-1].x[1], nodes[self.connectivity[0]-1].x[1]],
-          [nodes[self.connectivity[3]-1].x[2], nodes[self.connectivity[0]-1].x[2]],
-      color='black')
-      di.plot(
-          [nodes[self.connectivity[7]-1].x[0], nodes[self.connectivity[4]-1].x[0]],
-          [nodes[self.connectivity[7]-1].x[1], nodes[self.connectivity[4]-1].x[1]],
-          [nodes[self.connectivity[7]-1].x[2], nodes[self.connectivity[4]-1].x[2]],
-      color='black')
-      di.plot(
-          [nodes[self.connectivity[3]-1].x[0], nodes[self.connectivity[7]-1].x[0]],
-          [nodes[self.connectivity[3]-1].x[1], nodes[self.connectivity[7]-1].x[1]],
-          [nodes[self.connectivity[3]-1].x[2], nodes[self.connectivity[7]-1].x[2]],
-      color='black')
-      di.set_title((f"Elemento Exa8: {self.id}"))
-      di.set_xlabel("Coordinata x")
-      di.set_ylabel("Coordinata y")
-      di.set_zlabel("Coordinata z")
-      plt.show()
+      if figure.axes:
+          ax = figure.axes[0]
+      else:
+          ax = figure.add_subplot(111, projection='3d')
+
+      node_by_id = {n.id: n for n in nodes}
+      pts = [node_by_id[nid].x for nid in self.connectivity]
+
+      xs = [p[0] for p in pts]
+      ys = [p[1] for p in pts]
+      zs = [p[2] for p in pts]
+      ax.scatter(xs, ys, zs)
+
+      edges = [
+          (0, 1), (1, 2), (2, 3), (3, 0),
+          (4, 5), (5, 6), (6, 7), (7, 4),
+          (0, 4), (1, 5), (2, 6), (3, 7)
+      ]
+
+      for i, j in edges:
+          ax.plot([pts[i][0], pts[j][0]],
+                  [pts[i][1], pts[j][1]],
+                  [pts[i][2], pts[j][2]],
+                  color=color)
+
+      if show_node_id:
+          for nid in self.connectivity:
+              p = node_by_id[nid].x
+              ax.text(p[0], p[1], p[2], str(nid), fontsize=8, color=color)
   # ---------------------------------------------------------------------------
   def adding_surface_partialconstraint(self,id_surf:int,fix:np.ndarray,nodes:list[Node]) -> None:
-      n0: Node = nodes[self.surface[id_surf, 0]]
-      n1: Node = nodes[self.surface[id_surf, 1]]
-      n2: Node = nodes[self.surface[id_surf, 2]]
-      n3: Node = nodes[self.surface[id_surf, 3]]
+      """
+      n0: Node = nodes[find_pos(nodes,self.surface[id_surf, 0])]
+      n1: Node = nodes[find_pos(nodes,self.surface[id_surf, 1])]
+      n2: Node = nodes[find_pos(nodes,self.surface[id_surf, 2])]
+      n3: Node = nodes[find_pos(nodes,self.surface[id_surf, 3])]
+      """
+      n0: Node = nodes[find_pos(nodes,self.surface[id_surf].sur_nodes[0])]
+      n1: Node = nodes[find_pos(nodes,self.surface[id_surf].sur_nodes[1])]
+      n2: Node = nodes[find_pos(nodes,self.surface[id_surf].sur_nodes[2])]
+      n3: Node = nodes[find_pos(nodes,self.surface[id_surf].sur_nodes[3])]
       n0.add_partialconstraint(fix)
       n1.add_partialconstraint(fix)
       n2.add_partialconstraint(fix)
       n3.add_partialconstraint(fix)
   # ---------------------------------------------------------------------------
+  def find_ele_id(self, ele_nodes: list[int], nodes: list[Node]) -> int:
+      e1: list[int] = nodes[find_pos(nodes, ele_nodes[0])].includedbyelement
+      e2: list[int] = nodes[find_pos(nodes, ele_nodes[1])].includedbyelement
+      e3: list[int] = nodes[find_pos(nodes, ele_nodes[2])].includedbyelement
+      e4: list[int] = nodes[find_pos(nodes, ele_nodes[3])].includedbyelement
+      commonlist = set(e1) & set(e2) & set(e3) & set(e4)
+      if len(commonlist) > 1:
+          print(f'Error:there might be overlap between {len(commonlist)} elements')
+          return -1
+      else:
+          common = commonlist[0]
+          return common
+
   # ---------------------------------------------------------------------------
