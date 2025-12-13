@@ -116,9 +116,28 @@ if __name__ == "__main__":
   plt.show()
 #  elements[0].add_surface_stress(nodes,1, np.array([0., 0., 1000.]))
   elements[0].compute_Vol(nodes)
-  Liner_Solver(nodes, elements, props,100)
+  Liner_Solver(nodes, elements, props,1)
   fig2 = plt.figure(figsize=(8, 8))
   elements[0].draw_hex8_element(fig2, nodes, color="black")
   for i in range(1, len(elements)):
     elements[i].draw_hex8_element(fig2, nodes, color="black")
   plt.show()
+
+
+#Analytical solution
+  E=210_000
+  poisson=0.3
+  pressure = 1000
+  epsilon = pressure / E
+  deltaH =  2 * epsilon
+  altezza_deformata = 2-deltaH
+  print(f'H deformata = {altezza_deformata}')
+  print(f'L deformata = {poisson * deltaH}')
+
+  Toll = 0.000001
+  a= nodes[find_pos(nodes,25)].x[2]
+  b = nodes[find_pos(nodes, 25)].x[1]
+  if a-altezza_deformata<Toll:
+      print(f'errore spostamento in direzione z uguale a {a-altezza_deformata}')
+  if b-poisson * deltaH-2<Toll:
+      print(f'errore spostamento in direzione x e y uguale a {b-poisson * deltaH-2}')

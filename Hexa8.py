@@ -52,10 +52,16 @@ class Hexa8:
       n1: Node = nodes[find_pos(nodes,self.surface[id_surf].sur_nodes[1])]
       n2: Node = nodes[find_pos(nodes,self.surface[id_surf].sur_nodes[2])]
       n3: Node = nodes[find_pos(nodes,self.surface[id_surf].sur_nodes[3])]
-      v1 = n1.direction(n0)
-      v2 = n1.direction(n2)
+      v01 = n0.direction(n1)
+      v02 = n0.direction(n2)
+      A1 = 0.5 * np.linalg.norm(np.cross(v01, v02))
 
-      Area_surf = np.linalg.norm(np.cross(v1, v2))
+      v02b = n0.direction(n2)
+      v03 = n0.direction(n3)
+      A2 = 0.5 * np.linalg.norm(np.cross(v02b, v03))
+
+      Area_surf = A1 + A2
+
       surf_nodes = [n0, n1, n2, n3]
       for node in surf_nodes:
           node.add_load(stress_value * Area_surf / 4)
