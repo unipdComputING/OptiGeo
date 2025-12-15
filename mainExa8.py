@@ -71,15 +71,19 @@ if __name__ == "__main__":
       if n.x[2] == 0:
           for (e_id, s_id) in n.surfaces:
               z_nodes.append((e_id, s_id))
+
+  load_nodes: list[tuple[int, int]] = []
+  for n in nodes:
+      if n.x[2] == 2:
+          for (e_id, s_id) in n.surfaces:
+              load_nodes.append((e_id, s_id))
 #convert nodes_set to surface_id_set
-  x_surf: dict[tuple[int,int],int] = counting(x_nodes)
-  y_surf: dict[tuple[int,int],int] = counting(y_nodes)
-  z_surf: dict[tuple[int,int],int] = counting(z_nodes)
 
-  x_surf_id_list: list[tuple[int,int]] = find_repeating_numbers(x_surf, 4)
-  y_surf_id_list: list[tuple[int,int]] = find_repeating_numbers(y_surf, 4)
-  z_surf_id_list: list[tuple[int,int]] = find_repeating_numbers(z_surf, 4)
 
+  load_surf_id_list: list[tuple[int, int]] = selecting_surface_from_nodesset(4, load_nodes)
+  x_surf_id_list: list[tuple[int, int]] = selecting_surface_from_nodesset(4, x_nodes)
+  y_surf_id_list: list[tuple[int, int]] = selecting_surface_from_nodesset(4, y_nodes)
+  z_surf_id_list: list[tuple[int, int]] = selecting_surface_from_nodesset(4, z_nodes)
 
   for (e_id,s_id) in x_surf_id_list:
     pos_el=find_pos(elements,e_id)
@@ -94,15 +98,7 @@ if __name__ == "__main__":
     pos_su=find_pos(elements[pos_el].surface,s_id)
     elements[pos_el].adding_surface_partialconstraint(pos_su, np.array([0, 0, 1]), nodes)
 
-#applying uniformly distributed load
-  load_nodes: list[tuple[int, int]] = []
-  for n in nodes:
-      if n.x[2] == 2:
-          for (e_id, s_id) in n.surfaces:
-              load_nodes.append((e_id, s_id))
-
-  load_surf: dict[tuple[int, int], int] = counting(load_nodes)
-  load_surf_id_list: list[tuple[int, int]] = find_repeating_numbers(load_surf, 4)
+#applying uniformly distributed load:
 
   for (e_id,s_id) in load_surf_id_list:
     pos_el=find_pos(elements,e_id)
@@ -138,6 +134,6 @@ if __name__ == "__main__":
   a= nodes[find_pos(nodes,25)].x[2]
   b = nodes[find_pos(nodes, 25)].x[1]
   if a-altezza_deformata<Toll:
-      print(f'errore spostamento in direzione z uguale a {a-altezza_deformata}')
+      print(f'Analysis successfully completed (errore spostamento in direzione z uguale a {a-altezza_deformata})')
   if b-poisson * deltaH-2<Toll:
-      print(f'errore spostamento in direzione x e y uguale a {b-poisson * deltaH-2}')
+      print(f'Analysis successfully completed (errore spostamento in direzione x e y uguale a {b-poisson * deltaH-2})')

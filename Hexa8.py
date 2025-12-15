@@ -176,13 +176,11 @@ class Hexa8:
           ax = figure.axes[0]
       else:
           ax = figure.add_subplot(111, projection='3d')
+      nod = [nodes[find_pos(nodes,nid)].x for nid in self.connectivity]
 
-      node_by_id = {n.id: n for n in nodes}
-      pts = [node_by_id[nid].x for nid in self.connectivity]
-
-      xs = [p[0] for p in pts]
-      ys = [p[1] for p in pts]
-      zs = [p[2] for p in pts]
+      xs = [p[0] for p in nod]
+      ys = [p[1] for p in nod]
+      zs = [p[2] for p in nod]
       ax.scatter(xs, ys, zs)
 
       edges = [
@@ -192,14 +190,14 @@ class Hexa8:
       ]
 
       for i, j in edges:
-          ax.plot([pts[i][0], pts[j][0]],
-                  [pts[i][1], pts[j][1]],
-                  [pts[i][2], pts[j][2]],
+          ax.plot([nod[i][0], nod[j][0]],
+                  [nod[i][1], nod[j][1]],
+                  [nod[i][2], nod[j][2]],
                   color=color)
 
       if show_node_id:
           for nid in self.connectivity:
-              p = node_by_id[nid].x
+              p = nodes[find_pos(nodes,nid)].x
               ax.text(p[0], p[1], p[2], str(nid), fontsize=8, color=color)
   # ---------------------------------------------------------------------------
   def adding_surface_partialconstraint(self,id_surf:int,fix:np.ndarray,nodes:list[Node]) -> None:

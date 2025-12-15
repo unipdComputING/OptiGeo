@@ -37,6 +37,10 @@ def find_repeating_numbers(counts: dict[tuple[int, int], int],repeating_numbers:
             result.append(i)
     return result
 # -----------------------------------------------------------------------------
+def selecting_surface_from_nodesset (surface_nodes_number:int,nodes_set:list[tuple[int, int]]):
+    surf: dict[tuple[int, int], int] = counting(nodes_set)
+    surf_id_list: list[tuple[int, int]] = find_repeating_numbers(surf, surface_nodes_number)
+    return surf_id_list
 # -----------------------------------------------------------------------------
 # -----------------------------------------------------------------------------
 # -----------------------------------------------------------------------------
