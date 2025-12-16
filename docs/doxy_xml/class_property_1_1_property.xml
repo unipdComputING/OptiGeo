@@ -1,0 +1,99 @@
+<?xml version='1.0' encoding='UTF-8' standalone='no'?>
+<doxygen xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="compound.xsd" version="1.15.0" xml:lang="en-US">
+  <compounddef id="class_property_1_1_property" kind="class" language="Python" prot="public">
+    <compoundname>Property::Property</compoundname>
+    <sectiondef kind="public-attrib">
+      <memberdef kind="variable" id="class_property_1_1_property_1a97ab43f6fd28920a42d987c8fec4afec" prot="public" static="no" mutable="no">
+        <type>float</type>
+        <definition>float area</definition>
+        <argsstring></argsstring>
+        <name>area</name>
+        <qualifiedname>Property.Property.area</qualifiedname>
+        <initializer>=  area</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/dev/github/OptiGeo/src/Property.py" line="7" column="1" bodyfile="C:/dev/github/OptiGeo/src/Property.py" bodystart="7" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="class_property_1_1_property_1a7441ef0865bcb3db9b8064dd7375c1ea" prot="public" static="no" mutable="no">
+        <type>int</type>
+        <definition>int id</definition>
+        <argsstring></argsstring>
+        <name>id</name>
+        <qualifiedname>Property.Property.id</qualifiedname>
+        <initializer>=  id</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/dev/github/OptiGeo/src/Property.py" line="5" column="1" bodyfile="C:/dev/github/OptiGeo/src/Property.py" bodystart="5" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="class_property_1_1_property_1ad0bd87a264e65d1c17ecc07049819f2c" prot="public" static="no" mutable="no">
+        <type>float</type>
+        <definition>float young</definition>
+        <argsstring></argsstring>
+        <name>young</name>
+        <qualifiedname>Property.Property.young</qualifiedname>
+        <initializer>=  young</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/dev/github/OptiGeo/src/Property.py" line="6" column="1" bodyfile="C:/dev/github/OptiGeo/src/Property.py" bodystart="6" bodyend="-1"/>
+      </memberdef>
+    </sectiondef>
+    <sectiondef kind="public-func">
+      <memberdef kind="function" id="class_property_1_1_property_1a9eab42ce072113b56cb1792e739a6b26" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>None</type>
+        <definition> None __init__</definition>
+        <argsstring>(self, int id=0, float young=0, float area=0)</argsstring>
+        <name>__init__</name>
+        <qualifiedname>Property.Property.__init__</qualifiedname>
+        <param>
+          <type>self</type>
+          <defname>self</defname>
+        </param>
+        <param>
+          <type>int</type>
+          <declname>id</declname>
+          <defval>0</defval>
+        </param>
+        <param>
+          <type>float</type>
+          <declname>young</declname>
+          <defval>0</defval>
+        </param>
+        <param>
+          <type>float</type>
+          <declname>area</declname>
+          <defval>0</defval>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/dev/github/OptiGeo/src/Property.py" line="4" column="1" bodyfile="C:/dev/github/OptiGeo/src/Property.py" bodystart="4" bodyend="7"/>
+      </memberdef>
+    </sectiondef>
+    <briefdescription>
+    </briefdescription>
+    <detaileddescription>
+    </detaileddescription>
+    <location file="C:/dev/github/OptiGeo/src/Property.py" line="2" column="1" bodyfile="C:/dev/github/OptiGeo/src/Property.py" bodystart="2" bodyend="12"/>
+    <listofallmembers>
+      <member refid="class_property_1_1_property_1a9eab42ce072113b56cb1792e739a6b26" prot="public" virt="non-virtual"><scope>Property::Property</scope><name>__init__</name></member>
+      <member refid="class_property_1_1_property_1a97ab43f6fd28920a42d987c8fec4afec" prot="public" virt="non-virtual"><scope>Property::Property</scope><name>area</name></member>
+      <member refid="class_property_1_1_property_1a7441ef0865bcb3db9b8064dd7375c1ea" prot="public" virt="non-virtual"><scope>Property::Property</scope><name>id</name></member>
+      <member refid="class_property_1_1_property_1ad0bd87a264e65d1c17ecc07049819f2c" prot="public" virt="non-virtual"><scope>Property::Property</scope><name>young</name></member>
+    </listofallmembers>
+  </compounddef>
+</doxygen>

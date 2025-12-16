@@ -1,0 +1,144 @@
+<?xml version='1.0' encoding='UTF-8' standalone='no'?>
+<doxygen xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="compound.xsd" version="1.15.0" xml:lang="en-US">
+  <compounddef id="class_tet4_1_1_tet4" kind="class" language="Python" prot="public">
+    <compoundname>Tet4::Tet4</compoundname>
+    <sectiondef kind="public-attrib">
+      <memberdef kind="variable" id="class_tet4_1_1_tet4_1a121e7292ab53c4a6ab10e4573112aba9" prot="public" static="no" mutable="no">
+        <type>list[int]</type>
+        <definition>list[int] connectivity</definition>
+        <argsstring></argsstring>
+        <name>connectivity</name>
+        <qualifiedname>Tet4.Tet4.connectivity</qualifiedname>
+        <initializer>=  connectivity</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/dev/github/OptiGeo/src/Tet4.py" line="9" column="1" bodyfile="C:/dev/github/OptiGeo/src/Tet4.py" bodystart="9" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="class_tet4_1_1_tet4_1a7441ef0865bcb3db9b8064dd7375c1ea" prot="public" static="no" mutable="no">
+        <type>int</type>
+        <definition>int id</definition>
+        <argsstring></argsstring>
+        <name>id</name>
+        <qualifiedname>Tet4.Tet4.id</qualifiedname>
+        <initializer>=  id</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/dev/github/OptiGeo/src/Tet4.py" line="8" column="1" bodyfile="C:/dev/github/OptiGeo/src/Tet4.py" bodystart="8" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="class_tet4_1_1_tet4_1aa21a4218f8ce852130e99f39c5809efb" prot="public" static="no" mutable="no">
+        <type>int</type>
+        <definition>int id_prop</definition>
+        <argsstring></argsstring>
+        <name>id_prop</name>
+        <qualifiedname>Tet4.Tet4.id_prop</qualifiedname>
+        <initializer>=  id_prop</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/dev/github/OptiGeo/src/Tet4.py" line="10" column="1" bodyfile="C:/dev/github/OptiGeo/src/Tet4.py" bodystart="10" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="class_tet4_1_1_tet4_1a331a1976e74033a265b0fec3fb71c5f7" prot="public" static="no" mutable="no">
+        <type>int</type>
+        <definition>int TOT_EL_NODES</definition>
+        <argsstring></argsstring>
+        <name>TOT_EL_NODES</name>
+        <qualifiedname>Tet4.Tet4.TOT_EL_NODES</qualifiedname>
+        <initializer>=  4</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/dev/github/OptiGeo/src/Tet4.py" line="11" column="1" bodyfile="C:/dev/github/OptiGeo/src/Tet4.py" bodystart="11" bodyend="-1"/>
+      </memberdef>
+    </sectiondef>
+    <sectiondef kind="public-func">
+      <memberdef kind="function" id="class_tet4_1_1_tet4_1a97c4254f7ccd6b511d99edaef4c65ff7" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>None</type>
+        <definition> None __init__</definition>
+        <argsstring>(self, int id=0, list[int] connectivity=(0, 0, 0, 0), int id_prop=0)</argsstring>
+        <name>__init__</name>
+        <qualifiedname>Tet4.Tet4.__init__</qualifiedname>
+        <param>
+          <type>self</type>
+          <defname>self</defname>
+        </param>
+        <param>
+          <type>int</type>
+          <declname>id</declname>
+          <defval>0</defval>
+        </param>
+        <param>
+          <type>list</type>
+          <declname>connectivity</declname>
+          <array>[int]</array>
+          <defval>(0, 0, 0, 0)</defval>
+        </param>
+        <param>
+          <type>int</type>
+          <declname>id_prop</declname>
+          <defval>0</defval>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/dev/github/OptiGeo/src/Tet4.py" line="7" column="1" bodyfile="C:/dev/github/OptiGeo/src/Tet4.py" bodystart="7" bodyend="11"/>
+      </memberdef>
+      <memberdef kind="function" id="class_tet4_1_1_tet4_1a5247fb4b0e460fb00c900cd758e6558f" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type></type>
+        <definition>stiffness</definition>
+        <argsstring>(self, list[Node] nodes, Property prop)</argsstring>
+        <name>stiffness</name>
+        <qualifiedname>Tet4.Tet4.stiffness</qualifiedname>
+        <param>
+          <type>self</type>
+          <defname>self</defname>
+        </param>
+        <param>
+          <type>list</type>
+          <declname>nodes</declname>
+          <array>[Node]</array>
+        </param>
+        <param>
+          <type><ref refid="class_property_1_1_property" kindref="compound">Property</ref></type>
+          <declname>prop</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/dev/github/OptiGeo/src/Tet4.py" line="14" column="1" bodyfile="C:/dev/github/OptiGeo/src/Tet4.py" bodystart="14" bodyend="15"/>
+      </memberdef>
+    </sectiondef>
+    <briefdescription>
+    </briefdescription>
+    <detaileddescription>
+    </detaileddescription>
+    <location file="C:/dev/github/OptiGeo/src/Tet4.py" line="5" column="1" bodyfile="C:/dev/github/OptiGeo/src/Tet4.py" bodystart="5" bodyend="22"/>
+    <listofallmembers>
+      <member refid="class_tet4_1_1_tet4_1a97c4254f7ccd6b511d99edaef4c65ff7" prot="public" virt="non-virtual"><scope>Tet4::Tet4</scope><name>__init__</name></member>
+      <member refid="class_tet4_1_1_tet4_1a121e7292ab53c4a6ab10e4573112aba9" prot="public" virt="non-virtual"><scope>Tet4::Tet4</scope><name>connectivity</name></member>
+      <member refid="class_tet4_1_1_tet4_1a7441ef0865bcb3db9b8064dd7375c1ea" prot="public" virt="non-virtual"><scope>Tet4::Tet4</scope><name>id</name></member>
+      <member refid="class_tet4_1_1_tet4_1aa21a4218f8ce852130e99f39c5809efb" prot="public" virt="non-virtual"><scope>Tet4::Tet4</scope><name>id_prop</name></member>
+      <member refid="class_tet4_1_1_tet4_1a5247fb4b0e460fb00c900cd758e6558f" prot="public" virt="non-virtual"><scope>Tet4::Tet4</scope><name>stiffness</name></member>
+      <member refid="class_tet4_1_1_tet4_1a331a1976e74033a265b0fec3fb71c5f7" prot="public" virt="non-virtual"><scope>Tet4::Tet4</scope><name>TOT_EL_NODES</name></member>
+    </listofallmembers>
+  </compounddef>
+</doxygen>

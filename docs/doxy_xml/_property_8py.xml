@@ -1,0 +1,26 @@
+<?xml version='1.0' encoding='UTF-8' standalone='no'?>
+<doxygen xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="compound.xsd" version="1.15.0" xml:lang="en-US">
+  <compounddef id="_property_8py" kind="file" language="Python">
+    <compoundname>Property.py</compoundname>
+    <innerclass refid="class_property_1_1_property" prot="public">Property::Property</innerclass>
+    <innernamespace refid="namespace_property">Property</innernamespace>
+    <briefdescription>
+    </briefdescription>
+    <detaileddescription>
+    </detaileddescription>
+    <programlisting>
+<codeline lineno="1" refid="namespace_property" refkind="compound"><highlight class="normal"></highlight></codeline>
+<codeline lineno="2" refid="class_property_1_1_property" refkind="compound"><highlight class="normal"></highlight><highlight class="keyword">class<sp/></highlight><highlight class="normal"><ref refid="class_property_1_1_property" kindref="compound">Property</ref>:</highlight></codeline>
+<codeline lineno="3"><highlight class="normal"><sp/><sp/></highlight><highlight class="comment">#<sp/>---------------------------------------------------------------------------</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="4"><highlight class="normal"><sp/><sp/></highlight><highlight class="keyword">def<sp/></highlight><highlight class="normal"><ref refid="class_property_1_1_property_1a9eab42ce072113b56cb1792e739a6b26" kindref="member">__init__</ref>(self,<sp/>id:<sp/>int<sp/>=<sp/>0,<sp/>young:<sp/>float<sp/>=<sp/>0,<sp/>area:<sp/>float<sp/>=<sp/>0)<sp/>-&gt;<sp/></highlight><highlight class="keywordtype">None</highlight><highlight class="normal">:</highlight></codeline>
+<codeline lineno="5"><highlight class="normal"><sp/><sp/><sp/><sp/>self.<ref refid="class_property_1_1_property_1a7441ef0865bcb3db9b8064dd7375c1ea" kindref="member">id</ref>:<sp/>int<sp/>=<sp/>id</highlight></codeline>
+<codeline lineno="6"><highlight class="normal"><sp/><sp/><sp/><sp/>self.<ref refid="class_property_1_1_property_1ad0bd87a264e65d1c17ecc07049819f2c" kindref="member">young</ref>:<sp/>float<sp/>=<sp/>young</highlight></codeline>
+<codeline lineno="7"><highlight class="normal"><sp/><sp/><sp/><sp/>self.<ref refid="class_property_1_1_property_1a97ab43f6fd28920a42d987c8fec4afec" kindref="member">area</ref>:<sp/>float<sp/>=<sp/>area</highlight></codeline>
+<codeline lineno="8"><highlight class="normal"><sp/><sp/></highlight><highlight class="comment">#<sp/>---------------------------------------------------------------------------</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="9"><highlight class="normal"><sp/><sp/></highlight><highlight class="comment">#<sp/>---------------------------------------------------------------------------</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="10"><highlight class="normal"><sp/><sp/></highlight><highlight class="comment">#<sp/>---------------------------------------------------------------------------</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="11"><highlight class="normal"><sp/><sp/></highlight><highlight class="comment">#<sp/>---------------------------------------------------------------------------</highlight><highlight class="normal"></highlight></codeline>
+    </programlisting>
+    <location file="C:/dev/github/OptiGeo/src/Property.py"/>
+  </compounddef>
+</doxygen>

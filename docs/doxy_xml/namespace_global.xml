@@ -1,0 +1,90 @@
+<?xml version='1.0' encoding='UTF-8' standalone='no'?>
+<doxygen xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="compound.xsd" version="1.15.0" xml:lang="en-US">
+  <compounddef id="namespace_global" kind="namespace" language="Python">
+    <compoundname>Global</compoundname>
+    <sectiondef kind="var">
+      <memberdef kind="variable" id="namespace_global_1aa3fea4183883efcf428fffb0130d347d" prot="public" static="no" mutable="no">
+        <type>int</type>
+        <definition>int DIM_DOF</definition>
+        <argsstring></argsstring>
+        <name>DIM_DOF</name>
+        <qualifiedname>Global.DIM_DOF</qualifiedname>
+        <initializer>=  3</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/dev/github/OptiGeo/src/Global.py" line="2" column="1" bodyfile="C:/dev/github/OptiGeo/src/Global.py" bodystart="2" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="namespace_global_1a28cecbe552e09d9cc2c855cb3584cc1e" prot="public" static="no" mutable="no">
+        <type>int</type>
+        <definition>int DIM_SPACE</definition>
+        <argsstring></argsstring>
+        <name>DIM_SPACE</name>
+        <qualifiedname>Global.DIM_SPACE</qualifiedname>
+        <initializer>=  3</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/dev/github/OptiGeo/src/Global.py" line="1" column="1" bodyfile="C:/dev/github/OptiGeo/src/Global.py" bodystart="1" bodyend="-1"/>
+      </memberdef>
+    </sectiondef>
+    <sectiondef kind="func">
+      <memberdef kind="function" id="namespace_global_1a48722663f78961c62ebefcbff2566f55" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>int</type>
+        <definition> int find_pos</definition>
+        <argsstring>(data, id)</argsstring>
+        <name>find_pos</name>
+        <qualifiedname>Global.find_pos</qualifiedname>
+        <param>
+          <type>data</type>
+          <defname>data</defname>
+        </param>
+        <param>
+          <type>id</type>
+          <defname>id</defname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/dev/github/OptiGeo/src/Global.py" line="5" column="1" bodyfile="C:/dev/github/OptiGeo/src/Global.py" bodystart="5" bodyend="17"/>
+      </memberdef>
+      <memberdef kind="function" id="namespace_global_1ac4ed91d8f82ec9e0744cfc808883599f" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type></type>
+        <definition>get_el_nodes</definition>
+        <argsstring>(list[int] connectivity, nodes)</argsstring>
+        <name>get_el_nodes</name>
+        <qualifiedname>Global.get_el_nodes</qualifiedname>
+        <param>
+          <type>list</type>
+          <declname>connectivity</declname>
+          <array>[int]</array>
+        </param>
+        <param>
+          <type>nodes</type>
+          <defname>nodes</defname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/dev/github/OptiGeo/src/Global.py" line="18" column="1" bodyfile="C:/dev/github/OptiGeo/src/Global.py" bodystart="18" bodyend="31"/>
+      </memberdef>
+    </sectiondef>
+    <briefdescription>
+    </briefdescription>
+    <detaileddescription>
+    </detaileddescription>
+    <location file="C:/dev/github/OptiGeo/src/Global.py" line="1" column="1"/>
+  </compounddef>
+</doxygen>

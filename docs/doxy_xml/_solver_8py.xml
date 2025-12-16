@@ -1,0 +1,120 @@
+<?xml version='1.0' encoding='UTF-8' standalone='no'?>
+<doxygen xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="compound.xsd" version="1.15.0" xml:lang="en-US">
+  <compounddef id="_solver_8py" kind="file" language="Python">
+    <compoundname>Solver.py</compoundname>
+    <innernamespace refid="namespace_solver">Solver</innernamespace>
+    <briefdescription>
+    </briefdescription>
+    <detaileddescription>
+    </detaileddescription>
+    <programlisting>
+<codeline lineno="1" refid="namespace_solver" refkind="compound"><highlight class="keyword">import</highlight><highlight class="normal"><sp/>numpy<sp/></highlight><highlight class="keyword">as</highlight><highlight class="normal"><sp/>np</highlight></codeline>
+<codeline lineno="2"><highlight class="normal"></highlight><highlight class="keyword">from</highlight><highlight class="normal"><sp/><sp/>Global<sp/></highlight><highlight class="keyword">import</highlight><highlight class="normal"><sp/>*</highlight></codeline>
+<codeline lineno="3"><highlight class="normal"></highlight><highlight class="keyword">from</highlight><highlight class="normal"><sp/>Node<sp/></highlight><highlight class="keyword">import</highlight><highlight class="normal"><sp/>Node</highlight></codeline>
+<codeline lineno="4"><highlight class="normal"></highlight><highlight class="keyword">from</highlight><highlight class="normal"><sp/>Element<sp/></highlight><highlight class="keyword">import</highlight><highlight class="normal"><sp/>Element</highlight></codeline>
+<codeline lineno="5"><highlight class="normal"></highlight><highlight class="keyword">from</highlight><highlight class="normal"><sp/>Property<sp/></highlight><highlight class="keyword">import</highlight><highlight class="normal"><sp/>Property</highlight></codeline>
+<codeline lineno="6"><highlight class="normal"></highlight></codeline>
+<codeline lineno="7"><highlight class="normal"></highlight><highlight class="comment">#<sp/>-----------------------------------------------------------------------------</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="8"><highlight class="normal"></highlight><highlight class="keyword">def<sp/></highlight><highlight class="normal"><ref refid="namespace_solver_1a75c15cc81cd5b486331833b0604173bc" kindref="member">Liner_Solver</ref>(nodes:<sp/>list[Node]<sp/>=<sp/></highlight><highlight class="keywordtype">None</highlight><highlight class="normal">,<sp/>elements:<sp/>list[Element]<sp/>=<sp/></highlight><highlight class="keywordtype">None</highlight><highlight class="normal">,<sp/>props:<sp/>list[Property]<sp/>=<sp/></highlight><highlight class="keywordtype">None</highlight><highlight class="normal">)<sp/>-&gt;<sp/></highlight><highlight class="keywordtype">None</highlight><highlight class="normal">:</highlight></codeline>
+<codeline lineno="9"><highlight class="normal"></highlight></codeline>
+<codeline lineno="10"><highlight class="normal"><sp/><sp/></highlight><highlight class="keywordflow">if</highlight><highlight class="normal"><sp/>nodes<sp/></highlight><highlight class="keywordflow">is</highlight><highlight class="normal"><sp/></highlight><highlight class="keywordtype">None</highlight><highlight class="normal"><sp/></highlight><highlight class="keywordflow">or</highlight><highlight class="normal"><sp/>elements<sp/></highlight><highlight class="keywordflow">is</highlight><highlight class="normal"><sp/></highlight><highlight class="keywordtype">None</highlight><highlight class="normal"><sp/></highlight><highlight class="keywordflow">or</highlight><highlight class="normal"><sp/>props<sp/></highlight><highlight class="keywordflow">is</highlight><highlight class="normal"><sp/></highlight><highlight class="keywordtype">None</highlight><highlight class="normal">:</highlight></codeline>
+<codeline lineno="11"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">return</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="12"><highlight class="normal"></highlight></codeline>
+<codeline lineno="13"><highlight class="normal"><sp/><sp/></highlight><highlight class="comment">#<sp/>1.<sp/>stiffness<sp/>assembly</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="14"><highlight class="normal"><sp/><sp/>K:<sp/>np.ndarray<sp/>=<sp/><ref refid="namespace_solver_1a30110cadbb97d3f3aaaf4ea6be1862c5" kindref="member">assembly</ref>(nodes,<sp/>elements,<sp/>props)</highlight></codeline>
+<codeline lineno="15"><highlight class="normal"><sp/><sp/></highlight><highlight class="comment">#<sp/>2.<sp/>apply<sp/>bcs</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="16"><highlight class="normal"><sp/><sp/>(a,<sp/>fix)<sp/>=<sp/><ref refid="namespace_solver_1a271ebc0021cca64252246c5c26e9731c" kindref="member">apply_bcs</ref>(nodes)</highlight></codeline>
+<codeline lineno="17"><highlight class="normal"><sp/><sp/></highlight><highlight class="comment">#<sp/>3.<sp/>loads<sp/>assembly</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="18"><highlight class="normal"><sp/><sp/>f<sp/>=<sp/><ref refid="namespace_solver_1a97f51fb9d16798abaaf313e220f18d87" kindref="member">loads_assembly</ref>(nodes,<sp/>K,<sp/>a)</highlight></codeline>
+<codeline lineno="19"><highlight class="normal"><sp/><sp/></highlight><highlight class="comment">#<sp/>4.<sp/>solver</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="20"><highlight class="normal"><sp/><sp/><ref refid="namespace_solver_1a319b6449547410562e10096e4b0e3623" kindref="member">solver</ref>(nodes,<sp/>K,<sp/>a,<sp/>f,<sp/>fix)</highlight></codeline>
+<codeline lineno="21"><highlight class="normal"><sp/><sp/></highlight><highlight class="comment">#<sp/>5.<sp/>outputs</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="22"><highlight class="normal"><sp/><sp/></highlight><highlight class="keywordflow">return</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="23"><highlight class="normal"></highlight><highlight class="comment">#<sp/>-----------------------------------------------------------------------------</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="24"><highlight class="normal"></highlight><highlight class="keyword">def<sp/></highlight><highlight class="normal"><ref refid="namespace_solver_1a30110cadbb97d3f3aaaf4ea6be1862c5" kindref="member">assembly</ref>(nodes:<sp/>list[Node],<sp/>elements:<sp/>list[Element],<sp/>props:<sp/>list[Property])<sp/>-&gt;<sp/>np.ndarray:</highlight></codeline>
+<codeline lineno="25"><highlight class="normal"><sp/><sp/>DIM_PROBLEM:<sp/>int<sp/>=<sp/>len(nodes)<sp/>*<sp/>DIM_DOF</highlight></codeline>
+<codeline lineno="26"><highlight class="normal"><sp/><sp/>K:<sp/>np.ndarray<sp/>=<sp/>np.zeros((DIM_PROBLEM,<sp/>DIM_PROBLEM))</highlight></codeline>
+<codeline lineno="27"><highlight class="normal"><sp/><sp/></highlight><highlight class="keywordflow">for</highlight><highlight class="normal"><sp/>element<sp/></highlight><highlight class="keywordflow">in</highlight><highlight class="normal"><sp/>elements:</highlight></codeline>
+<codeline lineno="28"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="comment">#<sp/>id_n1:<sp/>int<sp/>=<sp/>element.connectivity[0]</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="29"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="comment">#<sp/>id_n2:<sp/>int<sp/>=<sp/>element.connectivity[1]</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="30"><highlight class="normal"><sp/><sp/><sp/><sp/>TOT_EL_NODES:<sp/>int<sp/>=<sp/>element.TOT_EL_NODES</highlight></codeline>
+<codeline lineno="31"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="comment">#<sp/>n1:<sp/>Node<sp/>=<sp/>nodes[element.connectivity[0]]</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="32"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="comment">#<sp/>n2:<sp/>Node<sp/>=<sp/>nodes[element.connectivity[1]]</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="33"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="comment">#<sp/>prop:<sp/>Property<sp/>=<sp/>props[element.id_prop]</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="34"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="comment">#<sp/>elK:<sp/>np<sp/>=<sp/>element.stiffness(n1,<sp/>n2,<sp/>prop)</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="35"><highlight class="normal"></highlight></codeline>
+<codeline lineno="36"><highlight class="normal"><sp/><sp/><sp/><sp/>nodes_position:<sp/>list[int]<sp/>=<sp/>element.get_nodes_position(nodes)</highlight></codeline>
+<codeline lineno="37"><highlight class="normal"><sp/><sp/><sp/><sp/>pos_prop<sp/>=<sp/><ref refid="namespace_global_1a48722663f78961c62ebefcbff2566f55" kindref="member">find_pos</ref>(props,<sp/>element.id_prop)</highlight></codeline>
+<codeline lineno="38"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">if</highlight><highlight class="normal"><sp/>pos_prop<sp/>&lt;<sp/>0:</highlight></codeline>
+<codeline lineno="39"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/>print(f</highlight><highlight class="stringliteral">&quot;ERROR<sp/>in<sp/>EL:<sp/>{element.id}:<sp/>properties<sp/>{element.id_prop}<sp/>not<sp/>defined&quot;</highlight><highlight class="normal">)</highlight></codeline>
+<codeline lineno="40"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/>quit()</highlight></codeline>
+<codeline lineno="41"><highlight class="normal"><sp/><sp/><sp/><sp/>el_nodes:<sp/>list[Node]<sp/>=<sp/><ref refid="namespace_global_1ac4ed91d8f82ec9e0744cfc808883599f" kindref="member">get_el_nodes</ref>(element.connectivity,<sp/>nodes)</highlight></codeline>
+<codeline lineno="42"><highlight class="normal"><sp/><sp/><sp/><sp/>elK:<sp/>np.ndarray<sp/>=<sp/>element.stiffness(el_nodes,</highlight></codeline>
+<codeline lineno="43"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>props[pos_prop])</highlight></codeline>
+<codeline lineno="44"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">for</highlight><highlight class="normal"><sp/>node_row<sp/></highlight><highlight class="keywordflow">in</highlight><highlight class="normal"><sp/>range(TOT_EL_NODES):</highlight></codeline>
+<codeline lineno="45"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/>pos_row:<sp/>int<sp/>=<sp/>nodes_position[node_row]</highlight></codeline>
+<codeline lineno="46"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">for</highlight><highlight class="normal"><sp/>node_col<sp/></highlight><highlight class="keywordflow">in</highlight><highlight class="normal"><sp/>range(TOT_EL_NODES):</highlight></codeline>
+<codeline lineno="47"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>pos_col:<sp/>int<sp/>=<sp/>nodes_position[node_col]</highlight></codeline>
+<codeline lineno="48"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">for</highlight><highlight class="normal"><sp/>i<sp/></highlight><highlight class="keywordflow">in</highlight><highlight class="normal"><sp/>range(DIM_DOF):</highlight></codeline>
+<codeline lineno="49"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>row:<sp/>int<sp/>=<sp/>DIM_DOF<sp/>*<sp/>pos_row<sp/>+<sp/>i</highlight></codeline>
+<codeline lineno="50"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>el_row:<sp/>int<sp/>=<sp/>DIM_DOF<sp/>*<sp/>node_row<sp/>+<sp/>i</highlight></codeline>
+<codeline lineno="51"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">for</highlight><highlight class="normal"><sp/>j<sp/></highlight><highlight class="keywordflow">in</highlight><highlight class="normal"><sp/>range(DIM_DOF):</highlight></codeline>
+<codeline lineno="52"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>col:<sp/>int<sp/>=<sp/>DIM_DOF<sp/>*<sp/>pos_col<sp/>+<sp/>j</highlight></codeline>
+<codeline lineno="53"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>el_col:<sp/>int<sp/>=<sp/>DIM_DOF<sp/>*<sp/>node_col<sp/>+<sp/>j</highlight></codeline>
+<codeline lineno="54"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>K[row,<sp/>col]<sp/>+=<sp/>elK[el_row,<sp/>el_col]</highlight></codeline>
+<codeline lineno="55"><highlight class="normal"><sp/><sp/></highlight><highlight class="keywordflow">return</highlight><highlight class="normal"><sp/>K</highlight></codeline>
+<codeline lineno="56"><highlight class="normal"></highlight><highlight class="comment">#<sp/>-----------------------------------------------------------------------------</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="57"><highlight class="normal"></highlight><highlight class="keyword">def<sp/></highlight><highlight class="normal"><ref refid="namespace_solver_1a271ebc0021cca64252246c5c26e9731c" kindref="member">apply_bcs</ref>(nodes:<sp/>list[Node])<sp/>-&gt;<sp/>tuple[np.ndarray,<sp/>np.ndarray]:</highlight></codeline>
+<codeline lineno="58"><highlight class="normal"><sp/><sp/>DIM_PROBLEM:<sp/>int<sp/>=<sp/>len(nodes)<sp/>*<sp/>DIM_DOF</highlight></codeline>
+<codeline lineno="59"><highlight class="normal"><sp/><sp/>fix:<sp/>np.ndarray<sp/>=<sp/>np.zeros(DIM_PROBLEM)</highlight></codeline>
+<codeline lineno="60"><highlight class="normal"><sp/><sp/>a:<sp/>np.ndarray<sp/>=<sp/>np.zeros(DIM_PROBLEM)</highlight></codeline>
+<codeline lineno="61"><highlight class="normal"><sp/><sp/>cont:<sp/>int<sp/>=<sp/>0</highlight></codeline>
+<codeline lineno="62"><highlight class="normal"><sp/><sp/></highlight><highlight class="keywordflow">for</highlight><highlight class="normal"><sp/>node<sp/></highlight><highlight class="keywordflow">in</highlight><highlight class="normal"><sp/>nodes:</highlight></codeline>
+<codeline lineno="63"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">for</highlight><highlight class="normal"><sp/>i<sp/></highlight><highlight class="keywordflow">in</highlight><highlight class="normal"><sp/>range(DIM_DOF):</highlight></codeline>
+<codeline lineno="64"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/>fix[cont]<sp/>=<sp/>node.fix[i]</highlight></codeline>
+<codeline lineno="65"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/>a[cont]<sp/>=<sp/>node.dof[i]</highlight></codeline>
+<codeline lineno="66"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/>cont<sp/>+=<sp/>1</highlight></codeline>
+<codeline lineno="67"><highlight class="normal"><sp/><sp/></highlight><highlight class="keywordflow">return</highlight><highlight class="normal"><sp/>(a,<sp/>fix)</highlight></codeline>
+<codeline lineno="68"><highlight class="normal"></highlight><highlight class="comment">#<sp/>-----------------------------------------------------------------------------</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="69"><highlight class="normal"></highlight><highlight class="keyword">def<sp/></highlight><highlight class="normal"><ref refid="namespace_solver_1a97f51fb9d16798abaaf313e220f18d87" kindref="member">loads_assembly</ref>(nodes:<sp/>list[Node],<sp/>K:<sp/>np.ndarray,<sp/>a:<sp/>np.ndarray)<sp/>-&gt;<sp/>np.ndarray:</highlight></codeline>
+<codeline lineno="70"><highlight class="normal"><sp/><sp/>DIM_PROBLEM:<sp/>int<sp/>=<sp/>len(nodes)<sp/>*<sp/>DIM_DOF</highlight></codeline>
+<codeline lineno="71"><highlight class="normal"><sp/><sp/>f:<sp/>np.ndarray<sp/>=<sp/>np.zeros(DIM_PROBLEM)</highlight></codeline>
+<codeline lineno="72"><highlight class="normal"><sp/><sp/>cont:<sp/>int<sp/>=<sp/>0</highlight></codeline>
+<codeline lineno="73"><highlight class="normal"><sp/><sp/></highlight><highlight class="keywordflow">for</highlight><highlight class="normal"><sp/>node<sp/></highlight><highlight class="keywordflow">in</highlight><highlight class="normal"><sp/>nodes:</highlight></codeline>
+<codeline lineno="74"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">for</highlight><highlight class="normal"><sp/>i<sp/></highlight><highlight class="keywordflow">in</highlight><highlight class="normal"><sp/>range(DIM_DOF):</highlight></codeline>
+<codeline lineno="75"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/>f[cont]<sp/>=<sp/>node.load[i]</highlight></codeline>
+<codeline lineno="76"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/>cont<sp/>+=<sp/>1</highlight></codeline>
+<codeline lineno="77"><highlight class="normal"><sp/><sp/></highlight><highlight class="keywordflow">return</highlight><highlight class="normal"><sp/>f<sp/>-<sp/>K<sp/>@<sp/>a</highlight></codeline>
+<codeline lineno="78"><highlight class="normal"></highlight><highlight class="comment">#<sp/>-----------------------------------------------------------------------------</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="79"><highlight class="normal"></highlight><highlight class="keyword">def<sp/></highlight><highlight class="normal"><ref refid="namespace_solver_1a319b6449547410562e10096e4b0e3623" kindref="member">solver</ref>(nodes:<sp/>list[Node],<sp/>K:<sp/>np.ndarray,<sp/>a:<sp/>np.ndarray,<sp/>f:<sp/>np.ndarray,<sp/>fix:<sp/>np.ndarray)<sp/>-&gt;<sp/></highlight><highlight class="keywordtype">None</highlight><highlight class="normal">:</highlight></codeline>
+<codeline lineno="80"><highlight class="normal"><sp/><sp/>penalty:<sp/>float<sp/>=<sp/>np.max(K)<sp/>*<sp/>100_000.0</highlight></codeline>
+<codeline lineno="81"><highlight class="normal"><sp/><sp/>DIM_PROBLEM:<sp/>int<sp/>=<sp/>len(nodes)<sp/>*<sp/>DIM_DOF</highlight></codeline>
+<codeline lineno="82"><highlight class="normal"><sp/><sp/></highlight><highlight class="keywordflow">for</highlight><highlight class="normal"><sp/>i<sp/></highlight><highlight class="keywordflow">in</highlight><highlight class="normal"><sp/>range(DIM_PROBLEM):</highlight></codeline>
+<codeline lineno="83"><highlight class="normal"><sp/><sp/><sp/><sp/>K[i,<sp/>i]<sp/>+=<sp/>fix[i]<sp/>*<sp/>penalty</highlight></codeline>
+<codeline lineno="84"><highlight class="normal"></highlight></codeline>
+<codeline lineno="85"><highlight class="normal"><sp/><sp/>u:<sp/>np.ndarray<sp/>=<sp/>np.linalg.inv(K)<sp/>@<sp/>f</highlight></codeline>
+<codeline lineno="86"><highlight class="normal"><sp/><sp/>u[:]<sp/>*=<sp/>fix[:]<sp/>-<sp/>1</highlight></codeline>
+<codeline lineno="87"><highlight class="normal"><sp/><sp/>a<sp/>+=<sp/>u</highlight></codeline>
+<codeline lineno="88"><highlight class="normal"><sp/><sp/>cont:<sp/>int<sp/>=<sp/>0</highlight></codeline>
+<codeline lineno="89"><highlight class="normal"><sp/><sp/></highlight><highlight class="keywordflow">for</highlight><highlight class="normal"><sp/>node<sp/></highlight><highlight class="keywordflow">in</highlight><highlight class="normal"><sp/>nodes:</highlight></codeline>
+<codeline lineno="90"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">for</highlight><highlight class="normal"><sp/>i<sp/></highlight><highlight class="keywordflow">in</highlight><highlight class="normal"><sp/>range(DIM_DOF):</highlight></codeline>
+<codeline lineno="91"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/>node.dof[i]<sp/>=<sp/>a[cont]</highlight></codeline>
+<codeline lineno="92"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/>cont<sp/>+=<sp/>1</highlight></codeline>
+<codeline lineno="93"><highlight class="normal"></highlight><highlight class="comment">#<sp/>-----------------------------------------------------------------------------</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="94"><highlight class="normal"></highlight><highlight class="comment">#<sp/>-----------------------------------------------------------------------------</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="95"><highlight class="normal"></highlight><highlight class="comment">#<sp/>-----------------------------------------------------------------------------</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="96"><highlight class="normal"></highlight><highlight class="comment">#<sp/>-----------------------------------------------------------------------------</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="97"><highlight class="normal"></highlight><highlight class="comment">#<sp/>-----------------------------------------------------------------------------</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="98"><highlight class="normal"></highlight><highlight class="comment">#<sp/>-----------------------------------------------------------------------------</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="99"><highlight class="normal"></highlight><highlight class="comment">#<sp/>-----------------------------------------------------------------------------</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="100"><highlight class="normal"></highlight><highlight class="comment">#<sp/>-----------------------------------------------------------------------------</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="101"><highlight class="normal"></highlight><highlight class="comment">#<sp/>-----------------------------------------------------------------------------</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="102"><highlight class="normal"></highlight><highlight class="comment">#<sp/>-----------------------------------------------------------------------------</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="103"><highlight class="normal"></highlight><highlight class="comment">#<sp/>-----------------------------------------------------------------------------</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="104"><highlight class="normal"></highlight><highlight class="comment">#<sp/>-----------------------------------------------------------------------------</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="105"><highlight class="normal"></highlight><highlight class="comment">#<sp/>-----------------------------------------------------------------------------</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="106"><highlight class="normal"></highlight><highlight class="comment">#<sp/>-----------------------------------------------------------------------------</highlight><highlight class="normal"></highlight></codeline>
+    </programlisting>
+    <location file="C:/dev/github/OptiGeo/src/Solver.py"/>
+  </compounddef>
+</doxygen>

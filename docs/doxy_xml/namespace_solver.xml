@@ -1,0 +1,155 @@
+<?xml version='1.0' encoding='UTF-8' standalone='no'?>
+<doxygen xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="compound.xsd" version="1.15.0" xml:lang="en-US">
+  <compounddef id="namespace_solver" kind="namespace" language="Python">
+    <compoundname>Solver</compoundname>
+    <sectiondef kind="func">
+      <memberdef kind="function" id="namespace_solver_1a271ebc0021cca64252246c5c26e9731c" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>tuple[np.ndarray, np.ndarray]</type>
+        <definition> tuple[np.ndarray, np.ndarray] apply_bcs</definition>
+        <argsstring>(list[Node] nodes)</argsstring>
+        <name>apply_bcs</name>
+        <qualifiedname>Solver.apply_bcs</qualifiedname>
+        <param>
+          <type>list</type>
+          <declname>nodes</declname>
+          <array>[Node]</array>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/dev/github/OptiGeo/src/Solver.py" line="57" column="1" bodyfile="C:/dev/github/OptiGeo/src/Solver.py" bodystart="57" bodyend="68"/>
+      </memberdef>
+      <memberdef kind="function" id="namespace_solver_1a30110cadbb97d3f3aaaf4ea6be1862c5" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>np.ndarray</type>
+        <definition> np.ndarray assembly</definition>
+        <argsstring>(list[Node] nodes, list[Element] elements, list[Property] props)</argsstring>
+        <name>assembly</name>
+        <qualifiedname>Solver.assembly</qualifiedname>
+        <param>
+          <type>list</type>
+          <declname>nodes</declname>
+          <array>[Node]</array>
+        </param>
+        <param>
+          <type>list</type>
+          <declname>elements</declname>
+          <array>[Element]</array>
+        </param>
+        <param>
+          <type>list</type>
+          <declname>props</declname>
+          <array>[Property]</array>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/dev/github/OptiGeo/src/Solver.py" line="24" column="1" bodyfile="C:/dev/github/OptiGeo/src/Solver.py" bodystart="24" bodyend="56"/>
+      </memberdef>
+      <memberdef kind="function" id="namespace_solver_1a75c15cc81cd5b486331833b0604173bc" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>None</type>
+        <definition> None Liner_Solver</definition>
+        <argsstring>(list[Node] nodes=None, list[Element] elements=None, list[Property] props=None)</argsstring>
+        <name>Liner_Solver</name>
+        <qualifiedname>Solver.Liner_Solver</qualifiedname>
+        <param>
+          <type>list</type>
+          <declname>nodes</declname>
+          <array>[Node]</array>
+          <defval>None</defval>
+        </param>
+        <param>
+          <type>list</type>
+          <declname>elements</declname>
+          <array>[Element]</array>
+          <defval>None</defval>
+        </param>
+        <param>
+          <type>list</type>
+          <declname>props</declname>
+          <array>[Property]</array>
+          <defval>None</defval>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/dev/github/OptiGeo/src/Solver.py" line="8" column="1" bodyfile="C:/dev/github/OptiGeo/src/Solver.py" bodystart="8" bodyend="23"/>
+      </memberdef>
+      <memberdef kind="function" id="namespace_solver_1a97f51fb9d16798abaaf313e220f18d87" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>np.ndarray</type>
+        <definition> np.ndarray loads_assembly</definition>
+        <argsstring>(list[Node] nodes, np.ndarray K, np.ndarray a)</argsstring>
+        <name>loads_assembly</name>
+        <qualifiedname>Solver.loads_assembly</qualifiedname>
+        <param>
+          <type>list</type>
+          <declname>nodes</declname>
+          <array>[Node]</array>
+        </param>
+        <param>
+          <type>np.ndarray</type>
+          <declname>K</declname>
+        </param>
+        <param>
+          <type>np.ndarray</type>
+          <declname>a</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/dev/github/OptiGeo/src/Solver.py" line="69" column="1" bodyfile="C:/dev/github/OptiGeo/src/Solver.py" bodystart="69" bodyend="78"/>
+      </memberdef>
+      <memberdef kind="function" id="namespace_solver_1a319b6449547410562e10096e4b0e3623" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>None</type>
+        <definition> None solver</definition>
+        <argsstring>(list[Node] nodes, np.ndarray K, np.ndarray a, np.ndarray f, np.ndarray fix)</argsstring>
+        <name>solver</name>
+        <qualifiedname>Solver.solver</qualifiedname>
+        <param>
+          <type>list</type>
+          <declname>nodes</declname>
+          <array>[Node]</array>
+        </param>
+        <param>
+          <type>np.ndarray</type>
+          <declname>K</declname>
+        </param>
+        <param>
+          <type>np.ndarray</type>
+          <declname>a</declname>
+        </param>
+        <param>
+          <type>np.ndarray</type>
+          <declname>f</declname>
+        </param>
+        <param>
+          <type>np.ndarray</type>
+          <declname>fix</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/dev/github/OptiGeo/src/Solver.py" line="79" column="1" bodyfile="C:/dev/github/OptiGeo/src/Solver.py" bodystart="79" bodyend="107"/>
+      </memberdef>
+    </sectiondef>
+    <briefdescription>
+    </briefdescription>
+    <detaileddescription>
+    </detaileddescription>
+    <location file="C:/dev/github/OptiGeo/src/Solver.py" line="1" column="1"/>
+  </compounddef>
+</doxygen>

@@ -1,0 +1,82 @@
+<?xml version='1.0' encoding='UTF-8' standalone='no'?>
+<doxygen xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="compound.xsd" version="1.15.0" xml:lang="en-US">
+  <compounddef id="namespacemain" kind="namespace" language="Python">
+    <compoundname>main</compoundname>
+    <sectiondef kind="var">
+      <memberdef kind="variable" id="namespacemain_1a7c47321fae78722b8f29ac89125e15a8" prot="public" static="no" mutable="no">
+        <type>list</type>
+        <definition>list elements</definition>
+        <argsstring></argsstring>
+        <name>elements</name>
+        <qualifiedname>main.elements</qualifiedname>
+        <initializer>=  [
+    <ref refid="namespace_element" kindref="compound">Element</ref>(0, [100, 66], 0),
+    <ref refid="namespace_element" kindref="compound">Element</ref>(1, [ 66, 23], 0),
+  ]</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/dev/github/OptiGeo/src/main.py" line="25" column="1" bodyfile="C:/dev/github/OptiGeo/src/main.py" bodystart="25" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="namespacemain_1af4428f414301129ced83dba0270ee67f" prot="public" static="no" mutable="no">
+        <type></type>
+        <definition>fix</definition>
+        <argsstring></argsstring>
+        <name>fix</name>
+        <qualifiedname>main.fix</qualifiedname>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/dev/github/OptiGeo/src/main.py" line="16" column="1" bodyfile="C:/dev/github/OptiGeo/src/main.py" bodystart="16" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="namespacemain_1a7d3a7a8f8b193c3a91a80dac71dcb75c" prot="public" static="no" mutable="no">
+        <type>list</type>
+        <definition>list nodes</definition>
+        <argsstring></argsstring>
+        <name>nodes</name>
+        <qualifiedname>main.nodes</qualifiedname>
+        <initializer>=  [
+    <ref refid="class_node_1_1_node" kindref="compound">Node</ref>(id = 100, x = np.array([0.,       0., 0.]), id_pos = 0),
+    <ref refid="class_node_1_1_node" kindref="compound">Node</ref>(id =  66, x = np.array([1000., 1000., 0.]), id_pos = 1),
+    <ref refid="class_node_1_1_node" kindref="compound">Node</ref>(id =  23, x = np.array([2000.,    0., 0.]), id_pos = 2),
+  ]</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/dev/github/OptiGeo/src/main.py" line="8" column="1" bodyfile="C:/dev/github/OptiGeo/src/main.py" bodystart="8" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="namespacemain_1a35fca521f56cc042dc7ca4be189b38ef" prot="public" static="no" mutable="no">
+        <type>list</type>
+        <definition>list props</definition>
+        <argsstring></argsstring>
+        <name>props</name>
+        <qualifiedname>main.props</qualifiedname>
+        <initializer>=  [
+    <ref refid="class_property_1_1_property" kindref="compound">Property</ref>(0, 210_000.0, 100.),
+    <ref refid="class_property_1_1_property" kindref="compound">Property</ref>(1, 30000., 500.0)
+  ]</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/dev/github/OptiGeo/src/main.py" line="20" column="1" bodyfile="C:/dev/github/OptiGeo/src/main.py" bodystart="20" bodyend="-1"/>
+      </memberdef>
+    </sectiondef>
+    <briefdescription>
+    </briefdescription>
+    <detaileddescription>
+    </detaileddescription>
+    <location file="C:/dev/github/OptiGeo/src/main.py" line="1" column="1"/>
+  </compounddef>
+</doxygen>

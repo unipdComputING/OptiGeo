@@ -1,0 +1,21 @@
+<?xml version='1.0' encoding='UTF-8' standalone='no'?>
+<doxygen xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="compound.xsd" version="1.15.0" xml:lang="en-US">
+  <compounddef id="dir_68267d1309a1af8e8297ef4c3efbcdba" kind="dir">
+    <compoundname>C:/dev/github/OptiGeo/src</compoundname>
+    <innerfile refid="_element_8py">Element.py</innerfile>
+    <innerfile refid="_global_8py">Global.py</innerfile>
+    <innerfile refid="_hexa8_8py">Hexa8.py</innerfile>
+    <innerfile refid="main_8py">main.py</innerfile>
+    <innerfile refid="_node_8py">Node.py</innerfile>
+    <innerfile refid="_property_8py">Property.py</innerfile>
+    <innerfile refid="_solver_8py">Solver.py</innerfile>
+    <innerfile refid="_tet4_8py">Tet4.py</innerfile>
+    <innerfile refid="_truss_8py">Truss.py</innerfile>
+    <innerfile refid="_vtk_8py">Vtk.py</innerfile>
+    <briefdescription>
+    </briefdescription>
+    <detaileddescription>
+    </detaileddescription>
+    <location file="C:/dev/github/OptiGeo/src/"/>
+  </compounddef>
+</doxygen>

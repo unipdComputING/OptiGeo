@@ -1,0 +1,179 @@
+<?xml version='1.0' encoding='UTF-8' standalone='no'?>
+<doxygen xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="compound.xsd" version="1.15.0" xml:lang="en-US">
+  <compounddef id="class_hexa8_1_1_hexa8" kind="class" language="Python" prot="public">
+    <compoundname>Hexa8::Hexa8</compoundname>
+    <sectiondef kind="public-attrib">
+      <memberdef kind="variable" id="class_hexa8_1_1_hexa8_1a121e7292ab53c4a6ab10e4573112aba9" prot="public" static="no" mutable="no">
+        <type>list[int]</type>
+        <definition>list[int] connectivity</definition>
+        <argsstring></argsstring>
+        <name>connectivity</name>
+        <qualifiedname>Hexa8.Hexa8.connectivity</qualifiedname>
+        <initializer>=  connectivity</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/dev/github/OptiGeo/src/Hexa8.py" line="19" column="1" bodyfile="C:/dev/github/OptiGeo/src/Hexa8.py" bodystart="19" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="class_hexa8_1_1_hexa8_1a7441ef0865bcb3db9b8064dd7375c1ea" prot="public" static="no" mutable="no">
+        <type>int</type>
+        <definition>int id</definition>
+        <argsstring></argsstring>
+        <name>id</name>
+        <qualifiedname>Hexa8.Hexa8.id</qualifiedname>
+        <initializer>=  id</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/dev/github/OptiGeo/src/Hexa8.py" line="18" column="1" bodyfile="C:/dev/github/OptiGeo/src/Hexa8.py" bodystart="18" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="class_hexa8_1_1_hexa8_1aa21a4218f8ce852130e99f39c5809efb" prot="public" static="no" mutable="no">
+        <type>int</type>
+        <definition>int id_prop</definition>
+        <argsstring></argsstring>
+        <name>id_prop</name>
+        <qualifiedname>Hexa8.Hexa8.id_prop</qualifiedname>
+        <initializer>=  id_prop</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/dev/github/OptiGeo/src/Hexa8.py" line="20" column="1" bodyfile="C:/dev/github/OptiGeo/src/Hexa8.py" bodystart="20" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="class_hexa8_1_1_hexa8_1a331a1976e74033a265b0fec3fb71c5f7" prot="public" static="no" mutable="no">
+        <type>int</type>
+        <definition>int TOT_EL_NODES</definition>
+        <argsstring></argsstring>
+        <name>TOT_EL_NODES</name>
+        <qualifiedname>Hexa8.Hexa8.TOT_EL_NODES</qualifiedname>
+        <initializer>=  8</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/dev/github/OptiGeo/src/Hexa8.py" line="21" column="1" bodyfile="C:/dev/github/OptiGeo/src/Hexa8.py" bodystart="21" bodyend="-1"/>
+      </memberdef>
+    </sectiondef>
+    <sectiondef kind="public-func">
+      <memberdef kind="function" id="class_hexa8_1_1_hexa8_1a7834c5cfd6ccb800b59e079a2df24ff9" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>None</type>
+        <definition> None __init__</definition>
+        <argsstring>(self, int id=0, list[int] connectivity=(0, 0, 0, 0, 0, 0, 0, 0), int id_prop=0)</argsstring>
+        <name>__init__</name>
+        <qualifiedname>Hexa8.Hexa8.__init__</qualifiedname>
+        <param>
+          <type>self</type>
+          <defname>self</defname>
+        </param>
+        <param>
+          <type>int</type>
+          <declname>id</declname>
+          <defval>0</defval>
+        </param>
+        <param>
+          <type>list</type>
+          <declname>connectivity</declname>
+          <array>[int]</array>
+          <defval>(0, 0, 0, 0, 0, 0, 0, 0)</defval>
+        </param>
+        <param>
+          <type>int</type>
+          <declname>id_prop</declname>
+          <defval>0</defval>
+        </param>
+        <briefdescription>
+<para>The <ref refid="class_hexa8_1_1_hexa8" kindref="compound">Hexa8</ref> base class initializer. </para>
+        </briefdescription>
+        <detaileddescription>
+<para><parameterlist kind="param"><parameteritem>
+<parameternamelist>
+<parametername>id</parametername>
+</parameternamelist>
+<parameterdescription>
+<para>The id of the element. </para>
+</parameterdescription>
+</parameteritem>
+<parameteritem>
+<parameternamelist>
+<parametername>connectivity</parametername>
+</parameternamelist>
+<parameterdescription>
+<para>The connectivity matrix of the element. </para>
+</parameterdescription>
+</parameteritem>
+<parameteritem>
+<parameternamelist>
+<parametername>id_prop</parametername>
+</parameternamelist>
+<parameterdescription>
+<para>The id_prop of the element. </para>
+</parameterdescription>
+</parameteritem>
+</parameterlist>
+<simplesect kind="return"><para>An instance of the <ref refid="class_hexa8_1_1_hexa8" kindref="compound">Hexa8</ref> class initialized. </para>
+</simplesect>
+</para>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/dev/github/OptiGeo/src/Hexa8.py" line="11" column="1" bodyfile="C:/dev/github/OptiGeo/src/Hexa8.py" bodystart="11" bodyend="21"/>
+      </memberdef>
+      <memberdef kind="function" id="class_hexa8_1_1_hexa8_1a5247fb4b0e460fb00c900cd758e6558f" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type></type>
+        <definition>stiffness</definition>
+        <argsstring>(self, list[Node] nodes, Property prop)</argsstring>
+        <name>stiffness</name>
+        <qualifiedname>Hexa8.Hexa8.stiffness</qualifiedname>
+        <param>
+          <type>self</type>
+          <defname>self</defname>
+        </param>
+        <param>
+          <type>list</type>
+          <declname>nodes</declname>
+          <array>[Node]</array>
+        </param>
+        <param>
+          <type><ref refid="class_property_1_1_property" kindref="compound">Property</ref></type>
+          <declname>prop</declname>
+        </param>
+        <briefdescription>
+<para>Retrieves the element&apos;s stiffness matrix. </para>
+        </briefdescription>
+        <detaileddescription>
+<para><simplesect kind="return"><para>Nothing. </para>
+</simplesect>
+</para>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/dev/github/OptiGeo/src/Hexa8.py" line="24" column="1" bodyfile="C:/dev/github/OptiGeo/src/Hexa8.py" bodystart="24" bodyend="28"/>
+      </memberdef>
+    </sectiondef>
+    <briefdescription>
+<para>The <ref refid="class_hexa8_1_1_hexa8" kindref="compound">Hexa8</ref> class. </para>
+    </briefdescription>
+    <detaileddescription>
+<para>Defines the finite element. </para>
+    </detaileddescription>
+    <location file="C:/dev/github/OptiGeo/src/Hexa8.py" line="6" column="1" bodyfile="C:/dev/github/OptiGeo/src/Hexa8.py" bodystart="6" bodyend="35"/>
+    <listofallmembers>
+      <member refid="class_hexa8_1_1_hexa8_1a7834c5cfd6ccb800b59e079a2df24ff9" prot="public" virt="non-virtual"><scope>Hexa8::Hexa8</scope><name>__init__</name></member>
+      <member refid="class_hexa8_1_1_hexa8_1a121e7292ab53c4a6ab10e4573112aba9" prot="public" virt="non-virtual"><scope>Hexa8::Hexa8</scope><name>connectivity</name></member>
+      <member refid="class_hexa8_1_1_hexa8_1a7441ef0865bcb3db9b8064dd7375c1ea" prot="public" virt="non-virtual"><scope>Hexa8::Hexa8</scope><name>id</name></member>
+      <member refid="class_hexa8_1_1_hexa8_1aa21a4218f8ce852130e99f39c5809efb" prot="public" virt="non-virtual"><scope>Hexa8::Hexa8</scope><name>id_prop</name></member>
+      <member refid="class_hexa8_1_1_hexa8_1a5247fb4b0e460fb00c900cd758e6558f" prot="public" virt="non-virtual"><scope>Hexa8::Hexa8</scope><name>stiffness</name></member>
+      <member refid="class_hexa8_1_1_hexa8_1a331a1976e74033a265b0fec3fb71c5f7" prot="public" virt="non-virtual"><scope>Hexa8::Hexa8</scope><name>TOT_EL_NODES</name></member>
+    </listofallmembers>
+  </compounddef>
+</doxygen>

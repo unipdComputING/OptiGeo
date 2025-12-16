@@ -1,0 +1,168 @@
+<?xml version='1.0' encoding='UTF-8' standalone='no'?>
+<doxygen xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="compound.xsd" version="1.15.0" xml:lang="en-US">
+  <compounddef id="class_truss_1_1_truss" kind="class" language="Python" prot="public">
+    <compoundname>Truss::Truss</compoundname>
+    <sectiondef kind="public-attrib">
+      <memberdef kind="variable" id="class_truss_1_1_truss_1a121e7292ab53c4a6ab10e4573112aba9" prot="public" static="no" mutable="no">
+        <type>list[int]</type>
+        <definition>list[int] connectivity</definition>
+        <argsstring></argsstring>
+        <name>connectivity</name>
+        <qualifiedname>Truss.Truss.connectivity</qualifiedname>
+        <initializer>=  connectivity</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/dev/github/OptiGeo/src/Truss.py" line="16" column="1" bodyfile="C:/dev/github/OptiGeo/src/Truss.py" bodystart="16" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="class_truss_1_1_truss_1a7441ef0865bcb3db9b8064dd7375c1ea" prot="public" static="no" mutable="no">
+        <type>int</type>
+        <definition>int id</definition>
+        <argsstring></argsstring>
+        <name>id</name>
+        <qualifiedname>Truss.Truss.id</qualifiedname>
+        <initializer>=  id</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/dev/github/OptiGeo/src/Truss.py" line="15" column="1" bodyfile="C:/dev/github/OptiGeo/src/Truss.py" bodystart="15" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="class_truss_1_1_truss_1aa21a4218f8ce852130e99f39c5809efb" prot="public" static="no" mutable="no">
+        <type>int</type>
+        <definition>int id_prop</definition>
+        <argsstring></argsstring>
+        <name>id_prop</name>
+        <qualifiedname>Truss.Truss.id_prop</qualifiedname>
+        <initializer>=  id_prop</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/dev/github/OptiGeo/src/Truss.py" line="17" column="1" bodyfile="C:/dev/github/OptiGeo/src/Truss.py" bodystart="17" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="class_truss_1_1_truss_1a331a1976e74033a265b0fec3fb71c5f7" prot="public" static="no" mutable="no">
+        <type>int</type>
+        <definition>int TOT_EL_NODES</definition>
+        <argsstring></argsstring>
+        <name>TOT_EL_NODES</name>
+        <qualifiedname>Truss.Truss.TOT_EL_NODES</qualifiedname>
+        <initializer>=  2</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/dev/github/OptiGeo/src/Truss.py" line="18" column="1" bodyfile="C:/dev/github/OptiGeo/src/Truss.py" bodystart="18" bodyend="-1"/>
+      </memberdef>
+    </sectiondef>
+    <sectiondef kind="public-func">
+      <memberdef kind="function" id="class_truss_1_1_truss_1aae6112cf35cb4b4fbfadd3bcd99eb709" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>None</type>
+        <definition> None __init__</definition>
+        <argsstring>(self, int id=0, list[int] connectivity=(0, 0), int id_prop=0)</argsstring>
+        <name>__init__</name>
+        <qualifiedname>Truss.Truss.__init__</qualifiedname>
+        <param>
+          <type>self</type>
+          <defname>self</defname>
+        </param>
+        <param>
+          <type>int</type>
+          <declname>id</declname>
+          <defval>0</defval>
+        </param>
+        <param>
+          <type>list</type>
+          <declname>connectivity</declname>
+          <array>[int]</array>
+          <defval>(0, 0)</defval>
+        </param>
+        <param>
+          <type>int</type>
+          <declname>id_prop</declname>
+          <defval>0</defval>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/dev/github/OptiGeo/src/Truss.py" line="14" column="1" bodyfile="C:/dev/github/OptiGeo/src/Truss.py" bodystart="14" bodyend="18"/>
+      </memberdef>
+      <memberdef kind="function" id="class_truss_1_1_truss_1ace95240b5c45c902eea6763446a3c8a3" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>list[int]</type>
+        <definition> list[int] get_nodes_position</definition>
+        <argsstring>(self, list[Node] nodes)</argsstring>
+        <name>get_nodes_position</name>
+        <qualifiedname>Truss.Truss.get_nodes_position</qualifiedname>
+        <param>
+          <type>self</type>
+          <defname>self</defname>
+        </param>
+        <param>
+          <type>list</type>
+          <declname>nodes</declname>
+          <array>[Node]</array>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/dev/github/OptiGeo/src/Truss.py" line="34" column="1" bodyfile="C:/dev/github/OptiGeo/src/Truss.py" bodystart="34" bodyend="42"/>
+      </memberdef>
+      <memberdef kind="function" id="class_truss_1_1_truss_1adda18863289cfe097427dd6a72f2e296" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>np.ndarray</type>
+        <definition> np.ndarray stiffness</definition>
+        <argsstring>(self, list[Node] el_nodes, Property prop)</argsstring>
+        <name>stiffness</name>
+        <qualifiedname>Truss.Truss.stiffness</qualifiedname>
+        <param>
+          <type>self</type>
+          <defname>self</defname>
+        </param>
+        <param>
+          <type>list</type>
+          <declname>el_nodes</declname>
+          <array>[Node]</array>
+        </param>
+        <param>
+          <type><ref refid="class_property_1_1_property" kindref="compound">Property</ref></type>
+          <declname>prop</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/dev/github/OptiGeo/src/Truss.py" line="20" column="1" bodyfile="C:/dev/github/OptiGeo/src/Truss.py" bodystart="20" bodyend="32"/>
+      </memberdef>
+    </sectiondef>
+    <briefdescription>
+    </briefdescription>
+    <detaileddescription>
+    </detaileddescription>
+    <location file="C:/dev/github/OptiGeo/src/Truss.py" line="12" column="1" bodyfile="C:/dev/github/OptiGeo/src/Truss.py" bodystart="12" bodyend="51"/>
+    <listofallmembers>
+      <member refid="class_truss_1_1_truss_1aae6112cf35cb4b4fbfadd3bcd99eb709" prot="public" virt="non-virtual"><scope>Truss::Truss</scope><name>__init__</name></member>
+      <member refid="class_truss_1_1_truss_1a121e7292ab53c4a6ab10e4573112aba9" prot="public" virt="non-virtual"><scope>Truss::Truss</scope><name>connectivity</name></member>
+      <member refid="class_truss_1_1_truss_1ace95240b5c45c902eea6763446a3c8a3" prot="public" virt="non-virtual"><scope>Truss::Truss</scope><name>get_nodes_position</name></member>
+      <member refid="class_truss_1_1_truss_1a7441ef0865bcb3db9b8064dd7375c1ea" prot="public" virt="non-virtual"><scope>Truss::Truss</scope><name>id</name></member>
+      <member refid="class_truss_1_1_truss_1aa21a4218f8ce852130e99f39c5809efb" prot="public" virt="non-virtual"><scope>Truss::Truss</scope><name>id_prop</name></member>
+      <member refid="class_truss_1_1_truss_1adda18863289cfe097427dd6a72f2e296" prot="public" virt="non-virtual"><scope>Truss::Truss</scope><name>stiffness</name></member>
+      <member refid="class_truss_1_1_truss_1a331a1976e74033a265b0fec3fb71c5f7" prot="public" virt="non-virtual"><scope>Truss::Truss</scope><name>TOT_EL_NODES</name></member>
+    </listofallmembers>
+  </compounddef>
+</doxygen>

@@ -1,0 +1,114 @@
+<?xml version='1.0' encoding='UTF-8' standalone='no'?>
+<doxygenindex xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="index.xsd" version="1.15.0" xml:lang="en-US">
+  <compound refid="class_element_1_1_element" kind="class"><name>Element::Element</name>
+    <member refid="class_element_1_1_element_1a121e7292ab53c4a6ab10e4573112aba9" kind="variable"><name>connectivity</name></member>
+    <member refid="class_element_1_1_element_1a7441ef0865bcb3db9b8064dd7375c1ea" kind="variable"><name>id</name></member>
+    <member refid="class_element_1_1_element_1aa21a4218f8ce852130e99f39c5809efb" kind="variable"><name>id_prop</name></member>
+    <member refid="class_element_1_1_element_1a331a1976e74033a265b0fec3fb71c5f7" kind="variable"><name>TOT_EL_NODES</name></member>
+    <member refid="class_element_1_1_element_1aae6112cf35cb4b4fbfadd3bcd99eb709" kind="function"><name>__init__</name></member>
+    <member refid="class_element_1_1_element_1ace95240b5c45c902eea6763446a3c8a3" kind="function"><name>get_nodes_position</name></member>
+    <member refid="class_element_1_1_element_1a84f00a80c53f96a5c202d5529bd2acd4" kind="function"><name>stiffness</name></member>
+  </compound>
+  <compound refid="class_hexa8_1_1_hexa8" kind="class"><name>Hexa8::Hexa8</name>
+    <member refid="class_hexa8_1_1_hexa8_1a121e7292ab53c4a6ab10e4573112aba9" kind="variable"><name>connectivity</name></member>
+    <member refid="class_hexa8_1_1_hexa8_1a7441ef0865bcb3db9b8064dd7375c1ea" kind="variable"><name>id</name></member>
+    <member refid="class_hexa8_1_1_hexa8_1aa21a4218f8ce852130e99f39c5809efb" kind="variable"><name>id_prop</name></member>
+    <member refid="class_hexa8_1_1_hexa8_1a331a1976e74033a265b0fec3fb71c5f7" kind="variable"><name>TOT_EL_NODES</name></member>
+    <member refid="class_hexa8_1_1_hexa8_1a7834c5cfd6ccb800b59e079a2df24ff9" kind="function"><name>__init__</name></member>
+    <member refid="class_hexa8_1_1_hexa8_1a5247fb4b0e460fb00c900cd758e6558f" kind="function"><name>stiffness</name></member>
+  </compound>
+  <compound refid="class_node_1_1_node" kind="class"><name>Node::Node</name>
+    <member refid="class_node_1_1_node_1a72028c980f50834659f9793bc965e409" kind="variable"><name>dof</name></member>
+    <member refid="class_node_1_1_node_1ab99d2127707c54c104aaa051c788569c" kind="variable"><name>fix</name></member>
+    <member refid="class_node_1_1_node_1a7441ef0865bcb3db9b8064dd7375c1ea" kind="variable"><name>id</name></member>
+    <member refid="class_node_1_1_node_1a9b0ed6ef81db5fbd7320bf8df39a63f2" kind="variable"><name>id_pos</name></member>
+    <member refid="class_node_1_1_node_1a68fd093b14e78eca78f6e02280e624c9" kind="variable"><name>load</name></member>
+    <member refid="class_node_1_1_node_1a73d6e5a73ce0df21b95fd1d01233c8cd" kind="variable"><name>x</name></member>
+    <member refid="class_node_1_1_node_1a86f1b109e440ec866c0929ba5b55c709" kind="function"><name>__init__</name></member>
+    <member refid="class_node_1_1_node_1a53b5591194bafdf1f39b486c5730d3d5" kind="function"><name>add_constraint</name></member>
+    <member refid="class_node_1_1_node_1a040021d70c4e78a746cc62a618a5740e" kind="function"><name>add_load</name></member>
+    <member refid="class_node_1_1_node_1a3f3491056acc65b3301b79572cf727c2" kind="function"><name>direction</name></member>
+    <member refid="class_node_1_1_node_1a7f052596b4458d6af60435280c021492" kind="function"><name>dist</name></member>
+    <member refid="class_node_1_1_node_1a8299cf408ef650322c9342ccbda03278" kind="function"><name>set_fix</name></member>
+    <member refid="class_node_1_1_node_1adb511f306dcf424bb0b5c9fbba6db4f2" kind="function"><name>set_free</name></member>
+  </compound>
+  <compound refid="class_property_1_1_property" kind="class"><name>Property::Property</name>
+    <member refid="class_property_1_1_property_1a97ab43f6fd28920a42d987c8fec4afec" kind="variable"><name>area</name></member>
+    <member refid="class_property_1_1_property_1a7441ef0865bcb3db9b8064dd7375c1ea" kind="variable"><name>id</name></member>
+    <member refid="class_property_1_1_property_1ad0bd87a264e65d1c17ecc07049819f2c" kind="variable"><name>young</name></member>
+    <member refid="class_property_1_1_property_1a9eab42ce072113b56cb1792e739a6b26" kind="function"><name>__init__</name></member>
+  </compound>
+  <compound refid="class_tet4_1_1_tet4" kind="class"><name>Tet4::Tet4</name>
+    <member refid="class_tet4_1_1_tet4_1a121e7292ab53c4a6ab10e4573112aba9" kind="variable"><name>connectivity</name></member>
+    <member refid="class_tet4_1_1_tet4_1a7441ef0865bcb3db9b8064dd7375c1ea" kind="variable"><name>id</name></member>
+    <member refid="class_tet4_1_1_tet4_1aa21a4218f8ce852130e99f39c5809efb" kind="variable"><name>id_prop</name></member>
+    <member refid="class_tet4_1_1_tet4_1a331a1976e74033a265b0fec3fb71c5f7" kind="variable"><name>TOT_EL_NODES</name></member>
+    <member refid="class_tet4_1_1_tet4_1a97c4254f7ccd6b511d99edaef4c65ff7" kind="function"><name>__init__</name></member>
+    <member refid="class_tet4_1_1_tet4_1a5247fb4b0e460fb00c900cd758e6558f" kind="function"><name>stiffness</name></member>
+  </compound>
+  <compound refid="class_truss_1_1_truss" kind="class"><name>Truss::Truss</name>
+    <member refid="class_truss_1_1_truss_1a121e7292ab53c4a6ab10e4573112aba9" kind="variable"><name>connectivity</name></member>
+    <member refid="class_truss_1_1_truss_1a7441ef0865bcb3db9b8064dd7375c1ea" kind="variable"><name>id</name></member>
+    <member refid="class_truss_1_1_truss_1aa21a4218f8ce852130e99f39c5809efb" kind="variable"><name>id_prop</name></member>
+    <member refid="class_truss_1_1_truss_1a331a1976e74033a265b0fec3fb71c5f7" kind="variable"><name>TOT_EL_NODES</name></member>
+    <member refid="class_truss_1_1_truss_1aae6112cf35cb4b4fbfadd3bcd99eb709" kind="function"><name>__init__</name></member>
+    <member refid="class_truss_1_1_truss_1ace95240b5c45c902eea6763446a3c8a3" kind="function"><name>get_nodes_position</name></member>
+    <member refid="class_truss_1_1_truss_1adda18863289cfe097427dd6a72f2e296" kind="function"><name>stiffness</name></member>
+  </compound>
+  <compound refid="namespace_element" kind="namespace"><name>Element</name>
+  </compound>
+  <compound refid="namespace_global" kind="namespace"><name>Global</name>
+    <member refid="namespace_global_1aa3fea4183883efcf428fffb0130d347d" kind="variable"><name>DIM_DOF</name></member>
+    <member refid="namespace_global_1a28cecbe552e09d9cc2c855cb3584cc1e" kind="variable"><name>DIM_SPACE</name></member>
+    <member refid="namespace_global_1a48722663f78961c62ebefcbff2566f55" kind="function"><name>find_pos</name></member>
+    <member refid="namespace_global_1ac4ed91d8f82ec9e0744cfc808883599f" kind="function"><name>get_el_nodes</name></member>
+  </compound>
+  <compound refid="namespace_hexa8" kind="namespace"><name>Hexa8</name>
+  </compound>
+  <compound refid="namespacemain" kind="namespace"><name>main</name>
+    <member refid="namespacemain_1a7c47321fae78722b8f29ac89125e15a8" kind="variable"><name>elements</name></member>
+    <member refid="namespacemain_1af4428f414301129ced83dba0270ee67f" kind="variable"><name>fix</name></member>
+    <member refid="namespacemain_1a7d3a7a8f8b193c3a91a80dac71dcb75c" kind="variable"><name>nodes</name></member>
+    <member refid="namespacemain_1a35fca521f56cc042dc7ca4be189b38ef" kind="variable"><name>props</name></member>
+  </compound>
+  <compound refid="namespace_node" kind="namespace"><name>Node</name>
+  </compound>
+  <compound refid="namespace_property" kind="namespace"><name>Property</name>
+  </compound>
+  <compound refid="namespace_solver" kind="namespace"><name>Solver</name>
+    <member refid="namespace_solver_1a271ebc0021cca64252246c5c26e9731c" kind="function"><name>apply_bcs</name></member>
+    <member refid="namespace_solver_1a30110cadbb97d3f3aaaf4ea6be1862c5" kind="function"><name>assembly</name></member>
+    <member refid="namespace_solver_1a75c15cc81cd5b486331833b0604173bc" kind="function"><name>Liner_Solver</name></member>
+    <member refid="namespace_solver_1a97f51fb9d16798abaaf313e220f18d87" kind="function"><name>loads_assembly</name></member>
+    <member refid="namespace_solver_1a319b6449547410562e10096e4b0e3623" kind="function"><name>solver</name></member>
+  </compound>
+  <compound refid="namespace_tet4" kind="namespace"><name>Tet4</name>
+  </compound>
+  <compound refid="namespace_truss" kind="namespace"><name>Truss</name>
+  </compound>
+  <compound refid="namespace_vtk" kind="namespace"><name>Vtk</name>
+    <member refid="namespace_vtk_1a3d60d798287d6f6c09e3b3c1a64f8bed" kind="function"><name>draw_mesh</name></member>
+  </compound>
+  <compound refid="_element_8py" kind="file"><name>Element.py</name>
+  </compound>
+  <compound refid="_global_8py" kind="file"><name>Global.py</name>
+  </compound>
+  <compound refid="_hexa8_8py" kind="file"><name>Hexa8.py</name>
+  </compound>
+  <compound refid="main_8py" kind="file"><name>main.py</name>
+  </compound>
+  <compound refid="_node_8py" kind="file"><name>Node.py</name>
+  </compound>
+  <compound refid="_property_8py" kind="file"><name>Property.py</name>
+  </compound>
+  <compound refid="_solver_8py" kind="file"><name>Solver.py</name>
+  </compound>
+  <compound refid="_tet4_8py" kind="file"><name>Tet4.py</name>
+  </compound>
+  <compound refid="_truss_8py" kind="file"><name>Truss.py</name>
+  </compound>
+  <compound refid="_vtk_8py" kind="file"><name>Vtk.py</name>
+  </compound>
+  <compound refid="dir_68267d1309a1af8e8297ef4c3efbcdba" kind="dir"><name>C:/dev/github/OptiGeo/src</name>
+  </compound>
+</doxygenindex>

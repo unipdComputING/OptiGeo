@@ -1,0 +1,12 @@
+<?xml version='1.0' encoding='UTF-8' standalone='no'?>
+<doxygen xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="compound.xsd" version="1.15.0" xml:lang="en-US">
+  <compounddef id="namespace_property" kind="namespace" language="Python">
+    <compoundname>Property</compoundname>
+    <innerclass refid="class_property_1_1_property" prot="public">Property::Property</innerclass>
+    <briefdescription>
+    </briefdescription>
+    <detaileddescription>
+    </detaileddescription>
+    <location file="C:/dev/github/OptiGeo/src/Property.py" line="1" column="1"/>
+  </compounddef>
+</doxygen>
