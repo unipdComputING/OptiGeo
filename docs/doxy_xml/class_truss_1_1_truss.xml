@@ -16,7 +16,7 @@
         </detaileddescription>
         <inbodydescription>
         </inbodydescription>
-        <location file="C:/dev/github/OptiGeo/src/Truss.py" line="16" column="1" bodyfile="C:/dev/github/OptiGeo/src/Truss.py" bodystart="16" bodyend="-1"/>
+        <location file="C:/dev/github/OptiGeo/src/Truss.py" line="26" column="1" bodyfile="C:/dev/github/OptiGeo/src/Truss.py" bodystart="26" bodyend="-1"/>
       </memberdef>
       <memberdef kind="variable" id="class_truss_1_1_truss_1a7441ef0865bcb3db9b8064dd7375c1ea" prot="public" static="no" mutable="no">
         <type>int</type>
@@ -31,7 +31,7 @@
         </detaileddescription>
         <inbodydescription>
         </inbodydescription>
-        <location file="C:/dev/github/OptiGeo/src/Truss.py" line="15" column="1" bodyfile="C:/dev/github/OptiGeo/src/Truss.py" bodystart="15" bodyend="-1"/>
+        <location file="C:/dev/github/OptiGeo/src/Truss.py" line="25" column="1" bodyfile="C:/dev/github/OptiGeo/src/Truss.py" bodystart="25" bodyend="-1"/>
       </memberdef>
       <memberdef kind="variable" id="class_truss_1_1_truss_1aa21a4218f8ce852130e99f39c5809efb" prot="public" static="no" mutable="no">
         <type>int</type>
@@ -46,7 +46,7 @@
         </detaileddescription>
         <inbodydescription>
         </inbodydescription>
-        <location file="C:/dev/github/OptiGeo/src/Truss.py" line="17" column="1" bodyfile="C:/dev/github/OptiGeo/src/Truss.py" bodystart="17" bodyend="-1"/>
+        <location file="C:/dev/github/OptiGeo/src/Truss.py" line="27" column="1" bodyfile="C:/dev/github/OptiGeo/src/Truss.py" bodystart="27" bodyend="-1"/>
       </memberdef>
       <memberdef kind="variable" id="class_truss_1_1_truss_1a331a1976e74033a265b0fec3fb71c5f7" prot="public" static="no" mutable="no">
         <type>int</type>
@@ -61,7 +61,7 @@
         </detaileddescription>
         <inbodydescription>
         </inbodydescription>
-        <location file="C:/dev/github/OptiGeo/src/Truss.py" line="18" column="1" bodyfile="C:/dev/github/OptiGeo/src/Truss.py" bodystart="18" bodyend="-1"/>
+        <location file="C:/dev/github/OptiGeo/src/Truss.py" line="28" column="1" bodyfile="C:/dev/github/OptiGeo/src/Truss.py" bodystart="28" bodyend="-1"/>
       </memberdef>
     </sectiondef>
     <sectiondef kind="public-func">
@@ -92,12 +92,49 @@
           <defval>0</defval>
         </param>
         <briefdescription>
+<para>The <ref refid="class_truss_1_1_truss" kindref="compound">Truss</ref> base class initializer. </para>
         </briefdescription>
         <detaileddescription>
+<para><parameterlist kind="param"><parameteritem>
+<parameternamelist>
+<parametername>id</parametername>
+</parameternamelist>
+<parameterdescription>
+<para>The id of the element. </para>
+</parameterdescription>
+</parameteritem>
+<parameteritem>
+<parameternamelist>
+<parametername>connectivity</parametername>
+</parameternamelist>
+<parameterdescription>
+<para>The connectivity matrix of the element. </para>
+</parameterdescription>
+</parameteritem>
+<parameteritem>
+<parameternamelist>
+<parametername>id_prop</parametername>
+</parameternamelist>
+<parameterdescription>
+<para>The id_prop of the element. </para>
+</parameterdescription>
+</parameteritem>
+<parameteritem>
+<parameternamelist>
+<parametername>TOT_EL_NODES</parametername>
+</parameternamelist>
+<parameterdescription>
+<para>The number of nodes in the element. </para>
+</parameterdescription>
+</parameteritem>
+</parameterlist>
+<simplesect kind="return"><para>An instance of the <ref refid="namespace_hexa8" kindref="compound">Hexa8</ref> class initialized. </para>
+</simplesect>
+</para>
         </detaileddescription>
         <inbodydescription>
         </inbodydescription>
-        <location file="C:/dev/github/OptiGeo/src/Truss.py" line="14" column="1" bodyfile="C:/dev/github/OptiGeo/src/Truss.py" bodystart="14" bodyend="18"/>
+        <location file="C:/dev/github/OptiGeo/src/Truss.py" line="17" column="1" bodyfile="C:/dev/github/OptiGeo/src/Truss.py" bodystart="17" bodyend="28"/>
       </memberdef>
       <memberdef kind="function" id="class_truss_1_1_truss_1ace95240b5c45c902eea6763446a3c8a3" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
         <type>list[int]</type>
@@ -120,7 +157,7 @@
         </detaileddescription>
         <inbodydescription>
         </inbodydescription>
-        <location file="C:/dev/github/OptiGeo/src/Truss.py" line="34" column="1" bodyfile="C:/dev/github/OptiGeo/src/Truss.py" bodystart="34" bodyend="42"/>
+        <location file="C:/dev/github/OptiGeo/src/Truss.py" line="44" column="1" bodyfile="C:/dev/github/OptiGeo/src/Truss.py" bodystart="44" bodyend="52"/>
       </memberdef>
       <memberdef kind="function" id="class_truss_1_1_truss_1adda18863289cfe097427dd6a72f2e296" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
         <type>np.ndarray</type>
@@ -147,14 +184,16 @@
         </detaileddescription>
         <inbodydescription>
         </inbodydescription>
-        <location file="C:/dev/github/OptiGeo/src/Truss.py" line="20" column="1" bodyfile="C:/dev/github/OptiGeo/src/Truss.py" bodystart="20" bodyend="32"/>
+        <location file="C:/dev/github/OptiGeo/src/Truss.py" line="30" column="1" bodyfile="C:/dev/github/OptiGeo/src/Truss.py" bodystart="30" bodyend="42"/>
       </memberdef>
     </sectiondef>
     <briefdescription>
+<para>The <ref refid="class_truss_1_1_truss" kindref="compound">Truss</ref> class. </para>
     </briefdescription>
     <detaileddescription>
+<para>Defines the finite element. </para>
     </detaileddescription>
-    <location file="C:/dev/github/OptiGeo/src/Truss.py" line="12" column="1" bodyfile="C:/dev/github/OptiGeo/src/Truss.py" bodystart="12" bodyend="51"/>
+    <location file="C:/dev/github/OptiGeo/src/Truss.py" line="12" column="1" bodyfile="C:/dev/github/OptiGeo/src/Truss.py" bodystart="12" bodyend="61"/>
     <listofallmembers>
       <member refid="class_truss_1_1_truss_1aae6112cf35cb4b4fbfadd3bcd99eb709" prot="public" virt="non-virtual"><scope>Truss::Truss</scope><name>__init__</name></member>
       <member refid="class_truss_1_1_truss_1a121e7292ab53c4a6ab10e4573112aba9" prot="public" virt="non-virtual"><scope>Truss::Truss</scope><name>connectivity</name></member>

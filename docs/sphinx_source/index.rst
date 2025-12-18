@@ -21,5 +21,6 @@ info.femdev@gmail.com
    :maxdepth: 1
    :caption: Contents:
 
+   Truss
    Hexa8
 
