@@ -19,7 +19,7 @@ class Truss:
         @param id  The id of the element.
         @param connectivity  The connectivity matrix of the element.
         @param id_prop  The id_prop of the element.
-        @param TOT_EL_NODES  The number of nodes in the element.
+        @param TOT_EL_NODES The number of nodes in the element.
         @return  An instance of the Hexa8 class initialized.
         """
     self.id: int = id

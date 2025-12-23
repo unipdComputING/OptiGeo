@@ -30,7 +30,7 @@
 <codeline lineno="19"><highlight class="stringliteral"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>@param<sp/>id<sp/><sp/>The<sp/>id<sp/>of<sp/>the<sp/>element.</highlight></codeline>
 <codeline lineno="20"><highlight class="stringliteral"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>@param<sp/>connectivity<sp/><sp/>The<sp/>connectivity<sp/>matrix<sp/>of<sp/>the<sp/>element.</highlight></codeline>
 <codeline lineno="21"><highlight class="stringliteral"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>@param<sp/>id_prop<sp/><sp/>The<sp/>id_prop<sp/>of<sp/>the<sp/>element.</highlight></codeline>
-<codeline lineno="22"><highlight class="stringliteral"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>@param<sp/>TOT_EL_NODES<sp/><sp/>The<sp/>number<sp/>of<sp/>nodes<sp/>in<sp/>the<sp/>element.</highlight></codeline>
+<codeline lineno="22"><highlight class="stringliteral"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>@param<sp/>TOT_EL_NODES<sp/>The<sp/>number<sp/>of<sp/>nodes<sp/>in<sp/>the<sp/>element.</highlight></codeline>
 <codeline lineno="23"><highlight class="stringliteral"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>@return<sp/><sp/>An<sp/>instance<sp/>of<sp/>the<sp/>Hexa8<sp/>class<sp/>initialized.</highlight></codeline>
 <codeline lineno="24"><highlight class="stringliteral"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>&quot;&quot;&quot;</highlight><highlight class="normal"></highlight></codeline>
 <codeline lineno="25"><highlight class="normal"><sp/><sp/><sp/><sp/>self.<ref refid="class_truss_1_1_truss_1a7441ef0865bcb3db9b8064dd7375c1ea" kindref="member">id</ref>:<sp/>int<sp/>=<sp/>id</highlight></codeline>
