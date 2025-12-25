@@ -59,13 +59,15 @@ class Tet4:
       n1 = nodes[1]
       n2 = nodes[2]
       n3 = nodes[3]
-
-  # giacitura degli spigoli
-      a = n3.direction(n0)
-      b = n3.direction(n1)
-      c = n3.direction(n2)
-      axb = np.cross(a, b) # area vettoriale base
-      Vol = 1/6 * axb @ c
+      vmat = np.array([
+          [1, n0.x[0], n0.x[1], n0.x[2]],
+          [1, n1.x[0], n1.x[1], n1.x[2]],
+          [1, n2.x[0], n2.x[1], n2.x[2]],
+          [1, n3.x[0], n3.x[1], n3.x[2]],
+      ])
+      Vol = 1/6 * np.linalg.det(vmat)
+      if Vol < 0 :
+          print("Det Negative")
       return Vol
   # ---------------------------------------------------------------------------
   def build_B(self,nodes: list[Node]) -> np.ndarray:
@@ -87,7 +89,7 @@ class Tet4:
               [1, n1.x[1], n1.x[2]],
               [1, n2.x[1], n2.x[2]],
           ])
-          b = -np.linalg.det(bmat)
+          b = - np.linalg.det(bmat)
 
           cmat = np.array([
               [n0.x[0], 1, n0.x[2]],
@@ -101,7 +103,7 @@ class Tet4:
               [n1.x[0], n1.x[1], 1],
               [n2.x[0], n2.x[1], 1],
           ])
-          d = -np.linalg.det(dmat)
+          d = - np.linalg.det(dmat)
 
           B[0, i*3:i*3+3] = [b, 0, 0]
           B[1, i*3:i*3+3] = [0, c, 0]
@@ -111,8 +113,8 @@ class Tet4:
           B[5, i*3:i*3+3] = [0, d, c]
 
       V = self.compute_Vol(nodes)
-      if V<0:
-          print("Jacobian Negative")
+      #if V<0:
+          #print("Jacobian Negative")
 
       B = B /(V*6)
       return B
@@ -143,16 +145,12 @@ class Tet4:
       n1.add_partialconstraint(fix)
       n2.add_partialconstraint(fix)
   # ---------------------------------------------------------------------------
-  def draw_element(self,figura: plt.Figure, nodes: list[Node]) -> None:
+  def draw_element(self,di: plt.Subplot, nodes: list[Node]) -> None:
       x = [nodes[n-1].x[0] for n in self.connectivity]
       y = [nodes[n-1].x[1] for n in self.connectivity]
       z = [nodes[n-1].x[2] for n in self.connectivity]
 
-      if not figura.axes:
-          di = figura.add_subplot(111, projection='3d')
-      else:
-          di = figura.axes[0]
-      di.scatter(x, y, z)
+      di.scatter(x, y, z, color='b')
       for i in self.connectivity:
           di.text(nodes[find_pos(nodes,i)].x[0], nodes[find_pos(nodes,i)].x[1], nodes[find_pos(nodes,i)].x[2], str(nodes[i-1].id), fontsize=9)
       comb_plot = np.array([
@@ -169,7 +167,6 @@ class Tet4:
              [nodes[find_pos(nodes,self.connectivity[i])].x[2], nodes[find_pos(nodes,self.connectivity[comb_plot[i,j]])].x[2]],
               color='black')
       di.set_title((f"Mesh generata"))
-      di.set_xlabel("Coordinata x")
-      di.set_ylabel("Coordinata y")
-      di.set_zlabel("Coordinata z")
-      plt.show()
+      di.set_xlabel("Asse x")
+      di.set_ylabel("Asse y")
+      di.set_zlabel("Asse z")

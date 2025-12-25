@@ -2,16 +2,15 @@ import numpy as np
 from Node import Node
 from Property import Property
 import matplotlib.pyplot as plt
-from Solver import Liner_Solver
+from Solver import Liner_Solver, assembly
 from Tet4 import Tet4 as Element
 
 if __name__ == "__main__":
   nodes: list[Node] = [
-        Node(id=1, x=np.array([1., 1., 1.]), id_pos=0),
-        Node(id=2, x=np.array([1., -1., -1.]), id_pos=1),
-        Node(id=3, x=np.array([-1., 1., -1.]), id_pos=2),
-        Node(id=4, x=np.array([-1., -1., 1.]), id_pos=3),
-        Node(id=5, x=np.array([ 1., -1., 1.]), id_pos=4),
+        Node(id=1, x=np.array([0., 0., 0.]), id_pos=0),
+        Node(id=2, x=np.array([1., 0., 0.]), id_pos=0),
+        Node(id=3, x=np.array([0., 1., 0.]), id_pos=0),
+        Node(id=4, x=np.array([0., 0., 1.]), id_pos=0),
     ]
 #--------------------------------------------------------------------------------------------------
 
@@ -20,12 +19,33 @@ if __name__ == "__main__":
   ]
 
   elements: list[Element] = [
-    Element(1, [1, 2 ,3 ,4 ], 1),
-    Element(2, [1, 2 ,3 ,5 ], 1),
+      Element(1, [2, 3, 1, 4], 1),
   ]
-  fig1 = plt.figure(figsize=(8, 8))
-  elements[0].draw_element(fig1,nodes)
-  elements[1].draw_element(fig1,nodes)
+# bottom fix
+  nodes[0].set_fix()
+  nodes[1].set_fix()
+  nodes[2].set_fix()
 
-  Liner_Solver(nodes, elements, props,100)
+# top load
+  nodes[3].add_load([0, 0, -100])
+  K = assembly(nodes, elements, props)
+  '''fig1 = plt.figure(figsize=(8, 8))
+  di = fig1.add_subplot(111, projection='3d')
+  for i in range(len(elements)):
+    elements[i].draw_element(di,nodes)
+  plt.show()
+
+  plt.spy(K)
+  plt.show()
+  plt.imshow(K, cmap='coolwarm')
+  plt.colorbar(label='K(i,j)')
+  plt.xlabel('cols j')
+  plt.ylabel('row i')
+  plt.title('Matrice di rigidezza globale')
+  plt.show()'''
+
+  a = Liner_Solver(nodes, elements, props,100)
+  f = K @ a
+  print(f"f:{f}")
+
 
