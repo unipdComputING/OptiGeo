@@ -1,0 +1,18 @@
+# N -> node 
+# 0 -> node id
+
+# 0 -> node x pos
+# 0 -> node y pos
+# 0 -> node z pos
+
+# 0 -> node x dof
+# 0 -> node y dof
+# 0 -> node z dof
+
+# 0 -> node x fix
+# 0 -> node y fix
+# 0 -> node z fix
+
+# 0 -> node x load
+# 0 -> node y load
+# 0 -> node z load

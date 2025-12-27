@@ -1,0 +1,19 @@
+Questo è una prima versione dell'applicazione OptiGeo
+Questa funziona leggendo l'input dal file stuff.txt per la definizione degli elementi,
+delle proprietà dei materiali e globali, dei parametri della simulazione e per la scelta
+del solver.
+Per aggiungere elementi, o proprietà, o parametri della simulazione basta prendere il file 
+stuff.txt e definire una lettera di riferimento ("P" ad esempio per proprietà), inserire il 
+nel file TheReader.py e definire poi il numero di proprietà che verranno poi inseriti nel
+dataframe corrispondente.
+Per ora manca è stata implementata la lettura e scrittura degli elementi, mancano
+proprietà, parametri della simulazione e solvers - manca poi l'aggiornamento dinamico dei
+dataframe all'interno del codice.
+Non sono riuscito inoltre a creare un visualizzatore vtk in quanto l'applicazione non 
+riusciva più ad aprirsi.
+Farò il possibile prossimamente per sistemare gli evidenti problemi che questo primo 
+tentativo ha, come l'impossibilità di modificare la tabella per più elementi per volta, 
+o il visualizzatore vtk, o il passaggio da "definizione delle proprietà" a 
+"visualizzatore della soluzione".
+
+Buone vacanze
