@@ -3,9 +3,8 @@ from Global import *
 
 class Node:
   # ---------------------------------------------------------------------------
-  def __init__(self, id: int = 0, x: np = np.zeros(DIM_SPACE), id_pos: int = -1):
+  def __init__(self, id: int = 0, x: np = np.zeros(DIM_SPACE)):
     self.id: int = id
-    self.id_pos = id_pos
     self.x: np = x
     self.dof: np = np.zeros(DIM_DOF)
     self.fix: np = np.zeros(DIM_DOF)

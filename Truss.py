@@ -1,4 +1,5 @@
 import  numpy as np
+import vtk
 from Global import *
 from Node import Node
 from Property import Property
@@ -16,6 +17,7 @@ class Truss:
     self.connectivity: list[int] = connectivity
     self.id_prop: int = id_prop
     self.TOT_EL_NODES: int = 2
+    self.actor: vtk.vtkActor = None
   # ---------------------------------------------------------------------------
   def stiffness(self, el_nodes: list[Node], prop: Property) -> np.ndarray:
     n1: Node = el_nodes[0]
@@ -46,5 +48,52 @@ class Truss:
   # ---------------------------------------------------------------------------
   # ---------------------------------------------------------------------------
   # ---------------------------------------------------------------------------
+  def get_actor(self, nodes: list[Node] = None, color=(0.8, 0.8, 0.8), opacity=1.0) -> vtk.vtkActor:
+    if nodes is None:
+      return None
+    nodes_position: list[int] = self.get_nodes_position(nodes)
+    """Create and return a vtkActor for rendering"""
+
+    points = vtk.vtkPoints()
+    for i in range(len(nodes_position)):
+      p = nodes[nodes_position[i]].x
+      points.InsertNextPoint(p)
+    
+    # Create vertices to represent each point
+    vertices = vtk.vtkCellArray()
+    for i in range(points.GetNumberOfPoints()):
+        vertex = vtk.vtkVertex()
+        vertex.GetPointIds().SetId(0, i)
+        vertices.InsertNextCell(vertex)
+
+    lines = vtk.vtkCellArray()
+    line = vtk.vtkLine()
+    line.GetPointIds().SetId(0, 0)
+    line.GetPointIds().SetId(1, 1)
+    lines.InsertNextCell(line)
+
+
+    # vtk_lines = vtk.vtkActor()
+    # vtk_lines.GetProperty().SetColor(0/255, 128/255, 255/255)   # Green lines
+    # vtk_lines.GetProperty().SetLineWidth(6)     # Thicker lines
+    # vtk_lines.SetPoints(points)
+    # vtk_lines.SetLines(lines)
+
+    polydata = vtk.vtkPolyData()
+    polydata.SetPoints(points)
+    polydata.SetLines(lines)
+
+    mapper = vtk.vtkPolyDataMapper()
+    mapper.SetInputData(polydata)
+
+    actor = vtk.vtkActor()
+    actor.SetMapper(mapper)
+    actor.GetProperty().SetColor(color)
+    actor.GetProperty().SetOpacity(opacity)
+    actor.GetProperty().SetEdgeVisibility(True)
+    actor.GetProperty().SetEdgeColor(0, 0, 0)
+
+    self.actor = actor
+    return actor
   # ---------------------------------------------------------------------------
   # ---------------------------------------------------------------------------

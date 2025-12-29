@@ -1,5 +1,6 @@
 DIM_SPACE: int = 3
 DIM_DOF: int = 3
+DIM_TENSOR: int = 6
 
 # -----------------------------------------------------------------------------
 def find_pos(data, id) -> int:
