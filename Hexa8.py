@@ -4,7 +4,6 @@ from Node import Node
 from Property import Property
 from Global import *
 
-
 class Hexa8:
   # ---------------------------------------------------------------------------
   def __init__(self, id: int = 0, connectivity: list[int] = (0, 0, 0, 0, 0, 0, 0, 0), id_prop: int = 0,nu:float=0) -> None:
