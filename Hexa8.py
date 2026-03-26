@@ -20,17 +20,17 @@ class Hexa8:
         [3, 2, 6, 7],
         [0, 4, 7, 3],
         [1, 2, 6, 5],
-    ])
+    ]).copy()
   # ---------------------------------------------------------------------------
   def _get_surface_nodes(self, id_surf, nodes) -> list[Node]:
     """Private method to determine the list of nodes defining an element face.
-    @param id_surf: Integer identifier of the hexahedral face (values from 0 to 7).
+    @param id_surf: Integer identifier of the hexahedral face (values from 0 to 5).
     @param nodes: Global list of nodes.
     @return: surf_nodes, the list of nodes defining the face specified by id_surf.
     """
-    loca_pos: list = self.surface[id_surf]
+    local_pos: list = self.surface[id_surf]
     surf_nodes: list[Node] = []
-    for pos in loca_pos:
+    for pos in local_pos:
       id_node = self.connectivity[pos]
       pos_node = find_pos(nodes, id_node)
       if pos_node >= 0:
@@ -110,7 +110,7 @@ class Hexa8:
           J = coords.T @ dN_dxi  # 3x3
           detJ = np.linalg.det(J)
           if detJ <= 0:
-              print(f"Hex8 {self.id}: detJ <= 0，negative jacobian determinant")
+              print(f"Hex8 {self.id}: detJ <= 0, negative jacobian determinant")
 
           invJ = np.linalg.inv(J)
           dN_dxyz = dN_dxi @ invJ.T

@@ -82,8 +82,8 @@ def solver(nodes: list[Node], K: np.ndarray, a: np.ndarray, f: np.ndarray, fix: 
   for i in range(DIM_PROBLEM):
     K[i, i] += fix[i] * penalty
 
-  u: np.ndarray = np.linalg.inv(K) @ f
-  u[:] *= fix[:] - 1
+  u: np.ndarray = np.linalg.solve(K, f)
+  u[:] *= 1 - fix[:]
   a += u
   cont: int = 0
   for node in nodes:
