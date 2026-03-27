@@ -86,10 +86,10 @@ def solver(nodes: list[Node], K: np.ndarray, a: np.ndarray, f: np.ndarray, fix: 
   u[:] *= 1 - fix[:]
   a += u
 
-  for i in range(DIM_PROBLEM):
-    K[i, i] -= fix[i] * penalty  
+  # for i in range(DIM_PROBLEM):
+  #   K[i, i] -= fix[i] * penalty  
 
-  ff = K @ a
+  # ff = K @ a
 
   cont: int = 0
   for node in nodes:
