@@ -116,9 +116,9 @@ class Hexa8:
           dN_dxyz = dN_dxi @ invJ.T
           B = self.build_B(dN_dxyz)
 
-          K += B.T @ D @ B * detJ
+          K += B.T @ (D @ B) * detJ
 
-      return K
+    return K
   # ---------------------------------------------------------------------------
   def adding_surface_partialconstraint(self,id_surf:int,fix:np.ndarray,nodes:list[Node]) -> None:
     surf_nodes = self._get_surface_nodes(id_surf, nodes)

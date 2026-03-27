@@ -77,7 +77,7 @@ def loads_assembly(nodes: list[Node], K: np.ndarray, a: np.ndarray) -> np.ndarra
   return f - K @ a
 # -----------------------------------------------------------------------------
 def solver(nodes: list[Node], K: np.ndarray, a: np.ndarray, f: np.ndarray, fix: np.ndarray) -> None:
-  penalty: float = np.max(K) * 100_000.0
+  penalty: float = np.max(K) * 1000_000_000.0
   DIM_PROBLEM: int = len(nodes) * DIM_DOF
   for i in range(DIM_PROBLEM):
     K[i, i] += fix[i] * penalty
@@ -85,6 +85,12 @@ def solver(nodes: list[Node], K: np.ndarray, a: np.ndarray, f: np.ndarray, fix: 
   u: np.ndarray = np.linalg.solve(K, f)
   u[:] *= 1 - fix[:]
   a += u
+
+  for i in range(DIM_PROBLEM):
+    K[i, i] -= fix[i] * penalty  
+
+  ff = K @ a
+
   cont: int = 0
   for node in nodes:
     for i in range(DIM_DOF):
