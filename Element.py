@@ -16,6 +16,7 @@ class Element:
     self.connectivity: list[int] = connectivity
     self.id_prop: int = id_prop
     self.TOT_EL_NODES: int = 2
+    self.nPtGauss: int = 1
   # ---------------------------------------------------------------------------
   def stiffness(self, n1: Node, n2: Node, prop: Property) -> np.ndarray:
     l0: float = n1.dist(n2)

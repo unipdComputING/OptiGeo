@@ -21,6 +21,7 @@ class Hexa8:
         [0, 4, 7, 3],
         [1, 2, 6, 5],
     ]).copy()
+    self.nPtGauss: int = 8
   # ---------------------------------------------------------------------------
   def _get_surface_nodes(self, id_surf, nodes) -> list[Node]:
     """Private method to determine the list of nodes defining an element face.
@@ -90,6 +91,33 @@ class Hexa8:
       B[5, col + 0] = dNz
       B[5, col + 2] = dNx
     return B
+  # ---------------------------------------------------------------------------
+  def compute_B(self, nodes: list[Node]) -> np.ndarray:
+      B = np.zeros((8, 144))
+      cont = 0
+      coords = np.array([n.x for n in nodes])
+
+      a = 1. / np.sqrt(3.)
+      gp = [-a, a]
+      for xi in gp:
+          for eta in gp:
+              for zeta in gp:
+                  dN_dxi = self.shape_grad_local(xi, eta, zeta)  # 8x3
+
+                  # Jacobian
+                  J = coords.T @ dN_dxi  # 3x3
+                  detJ = np.linalg.det(J)
+                  if detJ <= 0:
+                      print(f"Hex8 {self.id}: detJ <= 0, negative jacobian determinant")
+
+                  invJ = np.linalg.inv(J)
+                  dN_dxyz = dN_dxi @ invJ.T
+                  b = self.build_B(dN_dxyz)
+                  for i in range(DIM_TENSOR):
+                      B[cont, i * 24 : i * 24 + 24] = b[i,:]
+                  cont += 1
+      return B
+
   # ---------------------------------------------------------------------------
   def stiffness(self, nodes: list[Node], prop: Property) -> np.ndarray:
 

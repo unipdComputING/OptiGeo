@@ -12,14 +12,23 @@ def Liner_Solver(nodes: list[Node] = None, elements: list[Element] = None, props
 
   # 1. stiffness assembly
   K: np.ndarray = assembly(nodes, elements, props)
+
   # 2. apply bcs
   (a, fix) = apply_bcs(nodes)
+
   # 3. loads assembly
   f = loads_assembly(nodes, K, a)
+
   # 4. solver
   solver(nodes, K, a, f, fix)
+
   # 5. outputs
-  return
+  Offset = build_Offset(elements)
+  outputs = build_sigma_eps(elements, props, nodes,Offset, a)
+  strain = outputs[0]
+  stress = outputs[1]
+  return a, strain, stress
+
 # -----------------------------------------------------------------------------
 def assembly(nodes: list[Node], elements: list[Element], props: list[Property]) -> np.ndarray:
   DIM_PROBLEM: int = len(nodes) * DIM_DOF
@@ -97,7 +106,33 @@ def solver(nodes: list[Node], K: np.ndarray, a: np.ndarray, f: np.ndarray, fix: 
       node.dof[i] = a[cont]
       cont += 1
 # -----------------------------------------------------------------------------
+def build_Offset(elements: list[Element]) -> list[int]:
+    Offset = [0 for _ in range(len(elements))]
+    cont: int = 0
+    for element in elements[:-1]:
+        Offset[cont+1] = Offset[cont] + element.nPtGauss
+        cont += 1
+    return Offset
 # -----------------------------------------------------------------------------
+def build_sigma_eps(elements: list[Element], props: list[Property], nodes: list[Node],Offset, a) -> tuple:
+    rows = Offset[-1] + elements[-1].nPtGauss
+    strain = np.zeros((rows, DIM_TENSOR))
+    stress = np.zeros((rows, DIM_TENSOR))
+    cont: int = 0
+
+    for element in elements:
+        pos_prop = find_pos(props, element.id_prop)
+        el_nodes: list[Node] = get_el_nodes(element.connectivity, nodes)
+        el_B = element.compute_B(el_nodes)
+        el_D = props[pos_prop].get_el_const_mat()
+        for i in range(element.nPtGauss):
+            row = Offset[cont]
+            col = len(el_nodes) * DIM_DOF
+            for j in range(DIM_TENSOR):
+                strain[row + i, j] = el_B[i, j * col : j * col + col] @ a[col * cont : col * cont + col]
+            stress[row + i, :] = el_D @ strain[row + i, :].T
+        cont += 1
+    return strain, stress
 # -----------------------------------------------------------------------------
 # -----------------------------------------------------------------------------
 # -----------------------------------------------------------------------------

@@ -17,7 +17,7 @@ class Tet4:
         [1, 2, 3],
         [0, 2, 3],
     ]).copy()
-
+    self.nPtGauss: int = 1
     #                 2
     #               / |
     #             /  ||
@@ -81,14 +81,8 @@ class Tet4:
           print("Det Negative")
       return Vol
   # ---------------------------------------------------------------------------
-  def build_B(self,nodes: list[Node]) -> tuple[np.ndarray, float]:
+  def build_B(self,nodes: list[Node]) -> np.ndarray:
       B = np.zeros((6, 12))
-    #   Index = np.array([ # matrice di combinazione per definire iterativamente i nodi da utilizzare
-    #       [1, 2, 3],
-    #       [0, 2, 3],
-    #       [0, 1, 3],
-    #       [0, 1, 2],
-    #   ])
 
       Index = np.array([ # matrice di combinazione per definire iterativamente i nodi da utilizzare
           [1, 2, 3],
@@ -131,17 +125,17 @@ class Tet4:
           B[5, i*3 : i*3+3] = [d, 0, c]
 
       V = self.compute_Vol(nodes)
-      #if V<0:
-          #print("Jacobian Negative")
+      if V<0:
+          print("Jacobian Negative")
 
       B = B / (V * 6.)
-      return (B, V)
+      return B
   # ---------------------------------------------------------------------------
   def stiffness(self, nodes: list[Node], prop: Property) -> np.ndarray:
       (_, D) = prop.get_const_mat()
       K: np.ndarray = np.zeros((12, 12))
-      (B, V) = self.build_B(nodes)
-      # V: float = self.compute_Vol(nodes)
+      B = self.build_B(nodes)
+      V: float = self.compute_Vol(nodes)
 
       for i in range(4):
           for j in range(4):
@@ -154,6 +148,12 @@ class Tet4:
     for node in surf_nodes:
       node.add_constraint(fix, np.zeros(DIM_DOF))
   # ---------------------------------------------------------------------------
+  def compute_B(self,nodes: list[Node]) -> np.ndarray:
+      B = np.zeros((1, 72))
+      b = self.build_B(nodes)
+      for i in range(DIM_TENSOR):
+          B[0, i * 12: i * 12 + 12] = b[i, :]
+      return B
   # ---------------------------------------------------------------------------
   # ---------------------------------------------------------------------------
   # ---------------------------------------------------------------------------
