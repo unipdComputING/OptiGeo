@@ -3,6 +3,7 @@ from  Global import *
 from Node import Node
 from Element import Element
 from Property import Property
+from Vtk import save_vtk
 
 # -----------------------------------------------------------------------------
 def Liner_Solver(nodes: list[Node] = None, elements: list[Element] = None, props: list[Property] = None) -> None:
@@ -15,10 +16,18 @@ def Liner_Solver(nodes: list[Node] = None, elements: list[Element] = None, props
   # 2. apply bcs
   (a, fix) = apply_bcs(nodes)
   # 3. loads assembly
-  f = loads_assembly(nodes, K, a)
+  f: np.ndarray = loads_assembly(nodes, K, a)
   # 4. solver
   solver(nodes, K, a, f, fix)
   # 5. outputs
+  ip_offset: list[int] = build_offset(elements)
+  rows: int = ip_offset[-1]
+  strain: np.ndarray = np.zeros((rows, DIM_TENSOR), dtype=float)
+  stress: np.ndarray = np.zeros((rows, DIM_TENSOR), dtype=float)
+  statev: np.ndarray = np.zeros((rows, TOT_STATEV), dtype=float)
+  updates(elements, nodes, props, ip_offset, strain, stress, statev)
+  save_vtk("test.vtk", nodes, elements, ip_offset, strain, stress, statev)
+
   return
 # -----------------------------------------------------------------------------
 def assembly(nodes: list[Node], elements: list[Element], props: list[Property]) -> np.ndarray:
@@ -97,7 +106,38 @@ def solver(nodes: list[Node], K: np.ndarray, a: np.ndarray, f: np.ndarray, fix: 
       node.dof[i] = a[cont]
       cont += 1
 # -----------------------------------------------------------------------------
+def build_offset(elements: list[Element]) -> list[int]:
+  '''
+  Vettore che tiene conto dell'accumulo di punti di integrazione.
+  Ha dimensione tot_elements + 1
+  '''
+  offset: list[int] = [0]
+  for i, element in enumerate(elements):
+      offset.append(offset[i] + element.N_GAUSS)
+  return offset
 # -----------------------------------------------------------------------------
+def updates(elements: list[Element], nodes: list[Node], props: list[Property], 
+            offset: list[int], strain: np.ndarray, stress: np.ndarray, statev: np.ndarray)-> None:
+    
+    cont: int = 0
+
+    for i, elem in enumerate(elements):
+      pos_prop: int = find_pos(props, elem.id_prop)
+      prop: Property = props[pos_prop]
+      el_nodes: list[Node] = get_el_nodes(elem.connectivity, nodes)
+      el_strain: np.ndarray = strain[offset[i] : offset[i + 1], :]
+      el_stress: np.ndarray = stress[offset[i] : offset[i + 1], :]
+      el_statev: np.ndarray = statev[offset[i] : offset[i + 1], :]
+      elem.updates(el_nodes, prop, el_strain, el_stress, el_statev)
+      '''
+      NOTA: qui stiamo facendo un passaggio per riferimento dai vettori globali: strain, stress, statev
+      a quelli locagli degli elementi el_... questo implica che se modifichiamo i vettori locali
+      anche quelli globali verranno aggiornati e quindi non c'è bisogno di aggiornare in modo 
+      esplicito i vettori globali.
+      Facciamo la stessa cosa anche dentro elem.updates()
+      '''
+      
+    return
 # -----------------------------------------------------------------------------
 # -----------------------------------------------------------------------------
 # -----------------------------------------------------------------------------

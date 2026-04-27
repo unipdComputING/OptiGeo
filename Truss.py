@@ -17,7 +17,36 @@ class Truss:
     self.connectivity: list[int] = connectivity
     self.id_prop: int = id_prop
     self.TOT_EL_NODES: int = 2
+    self.N_GAUSS: int = 1
     self.actor: vtk.vtkActor = None
+  # ---------------------------------------------------------------------------
+  def compute_B(self, el_nodes: np.ndarray, ip: int) -> np.ndarray:
+
+    B: np.ndarray = np.zeros(DIM_TENSOR, dtype=float)
+
+    if ip > 0:
+      return B
+
+    #direction cosines
+    dx: float = (el_nodes[1].x[0] + el_nodes[1].dof[0]) - (el_nodes[0].x[0] + el_nodes[0].dof[0])
+    dy: float = (el_nodes[1].x[1] + el_nodes[1].dof[1]) - (el_nodes[0].x[1] + el_nodes[0].dof[1])
+    dz: float = (el_nodes[1].x[2] + el_nodes[1].dof[2]) - (el_nodes[0].x[2] + el_nodes[0].dof[2])
+
+    L: float = np.sqrt(dx * dx + dy * dy + dz * dz)
+
+    l: float = dx / L
+    m: float = dy / L
+    n: float = dz / L
+
+    # B matrix
+    B[0] = -l / L
+    B[1] = -m / L
+    B[2] = -n / L
+    B[3] =  l / L
+    B[4] =  m / L
+    B[5] =  n / L
+
+    return B
   # ---------------------------------------------------------------------------
   def stiffness(self, el_nodes: list[Node], prop: Property) -> np.ndarray:
     n1: Node = el_nodes[0]
@@ -43,7 +72,27 @@ class Truss:
       nodes_position.append(pos)
     return nodes_position
   # ---------------------------------------------------------------------------
+  def get_strain(self, el_nodes: list[Node], ip: int) -> np.ndarray:
+    a: np.ndarray = np.concatenate((el_nodes[0].dof, el_nodes[1].dof), axis=0)
+    B: np.ndarray  = self.compute_B(el_nodes, ip)
+    strain: np.ndarray = np.zeros(DIM_TENSOR, dtype=float)
+    strain[0] = B[0] * a[0] + B[1] * a[1] + B[2] * a[2] + B[3] * a[3] + B[4] * a[4] + B[5] * a[5]
+    return strain
   # ---------------------------------------------------------------------------
+  def updates(self, el_nodes: list[Node], prop: Property, 
+              el_strain: np.ndarray, el_stress: np.ndarray, el_statev: np.ndarray) -> None:
+    for ip in range(self.N_GAUSS):
+      ostrain: np.ndarray = el_strain[ip, :]
+      dstrain: np.ndarray = self.get_strain(el_nodes, ip)
+      statev : np.ndarray = el_statev[ip, :]
+      stress : np.ndarray = el_stress[ip, :]
+
+      prop.get_const_mat(ostrain, dstrain, stress, statev)
+      
+      el_strain[ip, :] = ostrain + dstrain
+      el_stress[ip, :] = stress
+      el_statev[ip, :] = statev
+    return
   # ---------------------------------------------------------------------------
   # ---------------------------------------------------------------------------
   # ---------------------------------------------------------------------------

@@ -11,6 +11,7 @@ class Tet4:
     self.connectivity: list[int] = connectivity
     self.id_prop: int = id_prop
     self.TOT_EL_NODES: int = 4
+    self.N_GAUSS: int = 1
     self.surface = np.array([
         [0, 1, 2],
         [0, 1, 3],

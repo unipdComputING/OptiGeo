@@ -13,6 +13,7 @@ class Hexa8:
     self.id_prop: int = id_prop
     self.TOT_EL_NODES: int = 8
     self.nu: float = nu
+    self.N_GAUSS: int = 8
     self.surface:np.ndarray = np.array([
         [0, 1, 2, 3],
         [4, 5, 6, 7],

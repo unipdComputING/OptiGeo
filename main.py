@@ -13,44 +13,56 @@ from Space import Space
 def start(space: Space) -> None:
   space.update(update_func=start, interval_ms=60)
 # -----------------------------------------------------------------------------
-
 if __name__ == "__main__":
   nodes: list[Node] = [
-    Node(id = 1, x = np.array([0.0  ,  0.0,    0.0])),
-    Node(id = 2, x = np.array([100.0,  0.0,    0.0])),
-    Node(id = 3, x = np.array([100.0, 100.0,   0.0])),
-    Node(id = 4, x = np.array([0.0  , 100.0,   0.0])),
+    Node(id = 1, x = np.array([0.0  ,  0.0,   0.0])),
+    Node(id = 2, x = np.array([100.0,  0.0,   0.0])),
+    Node(id = 3, x = np.array([200.0,  0.0,   0.0])),
+    Node(id = 4, x = np.array([300.0,  0.0,   0.0])),
 
-    Node(id = 5, x = np.array([0.0  ,  0.0,  100.0])),
-    Node(id = 6, x = np.array([100.0,  0.0,  100.0])),
-    Node(id = 7, x = np.array([100.0, 100.0, 100.0])),
-    Node(id = 8, x = np.array([0.0  , 100.0, 100.0])),
+    Node(id = 5, x = np.array([0.0  ,  0.0, 100.0])),
+    Node(id = 6, x = np.array([100.0,  0.0, 100.0])),
+    Node(id = 7, x = np.array([200.0,  0.0, 100.0])),
+    Node(id = 8, x = np.array([300.0,  0.0, 100.0])),
+
   ]
 
-  # constrain_set: Set = Set('fix', (1, 2, 3))
-  # constrain_set.fix(nodes)
-
   nodes[0].add_constraint(fix = np.array([1, 1, 1]))
-  nodes[1].add_constraint(fix = np.array([0, 1, 1]))
-  nodes[2].add_constraint(fix = np.array([0, 0, 1]))
-  nodes[3].add_constraint(fix = np.array([1, 0, 1]))
+  nodes[3].add_constraint(fix = np.array([1, 1, 1]))
 
-  nodes[4].add_constraint(fix = np.array([1, 1, 0]))
+  nodes[1].add_constraint(fix = np.array([0, 1, 0]))
+  nodes[2].add_constraint(fix = np.array([0, 1, 0]))
+  nodes[4].add_constraint(fix = np.array([0, 1, 0]))
   nodes[5].add_constraint(fix = np.array([0, 1, 0]))
-  nodes[7].add_constraint(fix = np.array([1, 0, 0]))
-
-
+  nodes[6].add_constraint(fix = np.array([0, 1, 0]))
+  nodes[7].add_constraint(fix = np.array([0, 1, 0]))
 
   load_set: Set = Set('load', (5, 6, 7, 8))
   load_set.add_loads(nodes, np.array([0.0, 0.0, -250.0]))
 
   props: list[Property] = [
-    Property(0, young = 96.0, area = 100., poisson = 0.),
+    Property(0, young = 960.0, area = 100., poisson = 0.),
     Property(1, young = 30000., area = 500.0)
   ]
 
   elements: list = [
-    Hexa8(1, [1, 2, 3, 4, 5, 6, 7, 8], 0)
+    Truss( 1, [1, 2], 0),
+    Truss( 2, [2, 3], 0),
+    Truss( 3, [3, 4], 0),
+
+    Truss( 4, [5, 6], 0),
+    Truss( 5, [6, 7], 0),
+    Truss( 6, [7, 8], 0),
+
+    Truss( 7, [1, 5], 0),
+    Truss( 8, [2, 6], 0),
+    Truss( 9, [3, 7], 0),
+    Truss(10, [4, 8], 0),
+
+    Truss(11, [5, 2], 0),
+    Truss(12, [6, 3], 0),
+    Truss(13, [7, 2], 0),
+    Truss(14, [3, 8], 0),
   ]
 
 
@@ -60,6 +72,53 @@ if __name__ == "__main__":
   space.add_elements(elements=elements, nodes=nodes)
 
   start(space)
+
+# if __name__ == "__main__":
+#   nodes: list[Node] = [
+#     Node(id = 1, x = np.array([0.0  ,  0.0,    0.0])),
+#     Node(id = 2, x = np.array([100.0,  0.0,    0.0])),
+#     Node(id = 3, x = np.array([100.0, 100.0,   0.0])),
+#     Node(id = 4, x = np.array([0.0  , 100.0,   0.0])),
+
+#     Node(id = 5, x = np.array([0.0  ,  0.0,  100.0])),
+#     Node(id = 6, x = np.array([100.0,  0.0,  100.0])),
+#     Node(id = 7, x = np.array([100.0, 100.0, 100.0])),
+#     Node(id = 8, x = np.array([0.0  , 100.0, 100.0])),
+#   ]
+
+#   # constrain_set: Set = Set('fix', (1, 2, 3))
+#   # constrain_set.fix(nodes)
+
+#   nodes[0].add_constraint(fix = np.array([1, 1, 1]))
+#   nodes[1].add_constraint(fix = np.array([0, 1, 1]))
+#   nodes[2].add_constraint(fix = np.array([0, 0, 1]))
+#   nodes[3].add_constraint(fix = np.array([1, 0, 1]))
+
+#   nodes[4].add_constraint(fix = np.array([1, 1, 0]))
+#   nodes[5].add_constraint(fix = np.array([0, 1, 0]))
+#   nodes[7].add_constraint(fix = np.array([1, 0, 0]))
+
+
+
+#   load_set: Set = Set('load', (5, 6, 7, 8))
+#   load_set.add_loads(nodes, np.array([0.0, 0.0, -250.0]))
+
+#   props: list[Property] = [
+#     Property(0, young = 96.0, area = 100., poisson = 0.),
+#     Property(1, young = 30000., area = 500.0)
+#   ]
+
+#   elements: list = [
+#     Hexa8(1, [1, 2, 3, 4, 5, 6, 7, 8], 0)
+#   ]
+
+
+#   Liner_Solver(nodes, elements, props)
+
+#   space = Space(width=1200, height=1200)
+#   space.add_elements(elements=elements, nodes=nodes)
+
+#   start(space)
 
 
 # if __name__ == "__main__":
