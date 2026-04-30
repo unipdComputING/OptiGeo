@@ -1,0 +1,52 @@
+#startglobalproperties
+GLOBALPROPERTIES    2
+name       | value
+DIM_SPACE  | 3    
+DIM_GLOBAL | 3    
+#startnodes
+NODES    6
+id | x      | y      | z     
+1N | 0.0    | 0.0    | 0.0   
+2N | 0.0    | 0.0    | 0.0   
+3N | 0.0    | 0.0    | 0.0   
+4N | 0.0    | 0.0    | 0.0   
+5N | 0.0    | 0.0    | 0.0   
+6N | 0.0    | 0.0    | 0.0   
+id | dof x  | dof y  | dof z 
+1N | 0      | 0      | 0     
+2N | 0      | 0      | 0     
+3N | 0      | 0      | 0     
+4N | 0      | 0      | 0     
+5N | 0      | 0      | 0     
+6N | 0      | 0      | 0     
+id | fix x  | fix y  | fix z 
+1N | 0      | 0      | 0     
+2N | 0      | 0      | 0     
+3N | 0      | 0      | 0     
+4N | 0      | 0      | 0     
+5N | 0      | 0      | 0     
+6N | 0      | 0      | 0     
+id | load x | load y | load z
+1N | 0.0    | 0.0    | 0.0   
+2N | 0.0    | 0.0    | 0.0   
+3N | 0.0    | 0.0    | 0.0   
+4N | 0.0    | 0.0    | 0.0   
+5N | 0.0    | 0.0    | 0.0   
+6N | 0.0    | 0.0    | 0.0   
+#startbeams
+BEAMS    1
+id | NODE1 | NODE2
+1B | 1N    | 2N   
+#starttetra
+TETRA    2
+id | NODE1 | NODE2 | NODE3 | NODE4
+1T | 1N    | 2N    | 3N    | 4N   
+2T | 1N    | 2N    | 3N    | 4N   
+#starthexa
+HEXA    1
+id | NODE1 | NODE2 | NODE3 | NODE4 | NODE5 | NODE6
+1H | 1N    | 2N    | 3N    | 4N    | 5N    | 6N   
+#startproperties
+PROPERTIES    0
+#startsolvers
+SOLVERS    0

@@ -1,0 +1,64 @@
+#startglobalproperties
+GLOBALPROPERTIES 2
+DIM_SPACE   |   3
+DIM_GLOBAL  |   3
+#endglobalproperties
+#startnodes
+NODES   6
+COORDINATES
+ID  |   x   |   y   |   z   |
+1N  |   0.0 |   0.0 |   0.0 |
+2N  |   0.0 |   0.0 |   0.0 |
+3N  |   0.0 |   0.0 |   0.0 |
+4N  |   0.0 |   0.0 |   0.0 |
+5N  |   0.0 |   0.0 |   0.0 |
+6N  |   0.0 |   0.0 |   0.0 |
+DOF
+ID  |   dof_x   |   dof_y   |   dof_z   |
+1N  |   0       |   0       |   0       |
+2N  |   0       |   0       |   0       |
+3N  |   0       |   0       |   0       |
+4N  |   0       |   0       |   0       |
+5N  |   0       |   0       |   0       |
+6N  |   0       |   0       |   0       |
+FIX
+ID  |   fix_x   |   fix_y   |   fix_z   |
+1N  |   0       |   0       |   0       |
+2N  |   0       |   0       |   0       |
+3N  |   0       |   0       |   0       |
+4N  |   0       |   0       |   0       |
+5N  |   0       |   0       |   0       |
+6N  |   0       |   0       |   0       |
+LOAD
+ID  |   lod_x   |   lod_y   |   lod_z   |
+1N  |   0.0     |   0.0     |   0.0     |
+2N  |   0.0     |   0.0     |   0.0     |
+3N  |   0.0     |   0.0     |   0.0     |
+4N  |   0.0     |   0.0     |   0.0     |
+5N  |   0.0     |   0.0     |   0.0     |
+6N  |   0.0     |   0.0     |   0.0     |
+#endnodes
+#startbeams
+BEAMS   1
+ID  |   NODE1   |   NODE2   |
+1B  |   1N      |   2N      |
+#endbeams
+#starttetra
+TETRA   2
+ID  |   NODE1   |   NODE2   |   NODE3   |   NODE4   |
+1T  |   1N      |   2N      |   3N      |   4N      |
+2T  |   1N      |   2N      |   3N      |   4N      |
+#endtetra
+#starthexa
+HEXA	1
+ID  |   NODE1   |   NODE2   |   NODE3   |   NODE4   |   NODE5   |   NODE4   |
+1H  |   1N      |   2N      |   3N      |   4N      |   5N      |   6N      |
+#endhexa
+#startproperties
+PROPERTIES 1
+ID  |   name    |   y_M	    |   s_M   |   p_n   |
+1P  |   STEEL   |   2.1E5   |   0     |   0.3   |
+#endproperties
+#startsolver
+SOLVER 0
+#endsolver
