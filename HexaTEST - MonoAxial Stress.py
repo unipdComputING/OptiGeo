@@ -4,8 +4,8 @@ from Property import Property
 from Hexa8 import Hexa8
 from Solver import Liner_Solver
 import matplotlib as plt
-#from Set import Set
-#from Space import Space
+from Set import Set
+from Space import Space
 
 # -----------------------------------------------------------------------------
 # -----------------------------------------------------------------------------
@@ -14,12 +14,12 @@ if __name__ == "__main__":
   nodes: list[Node] = [
     Node(id = 1, x = np.array([0.0, 0.0, 0.0])),
     Node(id = 2, x = np.array([1000.0, 0.0, 0.0])),
-    Node(id = 3, x = np.array([0.0, 1000.0, 0.0])),
-    Node(id = 4, x = np.array([1000.0, 1000.0, 0.0])),
+    Node(id = 4, x = np.array([0.0, 1000.0, 0.0])),
+    Node(id = 3, x = np.array([1000.0, 1000.0, 0.0])),
     Node(id = 5, x = np.array([0.0, 0.0, 1000.0])),
     Node(id = 6, x = np.array([1000.0, 0.0, 1000.0])),
-    Node(id = 7, x = np.array([0.0, 1000.0, 1000.0])),
-    Node(id = 8, x = np.array([1000.0, 1000.0, 1000.0]))
+    Node(id = 8, x = np.array([0.0, 1000.0, 1000.0])),
+    Node(id = 7, x = np.array([1000.0, 1000.0, 1000.0]))
   ]
 
   props: list[Property] = [
@@ -27,7 +27,8 @@ if __name__ == "__main__":
   ]
 
   elements: list = [
-      Hexa8(2, [1,2,4,3,5,6,8,7], 1)
+      #Hexa8(2, [1,2,4,3,5,6,8,7], 1)
+      Hexa8(2, [1, 2, 3, 4, 5, 6, 7, 8], 1)
   ]
 
 # -----------------------------------------------------------------------------
@@ -49,9 +50,8 @@ if __name__ == "__main__":
 
 # -----------------------------------------------------------------------------
 # Solve
-  # Solve
-  [a, strain, stress] = Liner_Solver(nodes, elements, props)
+  Liner_Solver(nodes, elements, props)
+  '''space = Space(width=600, height=800)
+  space.add_elements(elements=elements, nodes=nodes)
 
-print(f"\na = {a}")
-print(f"\nepsilon = {strain}")
-print(f"\nsigma = {stress}")
+  space.interactor.Start()'''

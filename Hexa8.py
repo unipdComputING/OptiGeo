@@ -13,6 +13,7 @@ class Hexa8:
     self.id_prop: int = id_prop
     self.TOT_EL_NODES: int = 8
     self.nu: float = nu
+    self.N_GAUSS: int = 8
     self.surface:np.ndarray = np.array([
         [0, 1, 2, 3],
         [4, 5, 6, 7],
@@ -21,7 +22,6 @@ class Hexa8:
         [0, 4, 7, 3],
         [1, 2, 6, 5],
     ]).copy()
-    self.nPtGauss: int = 8
   # ---------------------------------------------------------------------------
   def _get_surface_nodes(self, id_surf, nodes) -> list[Node]:
     """Private method to determine the list of nodes defining an element face.
@@ -92,38 +92,39 @@ class Hexa8:
       B[5, col + 2] = dNx
     return B
   # ---------------------------------------------------------------------------
-  def compute_B(self, nodes: list[Node]) -> np.ndarray:
-      B = np.zeros((8, 144))
-      cont = 0
+  def compute_B(self, nodes: list[Node], ip) -> np.ndarray:
       coords = np.array([n.x for n in nodes])
-
       a = 1. / np.sqrt(3.)
-      gp = [-a, a]
-      for xi in gp:
-          for eta in gp:
-              for zeta in gp:
-                  dN_dxi = self.shape_grad_local(xi, eta, zeta)  # 8x3
+      gp = np.array([
+          [-a, -a, -a],
+          [a, -a, -a],
+          [a, a, -a],
+          [-a, a, -a],
+          [-a, -a, a],
+          [a, -a, a],
+          [a, a, a],
+          [-a, a, a],
+      ])
 
-                  # Jacobian
-                  J = coords.T @ dN_dxi  # 3x3
-                  detJ = np.linalg.det(J)
-                  if detJ <= 0:
-                      print(f"Hex8 {self.id}: detJ <= 0, negative jacobian determinant")
+      xi = gp[ip,0]
+      eta = gp[ip,1]
+      zeta = gp[ip,2]
+      dN_dxi = self.shape_grad_local(xi, eta, zeta)  # 8x3
 
-                  invJ = np.linalg.inv(J)
-                  dN_dxyz = dN_dxi @ invJ.T
-                  b = self.build_B(dN_dxyz)
-                  for i in range(DIM_TENSOR):
-                      B[cont, i * 24 : i * 24 + 24] = b[i,:]
-                  cont += 1
+      # Jacobian
+      J = coords.T @ dN_dxi  # 3x3
+
+      invJ = np.linalg.inv(J)
+      dN_dxyz = dN_dxi @ invJ.T
+      B = self.build_B(dN_dxyz)
       return B
-
   # ---------------------------------------------------------------------------
   def stiffness(self, nodes: list[Node], prop: Property) -> np.ndarray:
 
     coords = np.array([n.x for n in nodes])
 
-    (_, D) = prop.get_const_mat()
+    #(_, D) = prop.get_const_mat()
+    D = prop.get_el_const_mat()
 
     a = 1. / np.sqrt(3.)
     gp = [-a, a]
@@ -153,6 +154,28 @@ class Hexa8:
     for node in surf_nodes:
       node.add_constraint(fix, np.zeros(DIM_DOF))
   # ---------------------------------------------------------------------------
+  def get_strain(self, el_nodes: list[Node], ip: int) -> np.ndarray:
+    a: np.ndarray = np.concatenate((el_nodes[0].dof, el_nodes[1].dof, el_nodes[2].dof, el_nodes[3].dof,
+                                    el_nodes[4].dof, el_nodes[5].dof, el_nodes[6].dof, el_nodes[7].dof), axis=0)
+    B = self.compute_B(el_nodes, ip)
+    strain: np.ndarray = np.zeros(DIM_TENSOR, dtype=float)
+    strain = B @ a
+    return strain
+  # ---------------------------------------------------------------------------
+  def updates(self, el_nodes: list[Node], prop: Property,
+              el_strain: np.ndarray, el_stress: np.ndarray, el_statev: np.ndarray) -> None:
+      for ip in range(self.N_GAUSS):
+          ostrain: np.ndarray = el_strain[ip, :]
+          dstrain: np.ndarray = self.get_strain(el_nodes, ip)
+          statev: np.ndarray = el_statev[ip, :]
+          stress: np.ndarray = el_stress[ip, :]
+
+          prop.get_const_mat(ostrain, dstrain, stress, statev)
+
+          el_strain[ip, :] = ostrain + dstrain
+          el_stress[ip, :] = stress
+          el_statev[ip, :] = statev
+      return
   # ---------------------------------------------------------------------------
   # ---------------------------------------------------------------------------
   # ---------------------------------------------------------------------------

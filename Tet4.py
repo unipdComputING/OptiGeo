@@ -11,13 +11,14 @@ class Tet4:
     self.connectivity: list[int] = connectivity
     self.id_prop: int = id_prop
     self.TOT_EL_NODES: int = 4
+    self.N_GAUSS: int = 1
     self.surface = np.array([
         [0, 1, 2],
         [0, 1, 3],
         [1, 2, 3],
         [0, 2, 3],
     ]).copy()
-    self.nPtGauss: int = 1
+
     #                 2
     #               / |
     #             /  ||
@@ -81,61 +82,59 @@ class Tet4:
           print("Det Negative")
       return Vol
   # ---------------------------------------------------------------------------
-  def build_B(self,nodes: list[Node]) -> np.ndarray:
+  def build_B(self, nodes: list[Node]) -> tuple[np.ndarray, float]:
       B = np.zeros((6, 12))
+      x = np.zeros((4, 1))
+      y = np.zeros((4, 1))
+      z = np.zeros((4, 1))
 
-      Index = np.array([ # matrice di combinazione per definire iterativamente i nodi da utilizzare
-          [1, 2, 3],
-          [0, 3, 2],
-          [0, 1, 3],
-          [0, 2, 1],
+      for i in range(len(nodes)):
+          x[i] = nodes[i].x[0]
+          y[i] = nodes[i].x[1]
+          z[i] = nodes[i].x[2]
+
+      a = np.array([
+          y[1] * (z[3] - z[2]) - y[2] * (z[3] - z[1]) + y[3] * (z[2] - z[1]),
+          -y[0] * (z[3] - z[2]) + y[2] * (z[3] - z[0]) - y[3] * (z[2] - z[0]),
+          y[0] * (z[3] - z[1]) - y[1] * (z[3] - z[0]) + y[3] * (z[1] - z[0]),
+          -y[0] * (z[2] - z[1]) + y[1] * (z[2] - z[0]) - y[2] * (z[1] - z[0]),
       ])
 
-      for i in range(4):
-          n0: Node = nodes[Index[i, 0]]
-          n1: Node = nodes[Index[i, 1]]
-          n2: Node = nodes[Index[i, 2]]
+      b = np.array([
+          -x[1] * (z[3] - z[2]) + x[2] * (z[3] - z[1]) - x[3] * (z[2] - z[1]),
+          x[0] * (z[3] - z[2]) - x[2] * (z[3] - z[0]) + x[3] * (z[2] - z[0]),
+          -x[0] * (z[3] - z[1]) + x[1] * (z[3] - z[0]) - x[3] * (z[1] - z[0]),
+          x[0] * (z[2] - z[1]) - x[1] * (z[2] - z[0]) + x[2] * (z[1] - z[0]),
+      ])
 
-          bmat = np.array([
-              [1, n0.x[1], n0.x[2]],
-              [1, n1.x[1], n1.x[2]],
-              [1, n2.x[1], n2.x[2]],
-          ])
-          b = np.linalg.det(bmat)
-
-          cmat = np.array([
-              [n0.x[0], 1, n0.x[2]],
-              [n1.x[0], 1, n1.x[2]],
-              [n2.x[0], 1, n2.x[2]],
-          ])
-          c = np.linalg.det(cmat)
-
-          dmat = np.array([
-              [n0.x[0], n0.x[1], 1],
-              [n1.x[0], n1.x[1], 1],
-              [n2.x[0], n2.x[1], 1],
-          ])
-          d = np.linalg.det(dmat)
-
-          B[0, i*3 : i*3+3] = [b, 0, 0]
-          B[1, i*3 : i*3+3] = [0, c, 0]
-          B[2, i*3 : i*3+3] = [0, 0, d]
-          B[3, i*3 : i*3+3] = [c, b, 0]
-          B[4, i*3 : i*3+3] = [0, d, b]
-          B[5, i*3 : i*3+3] = [d, 0, c]
+      c = np.array([
+          x[1] * (y[3] - y[2]) - x[2] * (y[3] - y[1]) + x[3] * (y[2] - y[1]),
+          -x[0] * (y[3] - y[2]) + y[2] * (y[3] - y[0]) - x[3] * (y[2] - y[0]),
+          x[0] * (y[3] - y[1]) - x[1] * (y[3] - y[0]) + x[3] * (y[1] - y[0]),
+          -x[0] * (y[2] - y[1]) + x[1] * (y[2] - y[0]) - x[2] * (y[1] - y[0]),
+      ])
 
       V = self.compute_Vol(nodes)
-      if V<0:
-          print("Jacobian Negative")
+      for i in range(4):
+          col = 3 * i
+          B[0, col + 0] = a[i]
+          B[1, col + 1] = b[i]
+          B[2, col + 2] = c[i]
+          B[3, col + 0] = b[i]
+          B[3, col + 1] = a[i]
+          B[4, col + 1] = c[i]
+          B[4, col + 2] = b[i]
+          B[5, col + 0] = c[i]
+          B[5, col + 2] = a[i]
 
-      B = B / (V * 6.)
-      return B
+      B = B / (6 * V)
+      return (B, V)
   # ---------------------------------------------------------------------------
   def stiffness(self, nodes: list[Node], prop: Property) -> np.ndarray:
-      (_, D) = prop.get_const_mat()
+      #(_, D) = prop.get_const_mat()
+      D = prop.get_el_const_mat()
       K: np.ndarray = np.zeros((12, 12))
-      B = self.build_B(nodes)
-      V: float = self.compute_Vol(nodes)
+      (B, V) = self.build_B(nodes)
 
       for i in range(4):
           for j in range(4):
@@ -148,12 +147,27 @@ class Tet4:
     for node in surf_nodes:
       node.add_constraint(fix, np.zeros(DIM_DOF))
   # ---------------------------------------------------------------------------
-  def compute_B(self,nodes: list[Node]) -> np.ndarray:
-      B = np.zeros((1, 72))
-      b = self.build_B(nodes)
-      for i in range(DIM_TENSOR):
-          B[0, i * 12: i * 12 + 12] = b[i, :]
-      return B
+  def get_strain(self, el_nodes: list[Node], ip: int) -> np.ndarray:
+    a: np.ndarray = np.concatenate((el_nodes[0].dof, el_nodes[1].dof, el_nodes[2].dof, el_nodes[3].dof), axis=0)
+    B, _  = self.build_B(el_nodes)
+    strain: np.ndarray = np.zeros(DIM_TENSOR, dtype=float)
+    strain = B @ a
+    return strain
+  # ---------------------------------------------------------------------------
+  def updates(self, el_nodes: list[Node], prop: Property,
+              el_strain: np.ndarray, el_stress: np.ndarray, el_statev: np.ndarray) -> None:
+      for ip in range(self.N_GAUSS):
+          ostrain: np.ndarray = el_strain[ip, :]
+          dstrain: np.ndarray = self.get_strain(el_nodes, ip)
+          statev: np.ndarray = el_statev[ip, :]
+          stress: np.ndarray = el_stress[ip, :]
+
+          prop.get_const_mat(ostrain, dstrain, stress, statev)
+
+          el_strain[ip, :] = ostrain + dstrain
+          el_stress[ip, :] = stress
+          el_statev[ip, :] = statev
+      return
   # ---------------------------------------------------------------------------
   # ---------------------------------------------------------------------------
   # ---------------------------------------------------------------------------

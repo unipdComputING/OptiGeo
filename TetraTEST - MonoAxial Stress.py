@@ -3,9 +3,8 @@ from Node import Node
 from Property import Property
 from Tet4 import Tet4
 from Solver import Liner_Solver
-import matplotlib as plt
-#from Set import Set
-#from Space import Space
+from Set import Set
+from Space import Space
 
 # -----------------------------------------------------------------------------
 # -----------------------------------------------------------------------------
@@ -39,8 +38,8 @@ if __name__ == "__main__":
 
 # -----------------------------------------------------------------------------
 # Solve
-  [a, strain, stress] = Liner_Solver(nodes, elements, props)
+  Liner_Solver(nodes, elements, props)
+  '''space = Space(width=600, height=800)
+  space.add_elements(elements=elements, nodes=nodes)
 
-print(f"\na = {a}")
-print(f"\nepsilon = {strain}")
-print(f"\nsigma = {stress}")
+  space.interactor.Start()'''

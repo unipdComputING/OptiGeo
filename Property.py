@@ -41,7 +41,7 @@ class Property:
   # 
   def get_const_mat(self, ostrain: np.ndarray = np.zeros(DIM_TENSOR), dstrain: np.ndarray = np.zeros(DIM_TENSOR), 
                     stress: np.ndarray = np.zeros(DIM_TENSOR), 
-                    statev: np.ndarray = None) -> tuple[np.ndarray, np.ndarray]:
+                    statev: np.ndarray = None) -> None:
     """! Function to compute the stress vector and the constitutive tangent operator in Voigt notation at increment n+1
     @param ostrain  Strain vector at increment n
     @param dstrain  Strain increment
@@ -51,10 +51,10 @@ class Property:
     """
     strain: np.ndarray = ostrain + dstrain
     D = self.get_el_const_mat()
-    stress: np.ndarray = D @ strain
+    stress[:] = D @ strain
     I1 = (stress[0] + stress[1] + stress[2]) / 3.0 
     if statev is not None:
       statev[0] = I1
-    return (stress, D)
+    return
   # ---------------------------------------------------------------------------
   # ---------------------------------------------------------------------------
