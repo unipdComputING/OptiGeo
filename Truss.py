@@ -1,4 +1,5 @@
 import  numpy as np
+from numpy import ndarray as nd
 import vtk
 from Global import *
 from Node import Node
@@ -48,7 +49,8 @@ class Truss:
 
     return B
   # ---------------------------------------------------------------------------
-  def stiffness(self, el_nodes: list[Node], prop: Property) -> np.ndarray:
+  def stiffness(self, el_nodes: list[Node], prop: Property,
+                el_strain: nd, el_dstrain: nd, el_stress: nd, el_statev: nd) -> {nd, nd}:
     n1: Node = el_nodes[0]
     n2: Node = el_nodes[1]
     l0: float = n1.dist(n2)

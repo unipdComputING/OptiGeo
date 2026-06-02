@@ -1,4 +1,5 @@
 import numpy as np
+from numpy import ndarray as nd
 from  Global import *
 from Node import Node
 from Element import Element
@@ -7,33 +8,47 @@ from Vtk import save_vtk
 
 # -----------------------------------------------------------------------------
 def Liner_Solver(nodes: list[Node] = None, elements: list[Element] = None, props: list[Property] = None) -> None:
-
+  '''! Linear Solver method
+  @param nodes     List of nodes mesh
+  @param elements  List of elements in the mesh
+  @param props     List of properties
+  '''
   if nodes is None or elements is None or props is None:
     return
-
+  
+  # 0. initialization global arrays to store data
+  ip_offset: list[int] = build_offset(elements)
+  rows: int = ip_offset[-1]
+  strain: nd = np.zeros((rows, DIM_TENSOR), dtype=float)
+  dstrain: nd = np.zeros((rows, DIM_TENSOR), dtype=float)
+  stress: nd = np.zeros((rows, DIM_TENSOR), dtype=float)
+  statev: nd = np.zeros((rows, TOT_STATEV), dtype=float)
   # 1. stiffness assembly
-  K: np.ndarray = assembly(nodes, elements, props)
+  K: nd = assembly(nodes, elements, props, ip_offset, strain, dstrain, stress, statev)
   # 2. apply bcs
   (a, fix) = apply_bcs(nodes)
   # 3. loads assembly
-  f: np.ndarray = loads_assembly(nodes, K, a)
+  f: nd = loads_assembly(nodes, K, a)
   # 4. solver
   solver(nodes, K, a, f, fix)
   # 5. outputs
-  ip_offset: list[int] = build_offset(elements)
-  rows: int = ip_offset[-1]
-  strain: np.ndarray = np.zeros((rows, DIM_TENSOR), dtype=float)
-  stress: np.ndarray = np.zeros((rows, DIM_TENSOR), dtype=float)
-  statev: np.ndarray = np.zeros((rows, TOT_STATEV), dtype=float)
   updates(elements, nodes, props, ip_offset, strain, stress, statev)
   save_vtk("test.vtk", nodes, elements, ip_offset, strain, stress, statev)
 
   return
 # -----------------------------------------------------------------------------
-def assembly(nodes: list[Node], elements: list[Element], props: list[Property]) -> np.ndarray:
+def assembly(nodes: list[Node], elements: list[Element], props: list[Property], offset: list[int],
+             strain: nd, dstrain: nd, stress: nd, statev: nd) -> nd:
+  '''! Assembly procedure to get the Global Stiffness Matrix
+  @param nodes     List of nodes
+  @param elements  List of elements in the mesh
+  @param props     List of properties
+  @param offset    Integration points offset
+  '''
   DIM_PROBLEM: int = len(nodes) * DIM_DOF
-  K: np.ndarray = np.zeros((DIM_PROBLEM, DIM_PROBLEM))
-  for element in elements:
+  K: nd = np.zeros((DIM_PROBLEM, DIM_PROBLEM), dtype=float)
+  Fi: nd = np.zeros(DIM_PROBLEM, dtype=float)
+  for e, element in enumerate(elements):
     # id_n1: int = element.connectivity[0]
     # id_n2: int = element.connectivity[1]
     TOT_EL_NODES: int = element.TOT_EL_NODES
@@ -42,14 +57,18 @@ def assembly(nodes: list[Node], elements: list[Element], props: list[Property]) 
     # prop: Property = props[element.id_prop]
     # elK: np = element.stiffness(n1, n2, prop)
 
+    el_strain : nd = strain[offset[e] : offset[e + 1], :]
+    el_dstrain: nd = strain[offset[e] : offset[e + 1], :]
+    el_stress : nd = stress[offset[e] : offset[e + 1], :]
+    el_statev : nd = statev[offset[e] : offset[e + 1], :]
+
     nodes_position: list[int] = element.get_nodes_position(nodes)
     pos_prop = find_pos(props, element.id_prop)
     if pos_prop < 0:
       print(f"ERROR in EL: {element.id}: properties {element.id_prop} not defined")
       quit()
     el_nodes: list[Node] = get_el_nodes(element.connectivity, nodes)
-    elK: np.ndarray = element.stiffness(el_nodes,
-                                        props[pos_prop])
+    elK, elFi = element.stiffness(el_nodes, props[pos_prop], el_strain, el_dstrain, el_stress, el_statev)
     for node_row in range(TOT_EL_NODES):
       pos_row: int = nodes_position[node_row]
       for node_col in range(TOT_EL_NODES):
@@ -63,10 +82,10 @@ def assembly(nodes: list[Node], elements: list[Element], props: list[Property]) 
             K[row, col] += elK[el_row, el_col]
   return K
 # -----------------------------------------------------------------------------
-def apply_bcs(nodes: list[Node]) -> tuple[np.ndarray, np.ndarray]:
+def apply_bcs(nodes: list[Node]) -> tuple[nd, nd]:
   DIM_PROBLEM: int = len(nodes) * DIM_DOF
-  fix: np.ndarray = np.zeros(DIM_PROBLEM)
-  a: np.ndarray = np.zeros(DIM_PROBLEM)
+  fix: nd = np.zeros(DIM_PROBLEM)
+  a: nd = np.zeros(DIM_PROBLEM)
   cont: int = 0
   for node in nodes:
     for i in range(DIM_DOF):
@@ -75,9 +94,9 @@ def apply_bcs(nodes: list[Node]) -> tuple[np.ndarray, np.ndarray]:
       cont += 1
   return (a, fix)
 # -----------------------------------------------------------------------------
-def loads_assembly(nodes: list[Node], K: np.ndarray, a: np.ndarray) -> np.ndarray:
+def loads_assembly(nodes: list[Node], K: nd, a: nd) -> nd:
   DIM_PROBLEM: int = len(nodes) * DIM_DOF
-  f: np.ndarray = np.zeros(DIM_PROBLEM)
+  f: nd = np.zeros(DIM_PROBLEM)
   cont: int = 0
   for node in nodes:
     for i in range(DIM_DOF):
@@ -85,13 +104,13 @@ def loads_assembly(nodes: list[Node], K: np.ndarray, a: np.ndarray) -> np.ndarra
       cont += 1
   return f - K @ a
 # -----------------------------------------------------------------------------
-def solver(nodes: list[Node], K: np.ndarray, a: np.ndarray, f: np.ndarray, fix: np.ndarray) -> None:
+def solver(nodes: list[Node], K: nd, a: nd, f: nd, fix: nd) -> None:
   penalty: float = np.max(K) * 1000_000_000.0
   DIM_PROBLEM: int = len(nodes) * DIM_DOF
   for i in range(DIM_PROBLEM):
     K[i, i] += fix[i] * penalty
 
-  u: np.ndarray = np.linalg.solve(K, f)
+  u: nd = np.linalg.solve(K, f)
   u[:] *= 1 - fix[:]
   a += u
 
@@ -117,7 +136,7 @@ def build_offset(elements: list[Element]) -> list[int]:
   return offset
 # -----------------------------------------------------------------------------
 def updates(elements: list[Element], nodes: list[Node], props: list[Property], 
-            offset: list[int], strain: np.ndarray, stress: np.ndarray, statev: np.ndarray)-> None:
+            offset: list[int], strain: nd, stress: nd, statev: nd)-> None:
     
     cont: int = 0
 
@@ -125,9 +144,9 @@ def updates(elements: list[Element], nodes: list[Node], props: list[Property],
       pos_prop: int = find_pos(props, elem.id_prop)
       prop: Property = props[pos_prop]
       el_nodes: list[Node] = get_el_nodes(elem.connectivity, nodes)
-      el_strain: np.ndarray = strain[offset[i] : offset[i + 1], :]
-      el_stress: np.ndarray = stress[offset[i] : offset[i + 1], :]
-      el_statev: np.ndarray = statev[offset[i] : offset[i + 1], :]
+      el_strain: nd = strain[offset[i] : offset[i + 1], :]
+      el_stress: nd = stress[offset[i] : offset[i + 1], :]
+      el_statev: nd = statev[offset[i] : offset[i + 1], :]
       elem.updates(el_nodes, prop, el_strain, el_stress, el_statev)
       '''
       NOTA: qui stiamo facendo un passaggio per riferimento dai vettori globali: strain, stress, statev

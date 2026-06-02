@@ -1,4 +1,5 @@
 import numpy as np
+from numpy import ndarray as nd
 import vtk
 from Global import *
 from Node import Node
@@ -138,23 +139,65 @@ class Tet4:
       B = B / (V * 6.)
       return (B, V)
   # ---------------------------------------------------------------------------
-  def stiffness(self, nodes: list[Node], prop: Property) -> np.ndarray:
-      (_, D) = prop.get_const_mat()
-      K: np.ndarray = np.zeros((12, 12))
-      (B, V) = self.build_B(nodes)
-      # V: float = self.compute_Vol(nodes)
+  def stiffness(self, nodes: list[Node], prop: Property, 
+                el_strain: nd, el_dstrain: nd, el_stress: nd, el_statev: nd) -> {nd, nd}:
+      # (_, D) = prop.get_const_mat()
+      # D = prop.get_el_const_mat()
+      # stiffness matrix
+      K: nd = np.zeros((12, 12), dtype=float)
+      # internal load
+      Fi: nd = np.zeros(12, dtype=float)
+      # tengent constitutive tensor
+      D: nd = np.zeros((DIM_TENSOR, DIM_TENSOR), dtype=float)
+      for ig in range(self.N_GAUSS):
+        strain : nd = el_strain [ig, :]
+        dstrain: nd = el_dstrain[ig, :]
+        stress:  nd = el_stress [ig, :]
+        statev:  nd = el_statev [ig, :]
+        (B, V) = self.build_B(nodes)
+        energy_density: float = 0.0 #######################################TEST
+        prop.get_const_mat(strain, dstrain, stress, D, energy_density, statev)
 
-      for i in range(4):
-          for j in range(4):
-            K[3*i:3*i+3, 3*j:3*j+3] += (B[0:6, 3*i:3*i+3].T @ D) @ B[0:6, 3*j:3*j+3] * V
 
-      return K
+        for i in range(4):
+            for j in range(4):
+                K[3*i:3*i+3, 3*j:3*j+3] += (B[0:6, 3*i:3*i+3].T @ D) @ B[0:6, 3*j:3*j+3] * V
+                Fi[3*i:3*i+3] += (B[0:6, 3*i:3*i+3].T @ stress) * V
+        
+        el_stress [ig, :] = stress
+        el_statev [ig, :] = statev
+
+      return (K, Fi)
   # ---------------------------------------------------------------------------
   def adding_surface_partialconstraint(self,id_surf:int,fix:np.ndarray,nodes:list[Node]) -> None:
     surf_nodes = self._get_surface_nodes(id_surf, nodes)
     for node in surf_nodes:
       node.add_constraint(fix, np.zeros(DIM_DOF))
   # ---------------------------------------------------------------------------
+  def get_strain(self, el_nodes: list[Node], ip: int) -> np.ndarray:
+    a: nd = np.concatenate((el_nodes[0].dof, el_nodes[1].dof, el_nodes[2].dof, el_nodes[3].dof), axis=0)
+    B, _ = self.build_B(el_nodes)
+    strain: nd = np.zeros(DIM_TENSOR, dtype=float)
+    strain = B @ a
+    return strain
+  # ---------------------------------------------------------------------------
+  def updates(self, el_nodes: list[Node], prop: Property, 
+                el_strain: np.ndarray, el_stress: np.ndarray, el_statev: np.ndarray) -> None:
+    for ip in range(self.N_GAUSS):
+      ostrain: np.ndarray = el_strain[ip, :]
+      dstrain: np.ndarray = self.get_strain(el_nodes, ip)
+      statev : np.ndarray = el_statev[ip, :]
+      stress : np.ndarray = el_stress[ip, :]
+
+      # prop.get_const_mat(ostrain, dstrain, stress, statev)
+      D: nd = np.zeros((DIM_TENSOR, DIM_TENSOR), dtype=float)
+      energy_density: float = 0.0 #######################################TEST
+      prop.get_const_mat(ostrain, dstrain, stress, D, energy_density, statev)
+      
+      el_strain[ip, :] = ostrain + dstrain
+      el_stress[ip, :] = stress
+      el_statev[ip, :] = statev
+    return
   # ---------------------------------------------------------------------------
   # ---------------------------------------------------------------------------
   # ---------------------------------------------------------------------------

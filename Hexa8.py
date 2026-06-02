@@ -1,4 +1,5 @@
 import  numpy as np
+from numpy import ndarray as nd
 import vtk
 from Node import Node
 from Property import Property
@@ -92,19 +93,61 @@ class Hexa8:
       B[5, col + 2] = dNx
     return B
   # ---------------------------------------------------------------------------
-  def stiffness(self, nodes: list[Node], prop: Property) -> np.ndarray:
+  def compute_B(self, nodes: list[Node], ip) -> np.ndarray:
+      coords = np.array([n.x for n in nodes])
+      a = 1. / np.sqrt(3.)
+      gp = np.array([
+          [-a, -a, -a],
+          [a, -a, -a],
+          [a, a, -a],
+          [-a, a, -a],
+          [-a, -a, a],
+          [a, -a, a],
+          [a, a, a],
+          [-a, a, a],
+      ])
+
+      xi = gp[ip,0]
+      eta = gp[ip,1]
+      zeta = gp[ip,2]
+      dN_dxi = self.shape_grad_local(xi, eta, zeta)  # 8x3
+
+      # Jacobian
+      J = coords.T @ dN_dxi  # 3x3
+
+      invJ = np.linalg.inv(J)
+      dN_dxyz = dN_dxi @ invJ.T
+      B = self.build_B(dN_dxyz)
+      return B
+  # ---------------------------------------------------------------------------
+  def stiffness(self, nodes: list[Node], prop: Property,
+                el_strain: nd, el_dstrain: nd, el_stress: nd, el_statev: nd) -> {nd, nd}:
 
     coords = np.array([n.x for n in nodes])
 
-    (_, D) = prop.get_const_mat()
+    #(_, D) = prop.get_const_mat()
+    #D = prop.get_el_const_mat()
 
     a = 1. / np.sqrt(3.)
     gp = [-a, a]
-    K = np.zeros((24, 24))
+    # stiffness matrix
+    K : nd = np.zeros((24, 24), dtype=float)
+    # internal load
+    Fi: nd = np.zeros((24), dtype=float)
+    # tengent constitutive tensor
+    D: nd = np.zeros((DIM_TENSOR, DIM_TENSOR), dtype=float)
 
+    ig: int = 0
     for xi in gp:
       for eta in gp:
         for zeta in gp:
+          strain : nd = el_strain [ig, :]
+          dstrain: nd = el_dstrain[ig, :]
+          stress:  nd = el_stress [ig, :]
+          statev:  nd = el_statev [ig, :]
+          energy_density: float = 0.0 #######################################TEST
+          prop.get_const_mat(strain, dstrain, stress, D, energy_density, statev)
+
           dN_dxi = self.shape_grad_local(xi, eta, zeta)  # 8x3
 
           # Jacobian
@@ -117,7 +160,13 @@ class Hexa8:
           dN_dxyz = dN_dxi @ invJ.T
           B = self.build_B(dN_dxyz)
 
-          K += B.T @ (D @ B) * detJ
+          K  += B.T @ (D @ B) * detJ
+          Fi += B.T @ stress * detJ
+
+          el_stress [ig, :] = stress
+          el_statev [ig, :] = statev
+
+          ig += 1
 
     return K
   # ---------------------------------------------------------------------------
@@ -126,6 +175,31 @@ class Hexa8:
     for node in surf_nodes:
       node.add_constraint(fix, np.zeros(DIM_DOF))
   # ---------------------------------------------------------------------------
+  def get_strain(self, el_nodes: list[Node], ip: int) -> np.ndarray:
+    a: np.ndarray = np.concatenate((el_nodes[0].dof, el_nodes[1].dof, el_nodes[2].dof, el_nodes[3].dof,
+                                    el_nodes[4].dof, el_nodes[5].dof, el_nodes[6].dof, el_nodes[7].dof), axis=0)
+    B = self.compute_B(el_nodes, ip)
+    strain: np.ndarray = np.zeros(DIM_TENSOR, dtype=float)
+    strain = B @ a
+    return strain
+  # ---------------------------------------------------------------------------
+  def updates(self, el_nodes: list[Node], prop: Property,
+              el_strain: np.ndarray, el_stress: np.ndarray, el_statev: np.ndarray) -> None:
+      for ip in range(self.N_GAUSS):
+          ostrain: np.ndarray = el_strain[ip, :]
+          dstrain: np.ndarray = self.get_strain(el_nodes, ip)
+          statev: np.ndarray = el_statev[ip, :]
+          stress: np.ndarray = el_stress[ip, :]
+
+          # prop.get_const_mat(ostrain, dstrain, stress, statev)
+          D: nd = np.zeros((DIM_TENSOR, DIM_TENSOR), dtype=float)
+          energy_density: float = 0.0 #######################################TEST
+          prop.get_const_mat(ostrain, dstrain, stress, D, energy_density, statev)
+
+          el_strain[ip, :] = ostrain + dstrain
+          el_stress[ip, :] = stress
+          el_statev[ip, :] = statev
+      return
   # ---------------------------------------------------------------------------
   # ---------------------------------------------------------------------------
   # ---------------------------------------------------------------------------

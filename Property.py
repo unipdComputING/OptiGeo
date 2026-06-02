@@ -4,7 +4,12 @@ from Global import *
 """! @brief Defines the Property classes."""
 class Property:
   # ---------------------------------------------------------------------------
-  def __init__(self, id: int = 0, young: float = 0, poisson: float = 0.0, area: float = 0) -> None:
+  def __init__(self, id: int = 0, young: float = 0, 
+               poisson: float = 0.0, area: float = 0, 
+               opt_x_min: float = 0.001, 
+               opt_eta: float = 0.0,
+               opt_m: float = 0.0,
+               opt_p: float = 0.0) -> None:
     """! The Property base class initializer.
     @param id  The property id.
     @param young  The elastic modulus.
@@ -17,6 +22,9 @@ class Property:
     self.area: float = area
     poisson = max(min(poisson, .4_999_999), 0.)
     self.poisson: float = poisson
+    self.opt_x_min: float = opt_x_min
+    self.opt_m: float = opt_m
+    self.opt_eta: float = opt_eta
   # ---------------------------------------------------------------------------
   def get_el_const_mat(self) -> np.ndarray:
     """! Elastic constitutive matrix definition in Voig notation (in a 3D space)
@@ -39,8 +47,11 @@ class Property:
   # ---------------------------------------------------------------------------
   # example of linear elastic isotropic material
   # 
-  def get_const_mat(self, ostrain: np.ndarray = np.zeros(DIM_TENSOR), dstrain: np.ndarray = np.zeros(DIM_TENSOR), 
-                    stress: np.ndarray = np.zeros(DIM_TENSOR), 
+  def get_const_mat(self, ostrain: np.ndarray = np.zeros(DIM_TENSOR), 
+                    dstrain: np.ndarray = np.zeros(DIM_TENSOR), 
+                    stress: np.ndarray = np.zeros(DIM_TENSOR),
+                    D: np.ndarray = np.zeros([DIM_TENSOR, DIM_TENSOR]),
+                    energy_density: np.ndarray = np.zeros([DIM_TENSOR, DIM_TENSOR]),
                     statev: np.ndarray = None) -> None:
     """! Function to compute the stress vector and the constitutive tangent operator in Voigt notation at increment n+1
     @param ostrain  Strain vector at increment n
@@ -49,12 +60,18 @@ class Property:
     @param statev   State variables stored at increment n
     @return Nothing
     """
+    x: float = 1 - statev[0]
     strain: np.ndarray = ostrain + dstrain
-    D = self.get_el_const_mat()
-    stress[:] = D @ strain
+    D[:, :] = self.get_el_const_mat()
+    # update 
+    # ...
+    # ...
+    # end update
+    D *= x
+    stress[:] = (D) @ strain
     I1 = (stress[0] + stress[1] + stress[2]) / 3.0 
     if statev is not None:
-      statev[0] = I1
+      statev[0] = 1 - x
     return
   # ---------------------------------------------------------------------------
   # ---------------------------------------------------------------------------
