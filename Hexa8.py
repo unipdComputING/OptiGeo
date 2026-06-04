@@ -168,7 +168,7 @@ class Hexa8:
 
           ig += 1
 
-    return K
+    return K, Fi
   # ---------------------------------------------------------------------------
   def adding_surface_partialconstraint(self,id_surf:int,fix:np.ndarray,nodes:list[Node]) -> None:
     surf_nodes = self._get_surface_nodes(id_surf, nodes)
